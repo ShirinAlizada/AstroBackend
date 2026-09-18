@@ -1,0 +1,6 @@
+@AstroBackend_HostAddress = http://localhost:5257
+
+GET {{AstroBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

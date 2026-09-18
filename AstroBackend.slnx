@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="AstroBackend/AstroBackend.csproj" />
+    <Project Path="src/AstroBackend.Application/AstroBackend.Application.csproj" />
+    <Project Path="src/AstroBackend.Domain/AstroBackend.Domain.csproj" />
+    <Project Path="src/AstroBackend.Infrastructure/AstroBackend.Infrastructure.csproj" />
+  </Folder>
+</Solution>

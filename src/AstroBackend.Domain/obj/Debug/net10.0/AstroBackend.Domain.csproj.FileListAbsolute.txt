@@ -1,0 +1,11 @@
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Domain\bin\Debug\net10.0\AstroBackend.Domain.deps.json
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Domain\bin\Debug\net10.0\AstroBackend.Domain.dll
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Domain\bin\Debug\net10.0\AstroBackend.Domain.pdb
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Domain\obj\Debug\net10.0\AstroBackend.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Domain\obj\Debug\net10.0\AstroBackend.Domain.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Domain\obj\Debug\net10.0\AstroBackend.Domain.AssemblyInfo.cs
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Domain\obj\Debug\net10.0\AstroBackend.Domain.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Domain\obj\Debug\net10.0\AstroBackend.Domain.dll
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Domain\obj\Debug\net10.0\refint\AstroBackend.Domain.dll
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Domain\obj\Debug\net10.0\AstroBackend.Domain.pdb
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Domain\obj\Debug\net10.0\ref\AstroBackend.Domain.dll

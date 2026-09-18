@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "AstroBackend.Application/1.0.0": {
+        "runtime": {
+          "AstroBackend.Application.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AstroBackend.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
