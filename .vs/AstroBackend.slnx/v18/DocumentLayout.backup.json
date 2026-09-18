@@ -3,68 +3,124 @@
   "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\AstroBackend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\interfaces\\security\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\interfaces\\security\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\interfaces\\security\\ipasswordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\interfaces\\security\\ipasswordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\forumreply.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\forumreply.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\interfaces\\repositories\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\interfaces\\repositories\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\forumtopic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\forumtopic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\horoscope.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\horoscope.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\astrology\\astrologyengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\astrology\\astrologyengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\journalentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\journalentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\dtos\\synastrydtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\dtos\\synastrydtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\natalchart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\natalchart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\dtos\\profiledtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\dtos\\profiledtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\profile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\profile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\dtos\\natalchartdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\dtos\\natalchartdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\exceptions\\exceptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\exceptions\\exceptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\dtos\\journaldtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\dtos\\journaldtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\enums\\sessiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\enums\\sessiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\dtos\\horoscopedtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\dtos\\horoscopedtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\enums\\horoscopeperiod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\enums\\horoscopeperiod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\dtos\\forumdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\dtos\\forumdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\enums\\bookingstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\enums\\bookingstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\dtos\\bookingdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\dtos\\bookingdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\enums\\approle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\enums\\approle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\dtos\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\dtos\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\astrologer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\astrologer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.application\\dtos\\astrologerdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE78131-1D80-EC80-3D76-997349AD8AEB}|src\\AstroBackend.Application\\AstroBackend.Application.csproj|solutionrelative:src\\astrobackend.application\\dtos\\astrologerdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\common\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{80CE6173-2BC8-4B33-84E1-C9AE9A9A461E}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\common\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D84A3286-150B-4F59-BB9B-1561E9EA2380}|AstroBackend\\AstroBackend.csproj|c:\\users\\user\\source\\repos\\astrobackend\\astrobackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D84A3286-150B-4F59-BB9B-1561E9EA2380}|AstroBackend\\AstroBackend.csproj|solutionrelative:astrobackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\forumreply.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\forumreply.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\forumtopic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\forumtopic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\horoscope.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\horoscope.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\journalentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\journalentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\natalchart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\natalchart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\profile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\profile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\exceptions\\exceptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\exceptions\\exceptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\enums\\sessiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\enums\\sessiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\enums\\horoscopeperiod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\enums\\horoscopeperiod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\enums\\bookingstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\enums\\bookingstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\enums\\approle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\enums\\approle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\entities\\astrologer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\entities\\astrologer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|c:\\users\\user\\source\\repos\\astrobackend\\src\\astrobackend.domain\\common\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AFDAF396-5FCC-043C-3020-4D0D6D95CB91}|src\\AstroBackend.Domain\\AstroBackend.Domain.csproj|solutionrelative:src\\astrobackend.domain\\common\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F897B61B-8C07-DCFD-E2D1-CB66307BEEE8}|AstroBackend\\AstroBackend.csproj|c:\\users\\user\\source\\repos\\astrobackend\\astrobackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F897B61B-8C07-DCFD-E2D1-CB66307BEEE8}|AstroBackend\\AstroBackend.csproj|solutionrelative:astrobackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,216 +130,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 301,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 4,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Booking.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Booking.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\Booking.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Booking.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\Booking.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T14:06:32.426Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ForumReply.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\ForumReply.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\ForumReply.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\ForumReply.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\ForumReply.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T14:05:55.475Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ForumTopic.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\ForumTopic.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\ForumTopic.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\ForumTopic.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\ForumTopic.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T14:05:13.492Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Horoscope.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Horoscope.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\Horoscope.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Horoscope.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\Horoscope.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T14:04:24.124Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "JournalEntry.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\JournalEntry.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\JournalEntry.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\JournalEntry.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\JournalEntry.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T14:03:41.078Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "NatalChart.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\NatalChart.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\NatalChart.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\NatalChart.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\NatalChart.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T14:02:08.799Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Profile.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Profile.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\Profile.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Profile.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\Profile.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T14:01:12.465Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Exceptions.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Exceptions\\Exceptions.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Exceptions\\Exceptions.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Exceptions\\Exceptions.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Exceptions\\Exceptions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T13:59:48.794Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "SessionType.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\SessionType.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Enums\\SessionType.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\SessionType.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Enums\\SessionType.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T13:59:26.334Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\User.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\User.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\User.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\User.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAIwBQAAABpAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T13:56:24.269Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "HoroscopePeriod.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\HoroscopePeriod.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Enums\\HoroscopePeriod.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\HoroscopePeriod.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Enums\\HoroscopePeriod.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T13:58:55.21Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "BookingStatus.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\BookingStatus.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Enums\\BookingStatus.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\BookingStatus.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Enums\\BookingStatus.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T13:58:28.035Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "AppRole.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\AppRole.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Enums\\AppRole.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\AppRole.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Enums\\AppRole.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T13:57:49.428Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Astrologer.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Astrologer.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\Astrologer.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Astrologer.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\Astrologer.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAA0wAIAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T13:55:40.788Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "BaseEntity.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Common\\BaseEntity.cs",
-              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Common\\BaseEntity.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Common\\BaseEntity.cs",
-              "RelativeToolTip": "src\\AstroBackend.Domain\\Common\\BaseEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T13:54:23.42Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\AstroBackend\\Program.cs",
-              "RelativeDocumentMoniker": "AstroBackend\\Program.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\AstroBackend\\Program.cs",
-              "RelativeToolTip": "AstroBackend\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T13:15:08.246Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
@@ -299,6 +147,380 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ITokenService.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\Interfaces\\Security\\ITokenService.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\Interfaces\\Security\\ITokenService.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\Interfaces\\Security\\ITokenService.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\Interfaces\\Security\\ITokenService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:49:12.845Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IPasswordHasher.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\Interfaces\\Security\\IPasswordHasher.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\Interfaces\\Security\\IPasswordHasher.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\Interfaces\\Security\\IPasswordHasher.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\Interfaces\\Security\\IPasswordHasher.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:47:49.291Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IUnitOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:46:13.812Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:42:59.447Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AstrologyEngine.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\Astrology\\AstrologyEngine.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\Astrology\\AstrologyEngine.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\Astrology\\AstrologyEngine.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\Astrology\\AstrologyEngine.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:39:05.938Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SynastryDtos.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\SynastryDtos.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\DTOs\\SynastryDtos.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\SynastryDtos.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\DTOs\\SynastryDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:38:04.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProfileDtos.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\ProfileDtos.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\DTOs\\ProfileDtos.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\ProfileDtos.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\DTOs\\ProfileDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:37:19.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "NatalChartDtos.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\NatalChartDtos.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\DTOs\\NatalChartDtos.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\NatalChartDtos.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\DTOs\\NatalChartDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:36:27.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "JournalDtos.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\JournalDtos.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\DTOs\\JournalDtos.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\JournalDtos.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\DTOs\\JournalDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:35:42.895Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "HoroscopeDtos.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\HoroscopeDtos.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\DTOs\\HoroscopeDtos.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\HoroscopeDtos.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\DTOs\\HoroscopeDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:35:01.532Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ForumDtos.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\ForumDtos.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\DTOs\\ForumDtos.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\ForumDtos.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\DTOs\\ForumDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:32:42.464Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "BookingDtos.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\BookingDtos.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\DTOs\\BookingDtos.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\BookingDtos.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\DTOs\\BookingDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:32:10.066Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AuthDtos.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\AuthDtos.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\DTOs\\AuthDtos.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\AuthDtos.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\DTOs\\AuthDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:31:14.929Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AstrologerDtos.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\AstrologerDtos.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Application\\DTOs\\AstrologerDtos.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\DTOs\\AstrologerDtos.cs",
+              "RelativeToolTip": "src\\AstroBackend.Application\\DTOs\\AstrologerDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T21:24:31.297Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Booking.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Booking.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\Booking.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Booking.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\Booking.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T14:06:32.426Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ForumReply.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\ForumReply.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\ForumReply.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\ForumReply.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\ForumReply.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T14:05:55.475Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ForumTopic.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\ForumTopic.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\ForumTopic.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\ForumTopic.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\ForumTopic.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T14:05:13.492Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Horoscope.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Horoscope.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\Horoscope.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Horoscope.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\Horoscope.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T14:04:24.124Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "JournalEntry.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\JournalEntry.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\JournalEntry.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\JournalEntry.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\JournalEntry.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T14:03:41.078Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "NatalChart.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\NatalChart.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\NatalChart.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\NatalChart.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\NatalChart.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T14:02:08.799Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Profile.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Profile.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\Profile.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Profile.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\Profile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T14:01:12.465Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Exceptions.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Exceptions\\Exceptions.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Exceptions\\Exceptions.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Exceptions\\Exceptions.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Exceptions\\Exceptions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T13:59:48.794Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "SessionType.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\SessionType.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Enums\\SessionType.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\SessionType.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Enums\\SessionType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T13:59:26.334Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\User.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABpAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T13:56:24.269Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "HoroscopePeriod.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\HoroscopePeriod.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Enums\\HoroscopePeriod.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\HoroscopePeriod.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Enums\\HoroscopePeriod.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T13:58:55.21Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "BookingStatus.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\BookingStatus.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Enums\\BookingStatus.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\BookingStatus.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Enums\\BookingStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T13:58:28.035Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "AppRole.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\AppRole.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Enums\\AppRole.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Enums\\AppRole.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Enums\\AppRole.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T13:57:49.428Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Astrologer.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Astrologer.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Entities\\Astrologer.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Entities\\Astrologer.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Entities\\Astrologer.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA0wAIAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T13:55:40.788Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "BaseEntity.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Common\\BaseEntity.cs",
+              "RelativeDocumentMoniker": "src\\AstroBackend.Domain\\Common\\BaseEntity.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Domain\\Common\\BaseEntity.cs",
+              "RelativeToolTip": "src\\AstroBackend.Domain\\Common\\BaseEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T13:54:23.42Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\AstroBackend\\AstroBackend\\Program.cs",
+              "RelativeDocumentMoniker": "AstroBackend\\Program.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\AstroBackend\\AstroBackend\\Program.cs",
+              "RelativeToolTip": "AstroBackend\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T13:15:08.246Z"
             }
           ]
         }
