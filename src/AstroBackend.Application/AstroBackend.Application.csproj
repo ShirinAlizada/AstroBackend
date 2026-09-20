@@ -30,13 +30,4 @@
     <ProjectReference Include="..\AstroBackend.Domain\AstroBackend.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Astrology\" />
-    <Folder Include="DTOs\" />
-    <Folder Include="Interfaces\Services\" />
-    <Folder Include="Interfaces\Security\" />
-    <Folder Include="Interfaces\Repositories\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
