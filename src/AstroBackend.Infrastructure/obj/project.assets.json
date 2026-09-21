@@ -1388,6 +1388,49 @@
         "build": {
           "buildTransitive/net8.0/_._": {}
         }
+      },
+      "AstroBackend.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "AstroBackend.Domain": "1.0.0",
+          "BCrypt.Net-Next": "4.2.0",
+          "FluentValidation": "12.1.1",
+          "FluentValidation.AspNetCore": "11.3.1",
+          "FluentValidation.DependencyInjectionExtensions": "12.1.1",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.12",
+          "Microsoft.EntityFrameworkCore": "10.0.12",
+          "Microsoft.EntityFrameworkCore.SqlServer": "10.0.12",
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.12",
+          "System.IdentityModel.Tokens.Jwt": "8.22.0"
+        },
+        "compile": {
+          "bin/placeholder/AstroBackend.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AstroBackend.Application.dll": {}
+        }
+      },
+      "AstroBackend.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "BCrypt.Net-Next": "4.2.0",
+          "FluentValidation": "12.1.1",
+          "FluentValidation.AspNetCore": "11.3.1",
+          "FluentValidation.DependencyInjectionExtensions": "12.1.1",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.12",
+          "Microsoft.EntityFrameworkCore": "10.0.12",
+          "Microsoft.EntityFrameworkCore.SqlServer": "10.0.12",
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.12",
+          "System.IdentityModel.Tokens.Jwt": "8.22.0"
+        },
+        "compile": {
+          "bin/placeholder/AstroBackend.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AstroBackend.Domain.dll": {}
+        }
       }
     }
   },
@@ -3950,10 +3993,21 @@
         "system.security.cryptography.protecteddata.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "AstroBackend.Application/1.0.0": {
+      "type": "project",
+      "path": "../AstroBackend.Application/AstroBackend.Application.csproj",
+      "msbuildProject": "../AstroBackend.Application/AstroBackend.Application.csproj"
+    },
+    "AstroBackend.Domain/1.0.0": {
+      "type": "project",
+      "path": "../AstroBackend.Domain/AstroBackend.Domain.csproj",
+      "msbuildProject": "../AstroBackend.Domain/AstroBackend.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "AstroBackend.Application >= 1.0.0",
       "BCrypt.Net-Next >= 4.2.0",
       "FluentValidation >= 12.1.1",
       "FluentValidation.AspNetCore >= 11.3.1",
@@ -3999,7 +4053,11 @@
         "net10.0": {
           "framework": "net10.0",
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\AstroBackend.Application.csproj": {
+              "projectPath": "C:\\Users\\User\\source\\repos\\AstroBackend\\src\\AstroBackend.Application\\AstroBackend.Application.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

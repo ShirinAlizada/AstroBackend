@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AstroBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6bdb62f8536fbf76ead4828bb75db6c3c81976f7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56e1d76002894f27d2525fa5ac67dd4f0d8d72d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("AstroBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AstroBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

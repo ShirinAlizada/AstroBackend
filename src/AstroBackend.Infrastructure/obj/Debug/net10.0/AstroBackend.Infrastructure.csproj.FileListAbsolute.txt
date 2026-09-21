@@ -9,3 +9,7 @@ C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Infrastructure\obj\Debu
 C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Infrastructure\obj\Debug\net10.0\refint\AstroBackend.Infrastructure.dll
 C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Infrastructure\obj\Debug\net10.0\AstroBackend.Infrastructure.pdb
 C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Infrastructure\obj\Debug\net10.0\ref\AstroBackend.Infrastructure.dll
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Infrastructure\bin\Debug\net10.0\AstroBackend.Infrastructure.runtimeconfig.json
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Infrastructure\obj\Debug\net10.0\AstroBackend.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Infrastructure\obj\Debug\net10.0\AstroBackend.Infrastructure.sourcelink.json
+C:\Users\User\source\repos\AstroBackend\src\AstroBackend.Infrastructure\obj\Debug\net10.0\AstroBackend.Infrastructure.genruntimeconfig.cache
