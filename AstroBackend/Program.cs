@@ -76,7 +76,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Virgo Astrology API v1");
-    c.RoutePrefix = string.Empty; // Serves Swagger UI at root (http://localhost:5000/)
+    c.RoutePrefix = string.Empty; // Serves Swagger UI at root 
 });
 
 // 9. CORS & Security Pipeline
