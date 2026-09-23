@@ -21,8 +21,8 @@ namespace AstroBackend.Infrastructure.Services
         public string GenerateAccessToken(User user)
         {
             var secret = _configuration["JwtSettings:Secret"] ?? "SuperSecretKeyForDestinyReadsAppAstrologyPlatform2026";
-            var issuer = _configuration["JwtSettings:Issuer"] ?? "AstroBackendAPI";
-            var audience = _configuration["JwtSettings:Audience"] ?? "AstroBackendClient";
+            var issuer = _configuration["JwtSettings:Issuer"] ?? "VirgoAstrologyAPI";
+            var audience = _configuration["JwtSettings:Audience"] ?? "VirgoAstrologyClient";
             var expireMinutes = int.TryParse(_configuration["JwtSettings:ExpiryMinutes"], out var exp) ? exp : 60;
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
@@ -33,7 +33,9 @@ namespace AstroBackend.Infrastructure.Services
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Email, user.Email),
             new(ClaimTypes.Name, user.FullName),
-            new(ClaimTypes.Role, user.Role.ToString())
+            new(ClaimTypes.Role, user.Role.ToString()),
+             new("role", user.Role.ToString()),
+            new("role", user.Role.ToString().ToLower())
         };
 
             var token = new JwtSecurityToken(

@@ -16,6 +16,9 @@ namespace AstroBackend.Infrastructure.Persistence
         public DbSet<JournalEntry> JournalEntries => Set<JournalEntry>();
         public DbSet<ForumTopic> ForumTopics => Set<ForumTopic>();
         public DbSet<ForumReply> ForumReplies => Set<ForumReply>();
+        public DbSet<Article> Articles => Set<Article>();
+        public DbSet<ChatThread> ChatThreads => Set<ChatThread>();
+        public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -125,7 +128,50 @@ namespace AstroBackend.Infrastructure.Persistence
                       .HasForeignKey(r => r.UserId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+
+            // Article
+            modelBuilder.Entity<Article>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+                entity.HasIndex(a => a.Slug).IsUnique();
+                entity.Property(a => a.Title).HasMaxLength(255).IsRequired();
+                entity.Property(a => a.Slug).HasMaxLength(255).IsRequired();
+
+                entity.HasOne(a => a.Author)
+                      .WithMany(u => u.Articles)
+                      .HasForeignKey(a => a.AuthorId)
+                      .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            // ChatThread
+            modelBuilder.Entity<ChatThread>(entity =>
+            {
+                entity.HasKey(t => t.Id);
+                entity.Property(t => t.Title).HasMaxLength(150).IsRequired();
+
+                entity.HasOne(t => t.User)
+                      .WithMany(u => u.ChatThreads)
+                      .HasForeignKey(t => t.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // ChatMessage
+            modelBuilder.Entity<ChatMessage>(entity =>
+            {
+                entity.HasKey(m => m.Id);
+
+                entity.HasOne(m => m.Thread)
+                      .WithMany(t => t.Messages)
+                      .HasForeignKey(m => m.ThreadId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(m => m.User)
+                      .WithMany(u => u.ChatMessages)
+                      .HasForeignKey(m => m.UserId)
+                      .OnDelete(DeleteBehavior.NoAction);
+            });
         }
     }
+
 
 }
