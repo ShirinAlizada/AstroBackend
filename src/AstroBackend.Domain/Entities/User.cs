@@ -21,5 +21,9 @@ namespace AstroBackend.Domain.Entities
         public virtual ICollection<JournalEntry> JournalEntries { get; set; } = new List<JournalEntry>();
         public virtual ICollection<ForumTopic> ForumTopics { get; set; } = new List<ForumTopic>();
         public virtual ICollection<ForumReply> ForumReplies { get; set; } = new List<ForumReply>();
+        public virtual ICollection<Article> Articles { get; set; } = new List<Article>();
+        public virtual ICollection<ChatThread> ChatThreads { get; set; } = new List<ChatThread>();
+        public virtual ICollection<ChatMessage> ChatMessages { get; set; } = new List<ChatMessage>();
     }
+
 }

@@ -4,6 +4,7 @@
     {
         User = 0,
         Astrologer = 1,
-        Admin = 2
+        Admin = 2,
+        SuperAdmin = 3
     }
 }
