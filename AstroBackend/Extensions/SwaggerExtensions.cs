@@ -18,11 +18,12 @@ namespace AstroBackend.Extensions
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization başlığı 'Bearer' sxemindən istifadə edir. Nümunə: 'Bearer 12345abcdef'",
                     Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
+                    Description = "Login etdikdən sonra aldığınız AccessToken-i bura yapışdırın (Bearer yazmağa ehtiyac yoxdur)."
                 });
 
                 c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
