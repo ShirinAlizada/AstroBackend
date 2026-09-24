@@ -79,9 +79,42 @@ public interface IForumService
     Task DeleteReplyAsync(Guid replyId, Guid userId, bool isAdmin, CancellationToken ct = default);
 }
 
+public interface IArticleService
+{
+    Task<IReadOnlyList<ArticleDto>> GetPublishedArticlesAsync(string? tag, string? search, string? sort, CancellationToken ct = default);
+    Task<ArticleDto> GetArticleBySlugAsync(string slug, CancellationToken ct = default);
+    Task IncrementViewsAsync(string slug, CancellationToken ct = default);
+    Task<IReadOnlyList<ArticleDto>> AdminGetAllArticlesAsync(CancellationToken ct = default);
+    Task<ArticleDto> AdminCreateArticleAsync(Guid? authorId, CreateArticleRequest request, CancellationToken ct = default);
+    Task<ArticleDto> AdminUpdateArticleAsync(Guid id, UpdateArticleRequest request, CancellationToken ct = default);
+    Task AdminDeleteArticleAsync(Guid id, CancellationToken ct = default);
+    Task AdminPublishArticleAsync(Guid id, bool publish, CancellationToken ct = default);
+}
+
+public interface IChatService
+{
+    Task<IReadOnlyList<ChatThreadDto>> GetThreadsAsync(Guid userId, CancellationToken ct = default);
+    Task<ChatThreadDto> CreateThreadAsync(Guid userId, CreateThreadRequest request, CancellationToken ct = default);
+    Task DeleteThreadAsync(Guid threadId, Guid userId, CancellationToken ct = default);
+    Task<IReadOnlyList<ChatMessageDto>> GetMessagesAsync(Guid threadId, Guid userId, CancellationToken ct = default);
+    Task<ChatMessageDto> SendMessageAsync(Guid threadId, Guid userId, SendMessageRequest request, CancellationToken ct = default);
+}
+
+public interface INumerologyService
+{
+    NumerologyResponse Calculate(NumerologyRequest request);
+}
+
+public interface IPanchangService
+{
+    PanchangResponse GetPanchang(PanchangRequest request);
+}
+
 public interface IAdminService
 {
     Task<IReadOnlyList<AdminUserDto>> GetAllUsersAsync(CancellationToken ct = default);
-    Task UpdateUserRoleAsync(Guid userId, string role, CancellationToken ct = default);
+    Task UpdateUserRoleAsync(Guid targetUserId, string role, Guid currentUserId, bool isSuperAdmin, CancellationToken ct = default);
     Task ToggleUserActiveStatusAsync(Guid userId, CancellationToken ct = default);
+    Task<AdminUserDto> CreateUserAsync(RegisterRequest request, string role, Guid currentUserId, bool isSuperAdmin, CancellationToken ct = default);
+    Task DeleteUserAsync(Guid targetUserId, Guid currentUserId, bool isSuperAdmin, CancellationToken ct = default);
 }
