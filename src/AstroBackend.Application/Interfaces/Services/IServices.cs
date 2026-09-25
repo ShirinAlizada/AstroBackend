@@ -89,6 +89,7 @@ public interface IArticleService
     Task<ArticleDto> AdminUpdateArticleAsync(Guid id, UpdateArticleRequest request, CancellationToken ct = default);
     Task AdminDeleteArticleAsync(Guid id, CancellationToken ct = default);
     Task AdminPublishArticleAsync(Guid id, bool publish, CancellationToken ct = default);
+    Task<AiArticleResultDto> GenerateArticleWithAiAsync(GenerateArticleAiRequest request, CancellationToken ct = default);
 }
 
 public interface IChatService
@@ -117,4 +118,10 @@ public interface IAdminService
     Task ToggleUserActiveStatusAsync(Guid userId, CancellationToken ct = default);
     Task<AdminUserDto> CreateUserAsync(RegisterRequest request, string role, Guid currentUserId, bool isSuperAdmin, CancellationToken ct = default);
     Task DeleteUserAsync(Guid targetUserId, Guid currentUserId, bool isSuperAdmin, CancellationToken ct = default);
+}
+
+public interface IAIService
+{
+    Task<string> GenerateTextAsync(string systemPrompt, List<AiTurnDto> messages, CancellationToken ct = default);
+    IAsyncEnumerable<string> StreamTextAsync(string systemPrompt, List<AiTurnDto> messages, CancellationToken ct = default);
 }

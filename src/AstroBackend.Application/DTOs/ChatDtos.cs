@@ -26,4 +26,14 @@ namespace AstroBackend.Application.DTOs
         string Message
     );
 
+    public record AiTurnDto(
+        string Role, // "user" or "assistant"
+        string Content
+    );
+
+    public record DirectAiRequest(
+        string? Mode, // "chat" or "article"
+        List<AiTurnDto>? Messages
+    );
+
 }

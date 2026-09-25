@@ -17,6 +17,10 @@ public static class ServiceRegistration
         services.AddScoped<IBookingService, BookingService>();
         services.AddScoped<IJournalService, JournalService>();
         services.AddScoped<IForumService, ForumService>();
+        services.AddScoped<IArticleService, ArticleService>();
+        services.AddScoped<IChatService, ChatService>();
+        services.AddScoped<INumerologyService, NumerologyService>();
+        services.AddScoped<IPanchangService, PanchangService>();
         services.AddScoped<IAdminService, AdminService>();
 
         return services;
