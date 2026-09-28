@@ -1,5 +1,6 @@
 ﻿using AstroBackend.Application.Interfaces.Repositories;
 using AstroBackend.Application.Interfaces.Security;
+using AstroBackend.Application.Interfaces.Services;
 using AstroBackend.Infrastructure.Persistence;
 using AstroBackend.Infrastructure.Persistence.Repositories;
 using AstroBackend.Infrastructure.Services;
@@ -22,6 +23,9 @@ namespace AstroBackend.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPasswordHasher, PasswordHasherService>();
             services.AddScoped<ITokenService, JwtTokenService>();
+
+            // AI Service HTTP Client Registration
+            services.AddHttpClient<IAIService, GeminiAIService>();
 
             return services;
         }
