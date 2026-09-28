@@ -1,11 +1,12 @@
 ﻿using AstroBackend.Application.DTOs;
 using AstroBackend.Application.Interfaces.Services;
+using AstroBackend.Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AstroBackend.Controllers;
 
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin,SuperAdmin")]
 public class AdminController : BaseApiController
 {
     private readonly IAdminService _adminService;
@@ -13,21 +14,31 @@ public class AdminController : BaseApiController
     private readonly IBookingService _bookingService;
     private readonly IHoroscopeService _horoscopeService;
     private readonly IForumService _forumService;
+    private readonly IArticleService _articleService;
+    private readonly ICurrentUserService _currentUserService;
 
     public AdminController(
         IAdminService adminService,
         IAstrologerService astrologerService,
         IBookingService bookingService,
         IHoroscopeService horoscopeService,
-        IForumService forumService)
+        IForumService forumService,
+        IArticleService articleService,
+        ICurrentUserService currentUserService)
     {
         _adminService = adminService;
         _astrologerService = astrologerService;
         _bookingService = bookingService;
         _horoscopeService = horoscopeService;
         _forumService = forumService;
+        _articleService = articleService;
+        _currentUserService = currentUserService;
     }
 
+    private bool IsSuperAdmin => _currentUserService.Role?.Equals("SuperAdmin", StringComparison.OrdinalIgnoreCase) ?? false;
+    private Guid CurrentUserId => _currentUserService.UserId ?? throw new UnauthorizedException("Giriş edilməyib.");
+
+    // --- USERS MANAGEMENT ---
     [HttpGet("users")]
     public async Task<ActionResult<IReadOnlyList<AdminUserDto>>> GetAllUsers(CancellationToken ct)
     {
@@ -35,10 +46,24 @@ public class AdminController : BaseApiController
         return Ok(users);
     }
 
+    [HttpPost("users")]
+    public async Task<ActionResult<AdminUserDto>> CreateUser([FromBody] RegisterRequest request, [FromQuery] string role = "user", CancellationToken ct = default)
+    {
+        var user = await _adminService.CreateUserAsync(request, role, CurrentUserId, IsSuperAdmin, ct);
+        return Ok(user);
+    }
+
+    [HttpDelete("users/{id:guid}")]
+    public async Task<IActionResult> DeleteUser(Guid id, CancellationToken ct)
+    {
+        await _adminService.DeleteUserAsync(id, CurrentUserId, IsSuperAdmin, ct);
+        return Ok(new { message = "İstifadəçi silindi." });
+    }
+
     [HttpPatch("users/{id:guid}/role")]
     public async Task<IActionResult> UpdateRole(Guid id, [FromQuery] string role, CancellationToken ct)
     {
-        await _adminService.UpdateUserRoleAsync(id, role, ct);
+        await _adminService.UpdateUserRoleAsync(id, role, CurrentUserId, IsSuperAdmin, ct);
         return Ok(new { message = "İstifadəçi rolu yeniləndi." });
     }
 
@@ -49,6 +74,50 @@ public class AdminController : BaseApiController
         return Ok(new { message = "İstifadəçi statusu dəyişdirildi." });
     }
 
+    // --- ARTICLES (QƏZET) MANAGEMENT ---
+    [HttpGet("articles")]
+    public async Task<ActionResult<IReadOnlyList<ArticleDto>>> GetAllArticles(CancellationToken ct)
+    {
+        var list = await _articleService.AdminGetAllArticlesAsync(ct);
+        return Ok(list);
+    }
+
+    [HttpPost("articles")]
+    public async Task<ActionResult<ArticleDto>> CreateArticle([FromBody] CreateArticleRequest request, CancellationToken ct)
+    {
+        var created = await _articleService.AdminCreateArticleAsync(CurrentUserId, request, ct);
+        return Ok(created);
+    }
+
+    [HttpPost("articles/generate-ai")]
+    public async Task<ActionResult<AiArticleResultDto>> GenerateAiArticle([FromBody] GenerateArticleAiRequest request, CancellationToken ct)
+    {
+        var result = await _articleService.GenerateArticleWithAiAsync(request, ct);
+        return Ok(result);
+    }
+
+    [HttpPut("articles/{id:guid}")]
+    public async Task<ActionResult<ArticleDto>> UpdateArticle(Guid id, [FromBody] UpdateArticleRequest request, CancellationToken ct)
+    {
+        var updated = await _articleService.AdminUpdateArticleAsync(id, request, ct);
+        return Ok(updated);
+    }
+
+    [HttpDelete("articles/{id:guid}")]
+    public async Task<IActionResult> DeleteArticle(Guid id, CancellationToken ct)
+    {
+        await _articleService.AdminDeleteArticleAsync(id, ct);
+        return Ok(new { message = "Məqalə silindi." });
+    }
+
+    [HttpPatch("articles/{id:guid}/publish")]
+    public async Task<IActionResult> PublishArticle(Guid id, [FromQuery] bool publish, CancellationToken ct)
+    {
+        await _articleService.AdminPublishArticleAsync(id, publish, ct);
+        return Ok(new { message = $"Məqalə statusu: {(publish ? "Dərc olundu" : "Qaralama")}." });
+    }
+
+    // --- ASTROLOGERS MANAGEMENT ---
     [HttpGet("astrologers")]
     public async Task<ActionResult<IReadOnlyList<AstrologerDto>>> GetAllAstrologers(CancellationToken ct)
     {
@@ -84,6 +153,7 @@ public class AdminController : BaseApiController
         return Ok(new { message = "Astroloq silindi." });
     }
 
+    // --- BOOKINGS MANAGEMENT ---
     [HttpGet("bookings")]
     public async Task<ActionResult<IReadOnlyList<BookingDto>>> GetAllBookings(CancellationToken ct)
     {
@@ -91,6 +161,7 @@ public class AdminController : BaseApiController
         return Ok(list);
     }
 
+    // --- HOROSCOPES MANAGEMENT ---
     [HttpPost("horoscopes")]
     public async Task<ActionResult<HoroscopeDto>> CreateHoroscope([FromBody] CreateHoroscopeRequest request, CancellationToken ct)
     {
@@ -112,6 +183,7 @@ public class AdminController : BaseApiController
         return Ok(new { message = "Horoskop silindi." });
     }
 
+    // --- FORUM MODERATION ---
     [HttpPatch("forum/topics/{id:guid}/hide")]
     public async Task<IActionResult> SetTopicHidden(Guid id, [FromQuery] bool isHidden, CancellationToken ct)
     {

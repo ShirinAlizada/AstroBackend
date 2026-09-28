@@ -1,15 +1,16 @@
-using System.Text;
-using AstroBackend.Services;
-using AstroBackend.Extensions;
 using AstroBackend.Application;
-using AstroBackend.Middlewares;
-using AstroBackend.Infrastructure;
-using Microsoft.IdentityModel.Tokens;
-using AstroBackend.Infrastructure.Persistence;
-using AstroBackend.Application.Interfaces.Services;
-using AstroBackend.Infrastructure.Persistence.SeedData;
 using AstroBackend.Application.Interfaces.Security;
+using AstroBackend.Application.Interfaces.Services;
+using AstroBackend.Extensions;
+using AstroBackend.Infrastructure;
+using AstroBackend.Infrastructure.Persistence;
+using AstroBackend.Infrastructure.Persistence.SeedData;
+using AstroBackend.Middlewares;
+using AstroBackend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +22,11 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-// 3. JWT Authentication
+// 3. JWT Authentication & Role Configuration
 var jwtSecret = builder.Configuration["JwtSettings:Secret"] ?? "SuperSecretKeyForDestinyReadsAppAstrologyPlatform2026!@#$%^&*()_+";
+var jwtIssuer = builder.Configuration["JwtSettings:Issuer"] ?? "VirgoAstrologyAPI";
+var jwtAudience = builder.Configuration["JwtSettings:Audience"] ?? "VirgoAstrologyClient";
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -36,9 +40,11 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["JwtSettings:Issuer"] ?? "DestinyReadsAPI",
-        ValidAudience = builder.Configuration["JwtSettings:Audience"] ?? "DestinyReadsClient",
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret)),
+        RoleClaimType = ClaimTypes.Role,
+        NameClaimType = ClaimTypes.NameIdentifier,
         ClockSkew = TimeSpan.Zero
     };
 });
@@ -75,8 +81,8 @@ app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Virgo Astrology API v1");
-    c.RoutePrefix = string.Empty; // Serves Swagger UI at root 
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Destiny Reads API v1");
+    c.RoutePrefix = string.Empty; // Serves Swagger UI at root
 });
 
 // 9. CORS & Security Pipeline
@@ -103,3 +109,4 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+
