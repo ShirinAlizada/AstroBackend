@@ -2,19 +2,19 @@
 namespace AstroBackend.Application.DTOs
 {
     public record ArticleDto(
-    Guid Id,
-    Guid? AuthorId,
-    string Title,
-    string Slug,
-    string? Excerpt,
-    string Body,
-    string Tag,
-    string? CoverUrl,
-    bool Published,
-    DateTime? PublishedAt,
-    int Views,
-    DateTime CreatedAt
-);
+     Guid Id,
+     Guid? AuthorId,
+     string Title,
+     string Slug,
+     string? Excerpt,
+     string Body,
+     string Tag,
+     string? CoverUrl,
+     bool Published,
+     DateTime? PublishedAt,
+     int Views,
+     DateTime CreatedAt
+ );
 
     public record CreateArticleRequest(
         string Title,
@@ -34,6 +34,18 @@ namespace AstroBackend.Application.DTOs
         string Tag,
         string? CoverUrl,
         bool Published
+    );
+
+    public record GenerateArticleAiRequest(
+        string Topic,
+        string? Tag = null
+    );
+
+    public record AiArticleResultDto(
+        string Title,
+        string Excerpt,
+        string Body,
+        string Tag
     );
 
 }

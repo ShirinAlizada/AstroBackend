@@ -9,11 +9,24 @@ namespace AstroBackend.Application.Services
     public class ArticleService : IArticleService
     {
         private readonly IGenericRepository<Article> _articleRepo;
+        private readonly IAIService _aiService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ArticleService(IGenericRepository<Article> articleRepo, IUnitOfWork unitOfWork)
+        public const string ArticleSystemPrompt = @"Sən ""Virgo Astrology"" platformasının Məqalələr bölməsi üçün redaktorsan.
+Verilən mövzuda Azərbaycan dilində məqalə yazırsan.
+Cavabı tam olaraq bu formatda ver, başqa heç nə yazma:
+BAŞLIQ: <cəlbedici başlıq>
+XÜLASƏ: <bir cümləlik anons>
+MƏTN:
+<4-6 abzaslıq məqalə mətni>";
+
+        public ArticleService(
+            IGenericRepository<Article> articleRepo,
+            IAIService aiService,
+            IUnitOfWork unitOfWork)
         {
             _articleRepo = articleRepo;
+            _aiService = aiService;
             _unitOfWork = unitOfWork;
         }
 
@@ -137,6 +150,57 @@ namespace AstroBackend.Application.Services
             await _unitOfWork.SaveChangesAsync(ct);
         }
 
+        public async Task<AiArticleResultDto> GenerateArticleWithAiAsync(GenerateArticleAiRequest request, CancellationToken ct = default)
+        {
+            var userTurn = new List<AiTurnDto>
+        {
+            new("user", $"Mövzu: {request.Topic}. Kateqoriya/Teq: {request.Tag ?? "ümumi"}.")
+        };
+
+            string aiOutput = await _aiService.GenerateTextAsync(ArticleSystemPrompt, userTurn, ct);
+
+            string title = request.Topic;
+            string excerpt = "Astroloji bələdçi və daxili kəşf.";
+            string body = aiOutput;
+
+            // Parse formatted response
+            var lines = aiOutput.Split('\n');
+            string currentSection = "";
+            var bodyLines = new List<string>();
+
+            foreach (var line in lines)
+            {
+                var trimmed = line.Trim();
+                if (trimmed.StartsWith("BAŞLIQ:", StringComparison.OrdinalIgnoreCase))
+                {
+                    title = trimmed["BAŞLIQ:".Length..].Trim();
+                }
+                else if (trimmed.StartsWith("XÜLASƏ:", StringComparison.OrdinalIgnoreCase))
+                {
+                    excerpt = trimmed["XÜLASƏ:".Length..].Trim();
+                }
+                else if (trimmed.StartsWith("MƏTN:", StringComparison.OrdinalIgnoreCase))
+                {
+                    currentSection = "body";
+                }
+                else if (currentSection == "body")
+                {
+                    bodyLines.Add(line);
+                }
+                else if (!trimmed.StartsWith("BAŞLIQ:", StringComparison.OrdinalIgnoreCase) && !trimmed.StartsWith("XÜLASƏ:", StringComparison.OrdinalIgnoreCase))
+                {
+                    bodyLines.Add(line);
+                }
+            }
+
+            if (bodyLines.Count > 0)
+            {
+                body = string.Join("\n", bodyLines).Trim();
+            }
+
+            return new AiArticleResultDto(title, excerpt, body, request.Tag ?? "ümumi");
+        }
+
         private static string GenerateSlug(string text)
         {
             var str = text.ToLower()
@@ -164,5 +228,6 @@ namespace AstroBackend.Application.Services
             a.CreatedAt
         );
     }
+
 
 }

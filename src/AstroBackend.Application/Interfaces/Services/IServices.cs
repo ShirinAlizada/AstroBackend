@@ -26,6 +26,9 @@ public interface INatalChartService
 public interface ISynastryService
 {
     SynastryResponse CalculateCompatibility(SynastryRequest request);
+
+    /// <summary>Tam natal xəritəyə əsaslanan (yalnız Günəş bürcü deyil) uyğunluq hesablaması.</summary>
+    Task<SynastryResponse> CalculateFromChartsAsync(SynastryChartRequest request, Guid? currentUserId, CancellationToken ct = default);
 }
 
 public interface IHoroscopeService

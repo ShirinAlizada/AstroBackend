@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AstroBackend.Application.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -89,4 +90,5 @@ namespace AstroBackend.Application.Astrology
             return new NumerologyResponse(lifePath, destiny, soulUrge, personality, birthday, details);
         }
     }
+
 }

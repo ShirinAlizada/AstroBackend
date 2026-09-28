@@ -52,7 +52,7 @@ public class ProfileService : IProfileService
             var chart = AstrologyEngine.ComputeNatalChart(profile.BirthDate, profile.BirthTime ?? "12:00", profile.BirthLat ?? 40.4093, profile.BirthLon ?? 49.8671);
             profile.SunSign = chart.Sun;
             profile.MoonSign = chart.Moon;
-            profile.Ascendant = chart.Ascendant;
+            profile.Ascendant = chart.Ascendant.Sign;
         }
 
         profile.UpdatedAt = DateTime.UtcNow;

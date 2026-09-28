@@ -2,9 +2,9 @@
 namespace AstroBackend.Application.DTOs
 {
     public record NumerologyRequest(
-     string FullName,
-     string BirthDate // YYYY-MM-DD
- );
+    string FullName,
+    string BirthDate // YYYY-MM-DD
+);
 
     public record NumerologyItemDto(
         int Number,

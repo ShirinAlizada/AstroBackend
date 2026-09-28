@@ -11,17 +11,27 @@ namespace AstroBackend.Application.Services
         private readonly IGenericRepository<ChatThread> _threadRepo;
         private readonly IGenericRepository<ChatMessage> _messageRepo;
         private readonly IGenericRepository<Profile> _profileRepo;
+        private readonly IAIService _aiService;
         private readonly IUnitOfWork _unitOfWork;
+
+        public const string AstrologerSystemPrompt = @"Sən ""Virgo Astrology"" platformasının AI astroloq köməkçisisən.
+Azərbaycan dilində, isti və aydın danışırsan.
+Bürclər, doğum xəritəsi, tranzitlər, uyğunluq və ay fazaları haqqında izah verirsən.
+Cavabların qısa (maksimum 200 söz), səmimi və praktik olsun; markdown başlıq və siyahılardan istifadə edə bilərsən.
+Tibbi, hüquqi və maliyyə məsləhəti vermirsən, belə suallarda mütəxəssisə yönləndirirsən.
+Astrologiyanın elmi sübut deyil, özünü dərk vasitəsi olduğunu lazım gələndə xatırladırsan.";
 
         public ChatService(
             IGenericRepository<ChatThread> threadRepo,
             IGenericRepository<ChatMessage> messageRepo,
             IGenericRepository<Profile> profileRepo,
+            IAIService aiService,
             IUnitOfWork unitOfWork)
         {
             _threadRepo = threadRepo;
             _messageRepo = messageRepo;
             _profileRepo = profileRepo;
+            _aiService = aiService;
             _unitOfWork = unitOfWork;
         }
 
@@ -85,11 +95,25 @@ namespace AstroBackend.Application.Services
             };
             await _messageRepo.AddAsync(userMsg, ct);
 
-            // 2. Generate Astrological AI Assistant response
-            var profile = await _profileRepo.FirstOrDefaultAsync(p => p.UserId == userId, ct);
-            string sunSign = profile?.SunSign ?? "Bürcünüz";
+            // 2. Fetch thread history for context
+            var history = _messageRepo.Query()
+                .Where(m => m.ThreadId == threadId)
+                .OrderBy(m => m.CreatedAt)
+                .Take(20)
+                .ToList();
 
-            string replyText = GenerateAstrologicalReply(request.Message, sunSign, profile?.FullName);
+            var aiTurns = history.Select(m => new AiTurnDto(m.Role, m.Content)).ToList();
+            aiTurns.Add(new AiTurnDto("user", request.Message));
+
+            var profile = await _profileRepo.FirstOrDefaultAsync(p => p.UserId == userId, ct);
+            string profileContext = profile != null
+                ? $"\nİstifadəçi məlumatları: Ad: {profile.FullName}, Günəş bürcü: {profile.SunSign ?? "Məlum deyil"}, Ay bürcü: {profile.MoonSign ?? "Məlum deyil"}, Yüksələn: {profile.Ascendant ?? "Məlum deyil"}."
+                : "";
+
+            string fullSystemPrompt = AstrologerSystemPrompt + profileContext;
+
+            // 3. Generate response via IAIService (Gemini with rule-based fallback)
+            string replyText = await _aiService.GenerateTextAsync(fullSystemPrompt, aiTurns, ct);
 
             var assistantMsg = new ChatMessage
             {
@@ -112,27 +136,7 @@ namespace AstroBackend.Application.Services
 
             return new ChatMessageDto(assistantMsg.Id, assistantMsg.ThreadId, assistantMsg.UserId, assistantMsg.Role, assistantMsg.Content, assistantMsg.CreatedAt);
         }
-
-        private static string GenerateAstrologicalReply(string userQuestion, string sunSign, string? name)
-        {
-            var q = userQuestion.ToLower();
-            string intro = string.IsNullOrWhiteSpace(name) ? $"Səlam səmavi axtarışçı ({sunSign})" : $"Salam, {name} ({sunSign} bürcü)";
-
-            if (q.Contains("retroqrad") || q.Contains("retro"))
-            {
-                return $"{intro}! Planetlərin retroqrad hərəkəti həyatı dayandırmaq deyil, daxilə baxmaq və keçmiş planları yenidən nəzərdən keçirmək üçün bir fürsətdir. Bu dövrdə tələsik qərarlar əvəzinə yarımçıq qalmış işləri yekunlaşdırmaq sizə böyük xeyir gətirəcəkdir.";
-            }
-            if (q.Contains("uyğunluq") || q.Contains("sevgi") || q.Contains("münasibət"))
-            {
-                return $"{intro}, münasibətlərdə ən vacib amil təkcə Günəş bürcü deyil, həm də Venera və Ay yerləşmələridir. Əgər bir-birinizin emosional ehtiyaclarına diqqət yetirsəniz və hisslərinizi açıq ifadə etsəniz, səmavi ahəng münasibətinizdə çiçəklənəcəkdir.";
-            }
-            if (q.Contains("karyera") || q.Contains("iş") || q.Contains("pul") || q.Contains("maliyyə"))
-            {
-                return $"{intro}, Saturn və Yupiterin hazırkı tranzitləri zəhmətkeşlik və nizam tələb edir. Bu ərəfədə başladığınız strateji addımlar uzunmüddətli maddi sabitlik və möhkəm təməl vəd edir.";
-            }
-
-            return $"{intro}. Səma xəritəniz göstərir ki, hazırkı dövrdə intuisiyanıza güvənmək və daxili harmoniyanı qorumaq ən doğru yoldur. Ulduzlar sizə bələdçilik edir, lakin seçimlər hər zaman sizin iradənizdən asılıdır. Əlavə olaraq natal xəritəniz üzrə hansı sahəni dərindən araşdırmaq istərdiniz?";
-        }
     }
+
 
 }
