@@ -19,6 +19,9 @@ namespace AstroBackend.Infrastructure.Persistence
         public DbSet<Article> Articles => Set<Article>();
         public DbSet<ChatThread> ChatThreads => Set<ChatThread>();
         public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
+        public DbSet<ShopProduct> ShopProducts => Set<ShopProduct>();
+        public DbSet<ShopOrder> ShopOrders => Set<ShopOrder>();
+        public DbSet<ShopOrderItem> ShopOrderItems => Set<ShopOrderItem>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -170,8 +173,56 @@ namespace AstroBackend.Infrastructure.Persistence
                       .HasForeignKey(m => m.UserId)
                       .OnDelete(DeleteBehavior.NoAction);
             });
+
+            // ShopProduct
+            modelBuilder.Entity<ShopProduct>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.HasIndex(p => p.Slug).IsUnique();
+                entity.Property(p => p.Slug).HasMaxLength(120).IsRequired();
+                entity.Property(p => p.Name).HasMaxLength(200).IsRequired();
+                entity.Property(p => p.NameEn).HasMaxLength(200);
+                entity.Property(p => p.NameRu).HasMaxLength(200);
+                entity.Property(p => p.Description).HasMaxLength(2000).IsRequired();
+                entity.Property(p => p.DescriptionEn).HasMaxLength(2000);
+                entity.Property(p => p.DescriptionRu).HasMaxLength(2000);
+                entity.Property(p => p.UnitLabel).HasMaxLength(50);
+                entity.Property(p => p.ImageUrl).HasMaxLength(500);
+            });
+
+            // ShopOrder
+            modelBuilder.Entity<ShopOrder>(entity =>
+            {
+                entity.HasKey(o => o.Id);
+                entity.Property(o => o.FullName).HasMaxLength(150).IsRequired();
+                entity.Property(o => o.Phone).HasMaxLength(50).IsRequired();
+                entity.Property(o => o.Address).HasMaxLength(500).IsRequired();
+
+                entity.HasOne(o => o.User)
+                      .WithMany(u => u.ShopOrders)
+                      .HasForeignKey(o => o.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // ShopOrderItem
+            modelBuilder.Entity<ShopOrderItem>(entity =>
+            {
+                entity.HasKey(i => i.Id);
+                entity.Property(i => i.ProductName).HasMaxLength(200).IsRequired();
+
+                entity.HasOne(i => i.Order)
+                      .WithMany(o => o.Items)
+                      .HasForeignKey(i => i.OrderId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(i => i.Product)
+                      .WithMany(p => p.OrderItems)
+                      .HasForeignKey(i => i.ProductId)
+                      .OnDelete(DeleteBehavior.SetNull);
+            });
         }
     }
+
 
 
 }
