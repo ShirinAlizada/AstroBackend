@@ -128,3 +128,16 @@ public interface IAIService
     Task<string> GenerateTextAsync(string systemPrompt, List<AiTurnDto> messages, CancellationToken ct = default);
     IAsyncEnumerable<string> StreamTextAsync(string systemPrompt, List<AiTurnDto> messages, CancellationToken ct = default);
 }
+
+public interface IShopService
+{
+    Task<IReadOnlyList<ShopProductDto>> GetActiveProductsAsync(CancellationToken ct = default);
+    Task<IReadOnlyList<ShopProductDto>> GetAllProductsAsync(CancellationToken ct = default);
+    Task<ShopProductDto> CreateProductAsync(CreateShopProductRequest request, CancellationToken ct = default);
+    Task<ShopProductDto> UpdateProductAsync(Guid id, UpdateShopProductRequest request, CancellationToken ct = default);
+    Task DeleteProductAsync(Guid id, CancellationToken ct = default);
+    Task<ShopOrderDto> PlaceOrderAsync(Guid userId, PlaceShopOrderRequest request, CancellationToken ct = default);
+    Task<IReadOnlyList<ShopOrderDto>> GetMyOrdersAsync(Guid userId, CancellationToken ct = default);
+    Task<IReadOnlyList<ShopOrderDto>> GetAllOrdersAsync(CancellationToken ct = default);
+    Task<ShopOrderDto> UpdateOrderStatusAsync(Guid orderId, string status, CancellationToken ct = default);
+}

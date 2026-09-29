@@ -22,6 +22,8 @@ public static class ServiceRegistration
         services.AddScoped<INumerologyService, NumerologyService>();
         services.AddScoped<IPanchangService, PanchangService>();
         services.AddScoped<IAdminService, AdminService>();
+        services.AddScoped<IShopService, ShopService>();
+
 
         return services;
     }
