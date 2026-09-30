@@ -5,21 +5,24 @@ using System.Text;
 namespace AstroBackend.Application.DTOs
 {
     public record ShopProductDto(
-    Guid Id,
-    string Category,
-    string Slug,
-    string Name,
-    string? NameEn,
-    string? NameRu,
-    string Description,
-    string? DescriptionEn,
-    string? DescriptionRu,
-    int PriceAzn,
-    string? UnitLabel,
-    string? ImageUrl,
-    short SortOrder,
-    bool IsActive
-);
+        Guid Id,
+        string Category,
+        string Slug,
+        string Name,
+        string? NameEn,
+        string? NameRu,
+        string Description,
+        string? DescriptionEn,
+        string? DescriptionRu,
+        int PriceAzn,
+        string? UnitLabel,
+        string? ImageUrl,
+        short SortOrder,
+        bool IsActive,
+        int Stock,
+        double? AverageRating,
+        int ReviewCount
+    );
 
     public record CreateShopProductRequest(
         string Category,
@@ -34,7 +37,8 @@ namespace AstroBackend.Application.DTOs
         string? UnitLabel,
         string? ImageUrl,
         short SortOrder,
-        bool IsActive
+        bool IsActive,
+        int Stock = 100
     );
 
     public record UpdateShopProductRequest(
@@ -49,7 +53,8 @@ namespace AstroBackend.Application.DTOs
         string? UnitLabel,
         string? ImageUrl,
         short SortOrder,
-        bool IsActive
+        bool IsActive,
+        int Stock
     );
 
     public record ShopOrderItemDto(
@@ -63,6 +68,8 @@ namespace AstroBackend.Application.DTOs
     public record ShopOrderDto(
         Guid Id,
         Guid UserId,
+        int SubtotalAzn,
+        int DiscountPct,
         int TotalAzn,
         string FullName,
         string Phone,
@@ -80,16 +87,48 @@ namespace AstroBackend.Application.DTOs
         int UnitPriceAzn
     );
 
+    /// <summary>
+    /// DiscountPct demo axınında frontend tərəfindən (sabit kod siyahısına qarşı)
+    /// artıq doğrulanıb hesablanır — real ödəniş inteqrasiyası olmadığı üçün
+    /// server burada təkrar doğrulama aparmır, sadəcə qəbul edib qeydə alır.
+    /// </summary>
     public record PlaceShopOrderRequest(
         List<ShopCartItemRequest> Items,
         string FullName,
         string Phone,
         string Address,
-        string? Note
+        string? Note,
+        int DiscountPct = 0
     );
 
     public record UpdateShopOrderStatusRequest(
         string Status
     );
+
+    // --- Rəy/reytinq ---
+
+    public record ShopProductReviewDto(
+        Guid Id,
+        Guid ProductId,
+        Guid UserId,
+        string? UserName,
+        int Rating,
+        string? Comment,
+        DateTime CreatedAt
+    );
+
+    public record UpsertReviewRequest(int Rating, string? Comment);
+
+    // --- Admin satış statistikası ---
+
+    public record ShopTopProductDto(Guid ProductId, string ProductName, int UnitsSold, int RevenueAzn);
+
+    public record ShopSalesStatsDto(
+        int TotalRevenueAzn,
+        int TotalOrders,
+        int PendingOrders,
+        List<ShopTopProductDto> TopProducts
+    );
+
 
 }

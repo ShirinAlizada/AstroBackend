@@ -2,12 +2,12 @@
 namespace AstroBackend.Application.DTOs
 {
     public record ChatThreadDto(
-    Guid Id,
-    Guid UserId,
-    string Title,
-    DateTime CreatedAt,
-    DateTime UpdatedAt
-);
+       Guid Id,
+       Guid UserId,
+       string Title,
+       DateTime CreatedAt,
+       DateTime UpdatedAt
+   );
 
     public record CreateThreadRequest(
         string? Title
@@ -35,5 +35,6 @@ namespace AstroBackend.Application.DTOs
         string? Mode, // "chat" or "article"
         List<AiTurnDto>? Messages
     );
+
 
 }

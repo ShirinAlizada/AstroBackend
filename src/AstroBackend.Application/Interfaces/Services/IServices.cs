@@ -131,7 +131,7 @@ public interface IAIService
 
 public interface IShopService
 {
-    Task<IReadOnlyList<ShopProductDto>> GetActiveProductsAsync(CancellationToken ct = default);
+    Task<IReadOnlyList<ShopProductDto>> GetActiveProductsAsync(string? search, string? sort, CancellationToken ct = default);
     Task<IReadOnlyList<ShopProductDto>> GetAllProductsAsync(CancellationToken ct = default);
     Task<ShopProductDto> CreateProductAsync(CreateShopProductRequest request, CancellationToken ct = default);
     Task<ShopProductDto> UpdateProductAsync(Guid id, UpdateShopProductRequest request, CancellationToken ct = default);
@@ -140,4 +140,38 @@ public interface IShopService
     Task<IReadOnlyList<ShopOrderDto>> GetMyOrdersAsync(Guid userId, CancellationToken ct = default);
     Task<IReadOnlyList<ShopOrderDto>> GetAllOrdersAsync(CancellationToken ct = default);
     Task<ShopOrderDto> UpdateOrderStatusAsync(Guid orderId, string status, CancellationToken ct = default);
+
+    Task<IReadOnlyList<ShopProductReviewDto>> GetReviewsAsync(Guid productId, CancellationToken ct = default);
+    Task<ShopProductReviewDto> UpsertReviewAsync(Guid productId, Guid userId, UpsertReviewRequest request, CancellationToken ct = default);
+
+    /// <summary>Admin paneli üçün mağaza satış statistikası — mövcud ShopOrder/ShopOrderItem üzərindən hesablanır.</summary>
+    Task<ShopSalesStatsDto> GetSalesStatsAsync(CancellationToken ct = default);
+}
+
+public interface IWishlistService
+{
+    Task<IReadOnlyList<WishlistItemDto>> GetMyWishlistAsync(Guid userId, CancellationToken ct = default);
+    Task AddAsync(Guid userId, Guid productId, CancellationToken ct = default);
+    Task RemoveAsync(Guid userId, Guid productId, CancellationToken ct = default);
+}
+
+public interface INotificationService
+{
+    Task<IReadOnlyList<NotificationDto>> GetMyNotificationsAsync(Guid userId, CancellationToken ct = default);
+    Task MarkReadAsync(Guid notificationId, Guid userId, CancellationToken ct = default);
+    Task MarkAllReadAsync(Guid userId, CancellationToken ct = default);
+
+    /// <summary>Digər servislər (ForumService, ShopService) tərəfindən daxili olaraq çağırılır — hadisə əsaslı bildiriş yaradır.</summary>
+    Task CreateAsync(Guid userId, string type, string title, string? body, string? link, CancellationToken ct = default);
+}
+
+/// <summary>
+/// Fayl saxlama abstraksiyası — hazırda yerli diskə (wwwroot/uploads) yazan
+/// LocalFileStorageService ilə tətbiq olunur. Bulud provayderinə (Azure Blob,
+/// S3 və s.) keçiddə yalnız Infrastructure-dakı tətbiq əvəzlənəcək.
+/// </summary>
+public interface IFileStorageService
+{
+    /// <summary>Faylı saxlayır və brauzerdən əlçatan nisbi URL qaytarır (məs. "/uploads/avatars/{id}.jpg").</summary>
+    Task<string> SaveAvatarAsync(Guid userId, Stream content, string fileExtension, CancellationToken ct = default);
 }
