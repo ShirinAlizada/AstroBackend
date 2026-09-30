@@ -15,6 +15,7 @@ public class AdminController : BaseApiController
     private readonly IHoroscopeService _horoscopeService;
     private readonly IForumService _forumService;
     private readonly IArticleService _articleService;
+    private readonly IShopService _shopService;
     private readonly ICurrentUserService _currentUserService;
 
     public AdminController(
@@ -24,6 +25,7 @@ public class AdminController : BaseApiController
         IHoroscopeService horoscopeService,
         IForumService forumService,
         IArticleService articleService,
+        IShopService shopService,
         ICurrentUserService currentUserService)
     {
         _adminService = adminService;
@@ -32,6 +34,7 @@ public class AdminController : BaseApiController
         _horoscopeService = horoscopeService;
         _forumService = forumService;
         _articleService = articleService;
+        _shopService = shopService;
         _currentUserService = currentUserService;
     }
 
@@ -197,4 +200,55 @@ public class AdminController : BaseApiController
         await _forumService.SetReplyHiddenAsync(id, isHidden, ct);
         return Ok(new { message = $"Rəyin gizliliyi dəyişdirildi: {isHidden}." });
     }
+
+    // --- SHOP MANAGEMENT ---
+    [HttpGet("shop/products")]
+    public async Task<ActionResult<IReadOnlyList<ShopProductDto>>> GetAllShopProducts(CancellationToken ct)
+    {
+        var list = await _shopService.GetAllProductsAsync(ct);
+        return Ok(list);
+    }
+
+    [HttpPost("shop/products")]
+    public async Task<ActionResult<ShopProductDto>> CreateShopProduct([FromBody] CreateShopProductRequest request, CancellationToken ct)
+    {
+        var created = await _shopService.CreateProductAsync(request, ct);
+        return Ok(created);
+    }
+
+    [HttpPut("shop/products/{id:guid}")]
+    public async Task<ActionResult<ShopProductDto>> UpdateShopProduct(Guid id, [FromBody] UpdateShopProductRequest request, CancellationToken ct)
+    {
+        var updated = await _shopService.UpdateProductAsync(id, request, ct);
+        return Ok(updated);
+    }
+
+    [HttpDelete("shop/products/{id:guid}")]
+    public async Task<IActionResult> DeleteShopProduct(Guid id, CancellationToken ct)
+    {
+        await _shopService.DeleteProductAsync(id, ct);
+        return Ok(new { message = "Məhsul silindi." });
+    }
+
+    [HttpGet("shop/orders")]
+    public async Task<ActionResult<IReadOnlyList<ShopOrderDto>>> GetAllShopOrders(CancellationToken ct)
+    {
+        var list = await _shopService.GetAllOrdersAsync(ct);
+        return Ok(list);
+    }
+
+    [HttpPatch("shop/orders/{id:guid}/status")]
+    public async Task<ActionResult<ShopOrderDto>> UpdateShopOrderStatus(Guid id, [FromBody] UpdateShopOrderStatusRequest request, CancellationToken ct)
+    {
+        var updated = await _shopService.UpdateOrderStatusAsync(id, request.Status, ct);
+        return Ok(updated);
+    }
+
+    [HttpGet("shop/stats")]
+    public async Task<ActionResult<ShopSalesStatsDto>> GetShopStats(CancellationToken ct)
+    {
+        var stats = await _shopService.GetSalesStatsAsync(ct);
+        return Ok(stats);
+    }
 }
+
