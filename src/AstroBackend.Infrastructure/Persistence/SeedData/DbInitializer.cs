@@ -96,6 +96,17 @@ namespace AstroBackend.Infrastructure.Persistence.SeedData
                     PriceAzn = 70,
                     Rating = 4.7m,
                     Verified = true
+                },
+                 new()
+                {
+                    DisplayName = "Ləman Əliyeva",
+                    Title = "Reiki Ustadi",
+                    Bio = "Reiki qəbulu və tədbirləri ilə məşğul olur.",
+                    SpecialtiesJson = JsonSerializer.Serialize(new[] { "Reiki", "Tədbirlər" }),
+                    LanguagesJson = JsonSerializer.Serialize(new[] { "Azərbaycan", "İngilis", "Rus", "Türk" }),
+                    PriceAzn = 200,
+                    Rating = 5.0m,
+                    Verified = true
                 }
             };
 
