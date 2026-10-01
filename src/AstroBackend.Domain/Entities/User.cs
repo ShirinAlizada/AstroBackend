@@ -25,5 +25,9 @@ namespace AstroBackend.Domain.Entities
         public virtual ICollection<ChatThread> ChatThreads { get; set; } = new List<ChatThread>();
         public virtual ICollection<ChatMessage> ChatMessages { get; set; } = new List<ChatMessage>();
         public virtual ICollection<ShopOrder> ShopOrders { get; set; } = new List<ShopOrder>();
+        public virtual ICollection<ShopProductReview> ShopProductReviews { get; set; } = new List<ShopProductReview>();
+        public virtual ICollection<WishlistItem> WishlistItems { get; set; } = new List<WishlistItem>();
+        public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     }
+
 }

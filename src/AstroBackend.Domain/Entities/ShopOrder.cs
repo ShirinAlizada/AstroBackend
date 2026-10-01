@@ -6,6 +6,11 @@ namespace AstroBackend.Domain.Entities
     public class ShopOrder : BaseEntity
     {
         public Guid UserId { get; set; }
+        /// <summary>Endirimdən əvvəlki cəm (aralıq cəm).</summary>
+        public int SubtotalAzn { get; set; }
+        /// <summary>Tətbiq olunan endirim kodunun faizi (0 = endirim yoxdur).</summary>
+        public int DiscountPct { get; set; } = 0;
+        /// <summary>Endirimdən sonra faktiki ödənilən cəm.</summary>
         public int TotalAzn { get; set; }
         public string FullName { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;

@@ -15,4 +15,5 @@ namespace AstroBackend.Domain.Entities
         public virtual ShopOrder Order { get; set; } = null!;
         public virtual ShopProduct? Product { get; set; }
     }
+
 }
