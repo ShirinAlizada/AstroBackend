@@ -22,6 +22,9 @@ namespace AstroBackend.Infrastructure.Persistence
         public DbSet<ShopProduct> ShopProducts => Set<ShopProduct>();
         public DbSet<ShopOrder> ShopOrders => Set<ShopOrder>();
         public DbSet<ShopOrderItem> ShopOrderItems => Set<ShopOrderItem>();
+        public DbSet<ShopProductReview> ShopProductReviews => Set<ShopProductReview>();
+        public DbSet<WishlistItem> WishlistItems => Set<WishlistItem>();
+        public DbSet<Notification> Notifications => Set<Notification>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -219,6 +222,58 @@ namespace AstroBackend.Infrastructure.Persistence
                       .WithMany(p => p.OrderItems)
                       .HasForeignKey(i => i.ProductId)
                       .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            // ShopProductReview
+            modelBuilder.Entity<ShopProductReview>(entity =>
+            {
+                entity.HasKey(r => r.Id);
+                entity.HasIndex(r => new { r.ProductId, r.UserId }).IsUnique();
+                entity.Property(r => r.Rating).IsRequired();
+                entity.Property(r => r.Comment).HasMaxLength(2000);
+
+                entity.HasOne(r => r.Product)
+                      .WithMany(p => p.Reviews)
+                      .HasForeignKey(r => r.ProductId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(r => r.User)
+                      .WithMany(u => u.ShopProductReviews)
+                      .HasForeignKey(r => r.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // WishlistItem
+            modelBuilder.Entity<WishlistItem>(entity =>
+            {
+                entity.HasKey(w => w.Id);
+                entity.HasIndex(w => new { w.UserId, w.ProductId }).IsUnique();
+
+                entity.HasOne(w => w.User)
+                      .WithMany(u => u.WishlistItems)
+                      .HasForeignKey(w => w.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(w => w.Product)
+                      .WithMany()
+                      .HasForeignKey(w => w.ProductId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // Notification
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.HasKey(n => n.Id);
+                entity.Property(n => n.Type).HasMaxLength(50).IsRequired();
+                entity.Property(n => n.Title).HasMaxLength(200).IsRequired();
+                entity.Property(n => n.Body).HasMaxLength(500);
+                entity.Property(n => n.Link).HasMaxLength(300);
+                entity.HasIndex(n => new { n.UserId, n.CreatedAt });
+
+                entity.HasOne(n => n.User)
+                      .WithMany(u => u.Notifications)
+                      .HasForeignKey(n => n.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }
