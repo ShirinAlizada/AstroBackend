@@ -11,15 +11,18 @@ public class ForumService : IForumService
     private readonly IGenericRepository<ForumTopic> _topicRepo;
     private readonly IGenericRepository<ForumReply> _replyRepo;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly INotificationService _notificationService;
 
     public ForumService(
         IGenericRepository<ForumTopic> topicRepo,
         IGenericRepository<ForumReply> replyRepo,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        INotificationService notificationService)
     {
         _topicRepo = topicRepo;
         _replyRepo = replyRepo;
         _unitOfWork = unitOfWork;
+        _notificationService = notificationService;
     }
 
     public async Task<IReadOnlyList<ForumTopicDto>> GetTopicsAsync(string? category, CancellationToken ct = default)
@@ -141,6 +144,19 @@ public class ForumService : IForumService
 
         await _replyRepo.AddAsync(reply, ct);
         await _unitOfWork.SaveChangesAsync(ct);
+
+        // Mövzu sahibinə bildiriş — yalnız başqası cavab verdikdə (özünə bildiriş göndərilmir)
+        if (topic.UserId != userId)
+        {
+            var preview = request.Body.Length > 120 ? request.Body[..120] + "…" : request.Body;
+            await _notificationService.CreateAsync(
+                topic.UserId,
+                "forum_reply",
+                "Mövzuna yeni cavab",
+                $"{authorName}: {preview}",
+                $"/forum/{topicId}",
+                ct);
+        }
 
         return new ForumReplyDto(
             reply.Id,
