@@ -28,6 +28,8 @@ namespace AstroBackend.Domain.Entities
         public virtual ICollection<ShopProductReview> ShopProductReviews { get; set; } = new List<ShopProductReview>();
         public virtual ICollection<WishlistItem> WishlistItems { get; set; } = new List<WishlistItem>();
         public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+        public virtual UserSubscription? Subscription { get; set; }
+        public virtual ICollection<PaymentTransaction> Payments { get; set; } = new List<PaymentTransaction>();
     }
 
 }
