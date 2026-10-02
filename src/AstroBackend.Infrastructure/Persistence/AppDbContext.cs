@@ -25,6 +25,9 @@ namespace AstroBackend.Infrastructure.Persistence
         public DbSet<ShopProductReview> ShopProductReviews => Set<ShopProductReview>();
         public DbSet<WishlistItem> WishlistItems => Set<WishlistItem>();
         public DbSet<Notification> Notifications => Set<Notification>();
+        public DbSet<SubscriptionPlan> SubscriptionPlans => Set<SubscriptionPlan>();
+        public DbSet<UserSubscription> UserSubscriptions => Set<UserSubscription>();
+        public DbSet<PaymentTransaction> PaymentTransactions => Set<PaymentTransaction>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -275,8 +278,74 @@ namespace AstroBackend.Infrastructure.Persistence
                       .HasForeignKey(n => n.UserId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
+
+            // SubscriptionPlan
+            modelBuilder.Entity<SubscriptionPlan>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.HasAlternateKey(p => p.Key);
+                entity.Property(p => p.Key).HasMaxLength(50).IsRequired();
+                entity.Property(p => p.Name).HasMaxLength(100).IsRequired();
+                entity.Property(p => p.Tagline).HasMaxLength(300);
+                entity.Property(p => p.BillingPeriod).HasMaxLength(20);
+
+                // Features: List<string> <-> JSON mətn sütunu (SQL Server-də native massiv dəstəyi yoxdur).
+                entity.Property(p => p.Features)
+                      .HasConversion(
+                          v => System.Text.Json.JsonSerializer.Serialize(v, (System.Text.Json.JsonSerializerOptions?)null),
+                          v => System.Text.Json.JsonSerializer.Deserialize<List<string>>(v, (System.Text.Json.JsonSerializerOptions?)null) ?? new List<string>())
+                      .Metadata.SetValueComparer(new Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer<List<string>>(
+                          (a, b) => (a ?? new()).SequenceEqual(b ?? new()),
+                          v => v.Aggregate(0, (hash, s) => HashCode.Combine(hash, s.GetHashCode())),
+                          v => v.ToList()));
+            });
+
+            // UserSubscription (1 to 1 with User)
+            modelBuilder.Entity<UserSubscription>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+                entity.HasIndex(s => s.UserId).IsUnique();
+                entity.Property(s => s.PlanKey).HasMaxLength(50).IsRequired();
+                entity.Property(s => s.Status).HasMaxLength(20).IsRequired();
+                entity.Property(s => s.BillingPeriod).HasMaxLength(20).IsRequired();
+
+                entity.HasOne(s => s.User)
+                      .WithOne(u => u.Subscription)
+                      .HasForeignKey<UserSubscription>(s => s.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(s => s.Plan)
+                      .WithMany()
+                      .HasForeignKey(s => s.PlanKey)
+                      .HasPrincipalKey(p => p.Key)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // PaymentTransaction (append-only jurnal)
+            modelBuilder.Entity<PaymentTransaction>(entity =>
+            {
+                entity.HasKey(t => t.Id);
+                entity.Property(t => t.PlanKey).HasMaxLength(50).IsRequired();
+                entity.Property(t => t.Provider).HasMaxLength(50).IsRequired();
+                entity.Property(t => t.Status).HasMaxLength(20).IsRequired();
+                entity.Property(t => t.Note).HasMaxLength(500);
+                entity.Property(t => t.BillingPeriod).HasMaxLength(20).IsRequired();
+                entity.HasIndex(t => new { t.UserId, t.CreatedAt });
+
+                entity.HasOne(t => t.User)
+                      .WithMany(u => u.Payments)
+                      .HasForeignKey(t => t.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(t => t.Plan)
+                      .WithMany()
+                      .HasForeignKey(t => t.PlanKey)
+                      .HasPrincipalKey(p => p.Key)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
         }
     }
+
 
 
 

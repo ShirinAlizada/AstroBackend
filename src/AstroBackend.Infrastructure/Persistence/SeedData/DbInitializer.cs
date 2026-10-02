@@ -383,9 +383,59 @@ namespace AstroBackend.Infrastructure.Persistence.SeedData
                 await context.ForumReplies.AddRangeAsync(replies);
                 await context.SaveChangesAsync();
             }
+            // 8. Seed Subscription Plans (Standart/Premium — "Pulsuz" DB-də sətir kimi mövcud deyil)
+            if (!await context.SubscriptionPlans.AnyAsync())
+            {
+                var plans = new List<SubscriptionPlan>
+            {
+                new()
+                {
+                    Key = "standart",
+                    Name = "Standart",
+                    Tagline = "Əsas astroloji vasitələrə tam giriş",
+                    PriceAzn = 9,
+                    Features = new List<string>
+                    {
+                        "Tam natal xəritə təkəri (planet, ev və aspekt təfərrüatları)",
+                        "Uyğunluq (sinastriya) — planet-planet detallı təhlil",
+                        "Gündəlik, həftəlik və aylıq horoskop",
+                        "Numerologiya hesablamaları",
+                        "Günün bələdçisi (Panchang)",
+                        "AI Astroloq söhbəti — gündə 15 mesaj",
+                        "Jurnal — limitsiz qeyd",
+                        "Astroloqlarla rezervasiya"
+                    },
+                    AiMessagesPerDay = 15,
+                    SynastryFullDetail = true,
+                    BookingDiscountPct = 0,
+                    SortOrder = 1,
+                    IsActive = true
+                },
+                new()
+                {
+                    Key = "premium",
+                    Name = "Premium",
+                    Tagline = "Ən dərin təhlillər və limitsiz AI dəstəyi",
+                    PriceAzn = 19,
+                    Features = new List<string>
+                    {
+                        "Standart paketin bütün imkanları",
+                        "AI Astroloq söhbəti — limitsiz mesaj",
+                        "Astroloq rezervasiyalarında 15% endirim",
+                        "Yeni məqalələrə prioritet giriş",
+                        "Prioritet dəstək"
+                    },
+                    AiMessagesPerDay = null,
+                    SynastryFullDetail = true,
+                    BookingDiscountPct = 15,
+                    SortOrder = 2,
+                    IsActive = true
+                }
+            };
+
+                await context.SubscriptionPlans.AddRangeAsync(plans);
+                await context.SaveChangesAsync();
+            }
         }
     }
-
-
-
 }

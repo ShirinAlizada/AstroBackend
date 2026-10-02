@@ -12,7 +12,7 @@ namespace AstroBackend.Infrastructure
 {
     public static class ServiceRegistration
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, string contentRootPath)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
                
@@ -26,6 +26,9 @@ namespace AstroBackend.Infrastructure
 
             // AI Service HTTP Client Registration
             services.AddHttpClient<IAIService, GeminiAIService>();
+
+            services.AddScoped<IFileStorageService>(_ => new LocalFileStorageService(contentRootPath));
+
 
             return services;
         }
