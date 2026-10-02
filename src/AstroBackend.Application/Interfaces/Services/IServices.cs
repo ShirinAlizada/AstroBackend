@@ -175,3 +175,16 @@ public interface IFileStorageService
     /// <summary>Faylı saxlayır və brauzerdən əlçatan nisbi URL qaytarır (məs. "/uploads/avatars/{id}.jpg").</summary>
     Task<string> SaveAvatarAsync(Guid userId, Stream content, string fileExtension, CancellationToken ct = default);
 }
+
+/// <summary>
+/// Abunəlik/ödəniş sisteminin backend qatı. "Pulsuz" paket DB-də sətir kimi
+/// mövcud deyil — null qayıdışı tətbiq səviyyəsində "pulsuz" kimi şərh olunur.
+/// </summary>
+public interface ISubscriptionService
+{
+    Task<IReadOnlyList<SubscriptionPlanDto>> GetActivePlansAsync(CancellationToken ct = default);
+    Task<UserSubscriptionDto?> GetMySubscriptionAsync(Guid userId, CancellationToken ct = default);
+    Task<UserSubscriptionDto> PurchaseAsync(Guid userId, PurchasePlanRequest request, CancellationToken ct = default);
+    Task CancelAsync(Guid userId, CancellationToken ct = default);
+    Task<IReadOnlyList<PaymentTransactionDto>> GetMyPaymentsAsync(Guid userId, CancellationToken ct = default);
+}
