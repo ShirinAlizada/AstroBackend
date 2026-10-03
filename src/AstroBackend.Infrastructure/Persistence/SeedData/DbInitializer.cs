@@ -400,7 +400,7 @@ namespace AstroBackend.Infrastructure.Persistence.SeedData
                         "Uyğunluq (sinastriya) — planet-planet detallı təhlil",
                         "Gündəlik, həftəlik və aylıq horoskop",
                         "Numerologiya hesablamaları",
-                        "Günün bələdçisi (Panchang)",
+                        "Günün bələdçisi",
                         "AI Astroloq söhbəti — gündə 15 mesaj",
                         "Jurnal — limitsiz qeyd",
                         "Astroloqlarla rezervasiya"
