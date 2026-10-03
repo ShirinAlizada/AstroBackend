@@ -1,4 +1,4 @@
-﻿
+
 namespace AstroBackend.Application.DTOs
 {
     public record PanchangRequest(
@@ -13,18 +13,29 @@ namespace AstroBackend.Application.DTOs
         string Reason
     );
 
+    /// <summary>Bugünkü iki planet arasında tapılan aspekt (Qərb astrologiyası, bax: PanchangEngine).</summary>
+    public record AspectHitDto(
+        string PlanetA,
+        string PlanetB,
+        string SignA,
+        string SignB,
+        string Aspect
+    );
+
+    /// <summary>
+    /// 2026-10 yenidənqurmasından sonra bu cavab artıq Vedik Panchang sahələrini (Tithi/Nakşatra/
+    /// Yoga/Karana) daşımır — əvəzində frontend-dəki `daily-guide.ts`/`DailyGuideContext` ilə
+    /// paralel olaraq Ay bürcü/ünsürü, gün hakimi planet, gün rəngi və bugünkü planet aspektləri
+    /// daşıyır. Ad (`PanchangResponse`) marşrut/DI uyğunluğu üçün saxlanılıb.
+    /// </summary>
     public record PanchangResponse(
         string DateISO,
-        int TithiIndex,
-        string TithiName,
-        string Paksha,
-        string TithiType,
-        string NakshatraName,
-        string NakshatraQuality,
-        string YogaName,
-        string KaranaName,
+        string MoonSign,
+        string MoonElement,
+        string DayRuler,
         int Weekday,
         string DayColor,
+        List<AspectHitDto> Aspects,
         List<GuidanceItemDto> Guidance
     );
 
