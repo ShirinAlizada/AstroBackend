@@ -27,12 +27,12 @@ namespace AstroBackend.Extensions
                 });
 
                 c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
-{
-    {
-        new OpenApiSecuritySchemeReference("Bearer"),
-        new List<string>()
-    }
-});
+                {
+                    {
+                       new OpenApiSecuritySchemeReference("Bearer"),
+                       new List<string>()
+                    }
+                });
             });
 
             return services;

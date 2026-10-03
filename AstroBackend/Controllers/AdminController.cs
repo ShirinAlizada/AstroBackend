@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AstroBackend.Controllers;
 
+
 [Authorize(Roles = "Admin,SuperAdmin")]
 public class AdminController : BaseApiController
 {
@@ -251,4 +252,3 @@ public class AdminController : BaseApiController
         return Ok(stats);
     }
 }
-

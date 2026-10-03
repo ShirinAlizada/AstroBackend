@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 1. Onion Architecture Layers Registration
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.ContentRootPath);
 
 // 2. Current User & HttpContext
 builder.Services.AddHttpContextAccessor();
@@ -24,8 +24,8 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 // 3. JWT Authentication & Role Configuration
 var jwtSecret = builder.Configuration["JwtSettings:Secret"] ?? "SuperSecretKeyForDestinyReadsAppAstrologyPlatform2026!@#$%^&*()_+";
-var jwtIssuer = builder.Configuration["JwtSettings:Issuer"] ?? "VirgoAstrologyAPI";
-var jwtAudience = builder.Configuration["JwtSettings:Audience"] ?? "VirgoAstrologyClient";
+var jwtIssuer = builder.Configuration["JwtSettings:Issuer"] ?? "DestinyReadsAPI";
+var jwtAudience = builder.Configuration["JwtSettings:Audience"] ?? "DestinyReadsClient";
 
 builder.Services.AddAuthentication(options =>
 {
@@ -87,6 +87,7 @@ app.UseSwaggerUI(c =>
 
 // 9. CORS & Security Pipeline
 app.UseCors("AllowAll");
+app.UseStaticFiles(); // wwwroot/uploads (avatarlar və s.) statik fayl kimi ötürülür
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -109,4 +110,3 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
-
