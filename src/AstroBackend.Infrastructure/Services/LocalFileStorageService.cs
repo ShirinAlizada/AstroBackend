@@ -1,4 +1,5 @@
 ﻿using AstroBackend.Application.Interfaces.Services;
+using AstroBackend.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +17,11 @@ namespace AstroBackend.Infrastructure.Services
     /// </summary>
     public class LocalFileStorageService : IFileStorageService
     {
+        private static readonly HashSet<string> AllowedAvatarExtensions = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ".jpg", ".jpeg", ".png", ".webp", ".gif"
+        };
+
         private readonly string _contentRootPath;
 
         public LocalFileStorageService(string contentRootPath)
@@ -26,6 +32,10 @@ namespace AstroBackend.Infrastructure.Services
         public async Task<string> SaveAvatarAsync(Guid userId, Stream content, string fileExtension, CancellationToken ct = default)
         {
             var extension = fileExtension.StartsWith('.') ? fileExtension : $".{fileExtension}";
+            if (!AllowedAvatarExtensions.Contains(extension))
+            {
+                throw new BadRequestException("Dəstəklənməyən şəkil formatı. İcazə verilən formatlar: jpg, jpeg, png, webp, gif.");
+            }
             var fileName = $"{userId}{extension}";
 
             var uploadsDir = Path.Combine(_contentRootPath, "wwwroot", "uploads", "avatars");

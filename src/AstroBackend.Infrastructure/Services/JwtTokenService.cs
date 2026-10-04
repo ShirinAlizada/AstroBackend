@@ -20,7 +20,13 @@ namespace AstroBackend.Infrastructure.Services
 
         public string GenerateAccessToken(User user)
         {
-            var secret = _configuration["JwtSettings:Secret"] ?? "SuperSecretKeyForDestinyReadsAppAstrologyPlatform2026";
+            var secret = _configuration["JwtSettings:Secret"];
+            if (string.IsNullOrWhiteSpace(secret) || secret.Length < 32)
+            {
+                throw new InvalidOperationException(
+                    "JwtSettings:Secret appsettings.json-da təyin edilməyib və ya 32 simvoldan qısadır. " +
+                    "Sərt kodlanmış defolt açar istifadə edilmir.");
+            }
             var issuer = _configuration["JwtSettings:Issuer"] ?? "VirgoAstrologyAPI";
             var audience = _configuration["JwtSettings:Audience"] ?? "VirgoAstrologyClient";
             var expireMinutes = int.TryParse(_configuration["JwtSettings:ExpiryMinutes"], out var exp) ? exp : 60;

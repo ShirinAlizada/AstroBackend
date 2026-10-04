@@ -91,7 +91,7 @@ namespace AstroBackend.Infrastructure.Persistence
                 entity.HasOne(b => b.User)
                       .WithMany(u => u.Bookings)
                       .HasForeignKey(b => b.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(b => b.Astrologer)
                       .WithMany(a => a.Bookings)
@@ -119,7 +119,7 @@ namespace AstroBackend.Infrastructure.Persistence
                 entity.HasOne(t => t.User)
                       .WithMany(u => u.ForumTopics)
                       .HasForeignKey(t => t.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             // ForumReply
@@ -177,7 +177,7 @@ namespace AstroBackend.Infrastructure.Persistence
                 entity.HasOne(m => m.User)
                       .WithMany(u => u.ChatMessages)
                       .HasForeignKey(m => m.UserId)
-                      .OnDelete(DeleteBehavior.NoAction);
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             // ShopProduct
@@ -207,7 +207,7 @@ namespace AstroBackend.Infrastructure.Persistence
                 entity.HasOne(o => o.User)
                       .WithMany(u => u.ShopOrders)
                       .HasForeignKey(o => o.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             // ShopOrderItem
@@ -335,7 +335,7 @@ namespace AstroBackend.Infrastructure.Persistence
                 entity.HasOne(t => t.User)
                       .WithMany(u => u.Payments)
                       .HasForeignKey(t => t.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(t => t.Plan)
                       .WithMany()
