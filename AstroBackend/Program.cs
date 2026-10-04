@@ -23,7 +23,14 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 // 3. JWT Authentication & Role Configuration
-var jwtSecret = builder.Configuration["JwtSettings:Secret"] ?? "SuperSecretKeyForDestinyReadsAppAstrologyPlatform2026!@#$%^&*()_+";
+var jwtSecret = builder.Configuration["JwtSettings:Secret"];
+if (string.IsNullOrWhiteSpace(jwtSecret) || jwtSecret.Length < 32)
+{
+    throw new InvalidOperationException(
+        "JwtSettings:Secret appsettings.json-da (və ya mühit dəyişənlərində) təyin edilməyib, " +
+        "yaxud 32 simvoldan qısadır. Tokenləri etibarlı şəkildə imzalamaq üçün güclü, " +
+        "təsadüfi generasiya olunmuş bir açar təyin edin — sərt kodlanmış defolt açar istifadə edilmir.");
+}
 var jwtIssuer = builder.Configuration["JwtSettings:Issuer"] ?? "DestinyReadsAPI";
 var jwtAudience = builder.Configuration["JwtSettings:Audience"] ?? "DestinyReadsClient";
 
@@ -52,11 +59,17 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 // 4. CORS Policy for Frontend Client
+// Mənbələr appsettings.json-dakı Cors:AllowedOrigins-dən oxunur; təyin olunmayıbsa,
+// yalnız lokal development mənbələrinə (frontend dev-server) icazə verilir. Production-da
+// real frontend domenini appsettings(.Production).json-a əlavə etmək lazımdır.
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+    ?? new[] { "http://localhost:8080", "http://localhost:3000", "http://localhost:5173" };
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("AllowedOrigins", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
@@ -77,16 +90,20 @@ var app = builder.Build();
 // 7. Global Exception Handling Middleware
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
-// 8. Swagger in Development and Production for easy testing
-app.UseSwagger();
-app.UseSwaggerUI(c =>
+// 8. Swagger — yalnız Development mühitində açıqdır (production-da API sxemini və
+// bütün endpoint-ləri ictimai şəkildə açmamaq üçün).
+if (app.Environment.IsDevelopment())
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Destiny Reads API v1");
-    c.RoutePrefix = string.Empty; // Serves Swagger UI at root
-});
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Destiny Reads API v1");
+        c.RoutePrefix = string.Empty; // Serves Swagger UI at root
+    });
+}
 
 // 9. CORS & Security Pipeline
-app.UseCors("AllowAll");
+app.UseCors("AllowedOrigins");
 app.UseStaticFiles(); // wwwroot/uploads (avatarlar və s.) statik fayl kimi ötürülür
 app.UseAuthentication();
 app.UseAuthorization();

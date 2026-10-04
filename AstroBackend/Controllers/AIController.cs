@@ -1,10 +1,12 @@
 ﻿using AstroBackend.Application.DTOs;
 using AstroBackend.Application.Interfaces.Services;
 using AstroBackend.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AstroBackend.Controllers
 {
+    [Authorize]
     public class AIController : BaseApiController
     {
         private readonly IAIService _aiService;

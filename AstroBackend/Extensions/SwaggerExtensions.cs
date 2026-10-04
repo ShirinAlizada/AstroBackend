@@ -26,10 +26,15 @@ namespace AstroBackend.Extensions
                     Description = "Login etdikdən sonra aldığınız AccessToken-i bura yapışdırın (Bearer yazmağa ehtiyac yoxdur)."
                 });
 
+                // DİQQƏT: "Bearer" reference-i document kontekstinə bağlanmalıdır, əks halda
+                // (yəni new OpenApiSecuritySchemeReference("Bearer") — document arqumenti olmadan)
+                // reference "asılı" qalır və Swagger UI "Authorize"dan sonra belə tokeni faktiki
+                // sorğuya əlavə etmir (biz məhz bu səbəbdən 401 alırdıq). Microsoft.OpenApi v2 +
+                // Swashbuckle.AspNetCore 10.x üçün rəsmi düzgün forma budur:
                 c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
                 {
                     {
-                       new OpenApiSecuritySchemeReference("Bearer"),
+                       new OpenApiSecuritySchemeReference("Bearer", document),
                        new List<string>()
                     }
                 });
