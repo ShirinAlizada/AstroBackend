@@ -3,6 +3,7 @@ using AstroBackend.Application.Interfaces.Repositories;
 using AstroBackend.Application.Interfaces.Services;
 using AstroBackend.Domain.Entities;
 using AstroBackend.Domain.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AstroBackend.Application.Services;
 
@@ -32,14 +33,14 @@ public class ForumService : IForumService
         if (!string.IsNullOrWhiteSpace(category) && category != "hamısı")
             query = query.Where(t => t.Category == category);
 
-        var topics = query.OrderByDescending(t => t.CreatedAt).ToList();
+        var topics = await query.OrderByDescending(t => t.CreatedAt).ToListAsync(ct);
         var topicIds = topics.Select(t => t.Id).ToList();
 
-        var replyCounts = _replyRepo.Query()
+        var replyCounts = await _replyRepo.Query()
             .Where(r => topicIds.Contains(r.TopicId) && !r.IsHidden)
             .GroupBy(r => r.TopicId)
             .Select(g => new { TopicId = g.Key, Count = g.Count() })
-            .ToDictionary(g => g.TopicId, g => g.Count);
+            .ToDictionaryAsync(g => g.TopicId, g => g.Count, ct);
 
         return topics.Select(t => new ForumTopicDto(
             t.Id,
@@ -60,7 +61,7 @@ public class ForumService : IForumService
         if (topic == null || topic.IsHidden)
             throw new NotFoundException("Mövzu tapılmadı.");
 
-        var count = _replyRepo.Query().Count(r => r.TopicId == id && !r.IsHidden);
+        var count = await _replyRepo.Query().CountAsync(r => r.TopicId == id && !r.IsHidden, ct);
 
         return new ForumTopicDto(
             topic.Id,
@@ -108,10 +109,10 @@ public class ForumService : IForumService
 
     public async Task<IReadOnlyList<ForumReplyDto>> GetRepliesAsync(Guid topicId, CancellationToken ct = default)
     {
-        var replies = _replyRepo.Query()
+        var replies = await _replyRepo.Query()
             .Where(r => r.TopicId == topicId && !r.IsHidden)
             .OrderBy(r => r.CreatedAt)
-            .ToList();
+            .ToListAsync(ct);
 
         return replies.Select(r => new ForumReplyDto(
             r.Id,

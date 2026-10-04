@@ -149,12 +149,21 @@ public class BookingService : IBookingService
         if (!Enum.TryParse<BookingStatus>(status, true, out var newStatus))
             throw new BadRequestException("Status yalnışdır.");
 
-        // Users can cancel their own booking
-        if (!isAdmin && booking.UserId != currentUserId)
+        var isOwner = booking.UserId == currentUserId;
+        if (!isAdmin && !isOwner)
         {
             var astro = await _astrologerRepo.GetByIdAsync(booking.AstrologerId, ct);
             if (astro == null || astro.UserId != currentUserId)
                 throw new ForbiddenException("Bu rezervasiyanı dəyişməyə icazəniz yoxdur.");
+        }
+
+        // Rezervasiyanın sahibi (admin və ya təyin olunmuş astroloq olmadıqda) yalnız öz
+        // rezervasiyasını LƏĞV edə bilər — özünü "Completed" və ya digər statuslara keçirə bilməz.
+        if (!isAdmin && isOwner && newStatus != BookingStatus.Cancelled)
+        {
+            var astro = await _astrologerRepo.GetByIdAsync(booking.AstrologerId, ct);
+            if (astro == null || astro.UserId != currentUserId)
+                throw new ForbiddenException("Rezervasiyanızı yalnız ləğv edə bilərsiniz.");
         }
 
         booking.Status = newStatus;

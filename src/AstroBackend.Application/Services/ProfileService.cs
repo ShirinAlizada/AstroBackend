@@ -32,7 +32,8 @@ public class ProfileService : IProfileService
     public async Task<ProfileDto> UpdateProfileAsync(Guid userId, UpdateProfileRequest request, CancellationToken ct = default)
     {
         var profile = await _profileRepo.FirstOrDefaultAsync(p => p.UserId == userId, ct);
-        if (profile == null)
+        var isNew = profile == null;
+        if (isNew)
         {
             profile = new Profile { UserId = userId };
             await _profileRepo.AddAsync(profile, ct);
@@ -56,7 +57,12 @@ public class ProfileService : IProfileService
         }
 
         profile.UpdatedAt = DateTime.UtcNow;
-        _profileRepo.Update(profile);
+        // Yeni yaradılan profil artıq "Added" vəziyyətində izlənilir — onu yenidən
+        // Update() ilə "Modified"ə keçirmək (mövcud olmayan sətirə UPDATE cəhdi) xətaya səbəb olurdu.
+        if (!isNew)
+        {
+            _profileRepo.Update(profile!);
+        }
 
         // Update FullName on User as well if provided
         if (!string.IsNullOrWhiteSpace(request.FullName))

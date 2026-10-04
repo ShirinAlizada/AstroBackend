@@ -3,6 +3,7 @@ using AstroBackend.Application.Interfaces.Repositories;
 using AstroBackend.Application.Interfaces.Services;
 using AstroBackend.Domain.Entities;
 using AstroBackend.Domain.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AstroBackend.Application.Services
 {
@@ -13,12 +14,12 @@ namespace AstroBackend.Application.Services
         private readonly IUnitOfWork _unitOfWork;
 
         public const string ArticleSystemPrompt = @"Sən ""Virgo Astrology"" platformasının Məqalələr bölməsi üçün redaktorsan.
-Verilən mövzuda Azərbaycan dilində məqalə yazırsan.
-Cavabı tam olaraq bu formatda ver, başqa heç nə yazma:
-BAŞLIQ: <cəlbedici başlıq>
-XÜLASƏ: <bir cümləlik anons>
-MƏTN:
-<4-6 abzaslıq məqalə mətni>";
+            Verilən mövzuda Azərbaycan dilində məqalə yazırsan.
+            Cavabı tam olaraq bu formatda ver, başqa heç nə yazma:
+            BAŞLIQ: <cəlbedici başlıq>
+            XÜLASƏ: <bir cümləlik anons>
+            MƏTN:
+            <4-6 abzaslıq məqalə mətni>";
 
         public ArticleService(
             IGenericRepository<Article> articleRepo,
@@ -44,8 +45,8 @@ MƏTN:
             }
 
             var list = sort == "populyar"
-                ? query.OrderByDescending(a => a.Views).ToList()
-                : query.OrderByDescending(a => a.PublishedAt ?? a.CreatedAt).ToList();
+                ? await query.OrderByDescending(a => a.Views).ToListAsync(ct)
+                : await query.OrderByDescending(a => a.PublishedAt ?? a.CreatedAt).ToListAsync(ct);
 
             return list.Select(MapToDto).ToList();
         }
@@ -71,7 +72,7 @@ MƏTN:
 
         public async Task<IReadOnlyList<ArticleDto>> AdminGetAllArticlesAsync(CancellationToken ct = default)
         {
-            var list = _articleRepo.Query().OrderByDescending(a => a.CreatedAt).ToList();
+            var list = await _articleRepo.Query().OrderByDescending(a => a.CreatedAt).ToListAsync(ct);
             return list.Select(MapToDto).ToList();
         }
 

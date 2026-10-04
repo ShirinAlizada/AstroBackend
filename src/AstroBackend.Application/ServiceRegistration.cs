@@ -23,7 +23,9 @@ public static class ServiceRegistration
         services.AddScoped<IPanchangService, PanchangService>();
         services.AddScoped<IAdminService, AdminService>();
         services.AddScoped<IShopService, ShopService>();
-
+        services.AddScoped<INotificationService, NotificationService>();
+        services.AddScoped<IWishlistService, WishlistService>();
+        services.AddScoped<ISubscriptionService, SubscriptionService>();
 
         return services;
     }

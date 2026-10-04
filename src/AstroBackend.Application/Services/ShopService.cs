@@ -150,23 +150,35 @@ namespace AstroBackend.Application.Services
 
             var discountPct = Math.Clamp(request.DiscountPct, 0, 100);
 
-            // Stok yoxlaması — hər sətir üçün mövcud stokdan çox sifariş verilə bilməz.
             var productIds = request.Items.Where(i => i.ProductId != Guid.Empty).Select(i => i.ProductId).Distinct().ToList();
             var products = productIds.Count == 0
                 ? new List<ShopProduct>()
                 : (await _productRepo.FindAsync(p => productIds.Contains(p.Id), ct)).ToList();
             var productsById = products.ToDictionary(p => p.Id);
 
-            foreach (var item in request.Items)
-            {
-                if (item.ProductId == Guid.Empty || !productsById.TryGetValue(item.ProductId, out var product))
-                    continue; // Məhsul sonradan silinmiş ola bilər — köhnə davranışla uyğunluq üçün buraxılır.
+            // Stok yoxlaması məhsul üzrə AQREQASİYA olunmuş miqdara görə aparılır: səbətdə eyni
+            // ProductId üçün bir neçə sətir olsa (hər sətir ayrıca stok limitindən keçsə belə),
+            // ÜMUMİ tələb olunan say stoku keçməməlidir — əks halda overselling mümkün olurdu.
+            var requestedQtyByProduct = request.Items
+                .Where(i => i.ProductId != Guid.Empty)
+                .GroupBy(i => i.ProductId)
+                .ToDictionary(g => g.Key, g => g.Sum(i => i.Quantity));
 
-                if (product.Stock < item.Quantity)
+            foreach (var (productId, requestedQty) in requestedQtyByProduct)
+            {
+                if (productsById.TryGetValue(productId, out var product) && product.Stock < requestedQty)
                     throw new BadRequestException($"\"{product.Name}\" məhsulundan stokda yalnız {product.Stock} ədəd qalıb.");
             }
 
-            var subtotal = request.Items.Sum(i => i.UnitPriceAzn * i.Quantity);
+            // Qiymət server tərəfindən kataloqdan təsdiqlənir — client-dən gələn UnitPriceAzn
+            // etibar edilə bilən deyil (asanlıqla saxtalaşdırıla bilər). Yalnız kataloqda uyğun
+            // məhsul tapılmayanda (silinmiş/legacy ProductId) client qiyməti ehtiyat kimi qalır.
+            int ResolveUnitPrice(ShopCartItemRequest item) =>
+                item.ProductId != Guid.Empty && productsById.TryGetValue(item.ProductId, out var p)
+                    ? p.PriceAzn
+                    : item.UnitPriceAzn;
+
+            var subtotal = request.Items.Sum(i => ResolveUnitPrice(i) * i.Quantity);
             var total = subtotal - (subtotal * discountPct / 100);
 
             var order = new ShopOrder
@@ -190,17 +202,17 @@ namespace AstroBackend.Application.Services
                 ProductId = i.ProductId,
                 ProductName = i.ProductName,
                 Quantity = i.Quantity,
-                UnitPriceAzn = i.UnitPriceAzn
+                UnitPriceAzn = ResolveUnitPrice(i)
             }).ToList();
 
             foreach (var item in items)
                 await _itemRepo.AddAsync(item, ct);
 
-            foreach (var item in items)
+            foreach (var (productId, requestedQty) in requestedQtyByProduct)
             {
-                if (productsById.TryGetValue(item.ProductId ?? Guid.Empty, out var product))
+                if (productsById.TryGetValue(productId, out var product))
                 {
-                    product.Stock -= item.Quantity;
+                    product.Stock -= requestedQty;
                     product.UpdatedAt = DateTime.UtcNow;
                     _productRepo.Update(product);
                 }

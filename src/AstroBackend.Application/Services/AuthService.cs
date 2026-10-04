@@ -90,6 +90,9 @@ public class AuthService : IAuthService
         if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
             throw new UnauthorizedException("Yeniləmə tokeni etibarsızdır və ya vaxtı bitmişdir.");
 
+        if (!user.IsActive)
+            throw new ForbiddenException("İstifadəçi hesabı deaktiv edilmişdir.");
+
         user.RefreshToken = _tokenService.GenerateRefreshToken();
         user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
 

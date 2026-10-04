@@ -95,11 +95,15 @@ Astrologiyanın elmi sübut deyil, özünü dərk vasitəsi olduğunu lazım gə
             };
             await _messageRepo.AddAsync(userMsg, ct);
 
-            // 2. Fetch thread history for context
+            // 2. Fetch thread history for context — ƏN SON 20 mesaj götürülür (əks halda
+            // thread 20 mesajı keçəndə AI konteksti həmişə ən köhnə 20-də "ilişib qalırdı"),
+            // sonra xronoloji ardıcıllıq üçün yenidən tarixə görə artan sıralanır.
             var history = _messageRepo.Query()
                 .Where(m => m.ThreadId == threadId)
-                .OrderBy(m => m.CreatedAt)
+                .OrderByDescending(m => m.CreatedAt)
                 .Take(20)
+                .ToList()
+                .OrderBy(m => m.CreatedAt)
                 .ToList();
 
             var aiTurns = history.Select(m => new AiTurnDto(m.Role, m.Content)).ToList();

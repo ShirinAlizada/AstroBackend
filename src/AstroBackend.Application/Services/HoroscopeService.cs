@@ -4,6 +4,7 @@ using AstroBackend.Application.Interfaces.Services;
 using AstroBackend.Domain.Entities;
 using AstroBackend.Domain.Enums;
 using AstroBackend.Domain.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AstroBackend.Application.Services;
 
@@ -28,7 +29,7 @@ public class HoroscopeService : IHoroscopeService
         if (!string.IsNullOrWhiteSpace(period) && Enum.TryParse<HoroscopePeriod>(period, true, out var pEnum))
             query = query.Where(h => h.Period == pEnum);
 
-        var list = query.OrderByDescending(h => h.PeriodStart).ToList();
+        var list = await query.OrderByDescending(h => h.PeriodStart).ToListAsync(ct);
         return list.Select(MapToDto).ToList();
     }
 
@@ -37,10 +38,10 @@ public class HoroscopeService : IHoroscopeService
         if (!Enum.TryParse<HoroscopePeriod>(period, true, out var pEnum))
             pEnum = HoroscopePeriod.Daily;
 
-        var horoscope = _horoscopeRepo.Query()
+        var horoscope = await _horoscopeRepo.Query()
             .Where(h => h.Sign.ToLower() == sign.ToLower() && h.Period == pEnum)
             .OrderByDescending(h => h.PeriodStart)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync(ct);
 
         return horoscope != null ? MapToDto(horoscope) : null;
     }
