@@ -28,6 +28,8 @@ namespace AstroBackend.Infrastructure.Persistence
         public DbSet<SubscriptionPlan> SubscriptionPlans => Set<SubscriptionPlan>();
         public DbSet<UserSubscription> UserSubscriptions => Set<UserSubscription>();
         public DbSet<PaymentTransaction> PaymentTransactions => Set<PaymentTransaction>();
+        public DbSet<ContactMessage> ContactMessages => Set<ContactMessage>();
+        public DbSet<PushSubscription> PushSubscriptions => Set<PushSubscription>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -144,6 +146,8 @@ namespace AstroBackend.Infrastructure.Persistence
                 entity.HasKey(a => a.Id);
                 entity.HasIndex(a => a.Slug).IsUnique();
                 entity.Property(a => a.Title).HasMaxLength(255).IsRequired();
+                entity.Property(a => a.TitleEn).HasMaxLength(255);
+                entity.Property(a => a.TitleRu).HasMaxLength(255);
                 entity.Property(a => a.Slug).HasMaxLength(255).IsRequired();
 
                 entity.HasOne(a => a.Author)
@@ -287,6 +291,8 @@ namespace AstroBackend.Infrastructure.Persistence
                 entity.Property(p => p.Key).HasMaxLength(50).IsRequired();
                 entity.Property(p => p.Name).HasMaxLength(100).IsRequired();
                 entity.Property(p => p.Tagline).HasMaxLength(300);
+                entity.Property(p => p.TaglineEn).HasMaxLength(300);
+                entity.Property(p => p.TaglineRu).HasMaxLength(300);
                 entity.Property(p => p.BillingPeriod).HasMaxLength(20);
 
                 // Features: List<string> <-> JSON mətn sütunu (SQL Server-də native massiv dəstəyi yoxdur).
@@ -298,6 +304,25 @@ namespace AstroBackend.Infrastructure.Persistence
                           (a, b) => (a ?? new()).SequenceEqual(b ?? new()),
                           v => v.Aggregate(0, (hash, s) => HashCode.Combine(hash, s.GetHashCode())),
                           v => v.ToList()));
+
+                // FeaturesEn/FeaturesRu: eyni naxış, amma NULL-a icazə verilir (tərcümə hələ
+                // doldurulmayan paketlər üçün — göstərmə qatı belə halda AZ-a geri qayıdır).
+                entity.Property(p => p.FeaturesEn)
+                      .HasConversion(
+                          v => v == null ? null : System.Text.Json.JsonSerializer.Serialize(v, (System.Text.Json.JsonSerializerOptions?)null),
+                          v => v == null ? null : System.Text.Json.JsonSerializer.Deserialize<List<string>>(v, (System.Text.Json.JsonSerializerOptions?)null))
+                      .Metadata.SetValueComparer(new Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer<List<string>?>(
+                          (a, b) => (a ?? new()).SequenceEqual(b ?? new()),
+                          v => (v ?? new()).Aggregate(0, (hash, s) => HashCode.Combine(hash, s.GetHashCode())),
+                          v => v == null ? null : v.ToList()));
+                entity.Property(p => p.FeaturesRu)
+                      .HasConversion(
+                          v => v == null ? null : System.Text.Json.JsonSerializer.Serialize(v, (System.Text.Json.JsonSerializerOptions?)null),
+                          v => v == null ? null : System.Text.Json.JsonSerializer.Deserialize<List<string>>(v, (System.Text.Json.JsonSerializerOptions?)null))
+                      .Metadata.SetValueComparer(new Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer<List<string>?>(
+                          (a, b) => (a ?? new()).SequenceEqual(b ?? new()),
+                          v => (v ?? new()).Aggregate(0, (hash, s) => HashCode.Combine(hash, s.GetHashCode())),
+                          v => v == null ? null : v.ToList()));
             });
 
             // UserSubscription (1 to 1 with User)
@@ -342,6 +367,31 @@ namespace AstroBackend.Infrastructure.Persistence
                       .HasForeignKey(t => t.PlanKey)
                       .HasPrincipalKey(p => p.Key)
                       .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // ContactMessage ("Əlaqə" formu)
+            modelBuilder.Entity<ContactMessage>(entity =>
+            {
+                entity.HasKey(m => m.Id);
+                entity.Property(m => m.Name).HasMaxLength(150).IsRequired();
+                entity.Property(m => m.Email).HasMaxLength(255).IsRequired();
+                entity.Property(m => m.Message).HasMaxLength(4000).IsRequired();
+                entity.HasIndex(m => m.CreatedAt);
+            });
+
+            // PushSubscription (Web Push / VAPID)
+            modelBuilder.Entity<PushSubscription>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.HasIndex(p => p.Endpoint).IsUnique();
+                entity.Property(p => p.Endpoint).HasMaxLength(500).IsRequired();
+                entity.Property(p => p.P256dh).HasMaxLength(300).IsRequired();
+                entity.Property(p => p.AuthKey).HasMaxLength(100).IsRequired();
+
+                entity.HasOne(p => p.User)
+                      .WithMany(u => u.PushSubscriptions)
+                      .HasForeignKey(p => p.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

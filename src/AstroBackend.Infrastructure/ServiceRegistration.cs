@@ -29,6 +29,21 @@ namespace AstroBackend.Infrastructure
 
             services.AddScoped<IFileStorageService>(_ => new LocalFileStorageService(contentRootPath));
 
+            // Web Push (VAPID) — açarlar appsettings.json-dakı Vapid bölməsindən.
+            services.AddScoped<IPushService>(_ => new WebPushService(
+                configuration["Vapid:PublicKey"] ?? string.Empty,
+                configuration["Vapid:PrivateKey"] ?? string.Empty,
+                configuration["Vapid:Subject"] ?? "mailto:admin@virgoastrology.local"));
+
+            // SMTP e-poçt — konfiqurasiya appsettings.json-dakı Smtp bölməsindən.
+            services.AddScoped<IEmailService>(_ => new SmtpEmailService(
+                configuration["Smtp:Host"],
+                int.TryParse(configuration["Smtp:Port"], out var smtpPort) ? smtpPort : 587,
+                configuration["Smtp:User"],
+                configuration["Smtp:Password"],
+                configuration["Smtp:From"] ?? "no-reply@virgoastrology.local",
+                configuration["Smtp:FromName"] ?? "Virgo Astrology",
+                bool.TryParse(configuration["Smtp:EnableSsl"], out var enableSsl) && enableSsl));
 
             return services;
         }

@@ -446,6 +446,134 @@ namespace AstroBackend.Infrastructure.Persistence.SeedData
                 await context.SubscriptionPlans.AddRangeAsync(plans);
                 await context.SaveChangesAsync();
             }
+
+            // 9. Seed Shop Products (Tarot/Kristal/Şam/Kitab — 8 məhsul, hamısının öz şəkli
+            // wwwroot/uploads/shop/ qovluğunda saxlanılır; bu şəkillər repo ilə birlikdə
+            // gəlmədiyi üçün (fərdi seçilmiş şəkillərdir) DB sıfırlandıqda ImageUrl sahələri
+            // qalır, lakin faktiki fayllar yenidən əl ilə həmin qovluğa köçürülməlidir əgər
+            // wwwroot da silinibsə. Qiymətlər və təsvirlər canlı admin API ilə əvvəlcə
+            // yaradılmış sətirlərlə eynidir — DB sıfırlanarsa eyni vəziyyət bərpa olunsun deyə.
+            if (!await context.ShopProducts.AnyAsync())
+            {
+                var products = new List<ShopProduct>
+            {
+                new()
+                {
+                    Category = ShopCategory.Tarot,
+                    Slug = "klassik-tarot-kartlari",
+                    Name = "Klassik Tarot Kartları (Rider-Waite)",
+                    NameEn = "Classic Tarot Deck (Rider-Waite)",
+                    Description = "78 kartdan ibarət klassik Rider-Waite tarot dəsti, Azərbaycan dilində izahat kitabçası ilə birlikdə. Başlayanlar üçün ideal seçimdir.",
+                    PriceAzn = 35,
+                    UnitLabel = "dəst",
+                    ImageUrl = "/uploads/shop/tarot-rider-waite.jpg",
+                    SortOrder = 1,
+                    IsActive = true,
+                    Stock = 50
+                },
+                new()
+                {
+                    Category = ShopCategory.Tarot,
+                    Slug = "qara-ay-tarot-desti",
+                    Name = "Qara Ay Tarot Dəsti",
+                    NameEn = "Dark Moon Tarot Deck",
+                    Description = "Qaranlıq və mistik illüstrasiyalarla hazırlanmış 78 kartlıq premium tarot dəsti. Dərin sezgi işi üçün nəzərdə tutulub.",
+                    PriceAzn = 42,
+                    UnitLabel = "dəst",
+                    ImageUrl = "/uploads/shop/tarot-qara-ay.jpg",
+                    SortOrder = 2,
+                    IsActive = true,
+                    Stock = 30
+                },
+                new()
+                {
+                    Category = ShopCategory.Kristal,
+                    Slug = "ametist-kristal-das",
+                    Name = "Ametist Kristal Daş",
+                    NameEn = "Amethyst Crystal Stone",
+                    Description = "Təbii ametist daşı — sakitlik, intuisiya və mənəvi qorunma üçün istifadə olunur. Hər daş fərdi formaya malikdir.",
+                    PriceAzn = 18,
+                    UnitLabel = "ədəd",
+                    ImageUrl = "/uploads/shop/kristal-ametist.jpg",
+                    SortOrder = 1,
+                    IsActive = true,
+                    Stock = 80
+                },
+                new()
+                {
+                    Category = ShopCategory.Kristal,
+                    Slug = "roza-kuars-urek-dasi",
+                    Name = "Roza Kuars Ürək Daşı",
+                    NameEn = "Rose Quartz Heart Stone",
+                    Description = "Ürək formasında yonulmuş roza kuars — sevgi enerjisini, şəfqəti və emosional balansı gücləndirir.",
+                    PriceAzn = 22,
+                    UnitLabel = "ədəd",
+                    ImageUrl = "/uploads/shop/kristal-roza-kuars.jpg",
+                    SortOrder = 2,
+                    IsActive = true,
+                    Stock = 60
+                },
+                new()
+                {
+                    Category = ShopCategory.Sham,
+                    Slug = "lavanda-aromaterapiya-sami",
+                    Name = "Lavanda Aromaterapiya Şamı",
+                    NameEn = "Lavender Aromatherapy Candle",
+                    Description = "Təbii soya mumundan hazırlanmış, lavanda ətirli rahatlaşdırıcı şam. Meditasiya və ritual seansları üçün idealdır. Yanma müddəti ~30 saat.",
+                    PriceAzn = 15,
+                    UnitLabel = "ədəd",
+                    ImageUrl = "/uploads/shop/sham-lavanda.jpg",
+                    SortOrder = 1,
+                    IsActive = true,
+                    Stock = 100
+                },
+                new()
+                {
+                    Category = ShopCategory.Sham,
+                    Slug = "ay-enerjili-ritual-sami",
+                    Name = "Ay Enerjili Ritual Şamı",
+                    NameEn = "Moon-Charged Ritual Candle",
+                    Description = "Dolunay enerjisi ilə \"şarj edilmiş\" ritual şamı — niyyət qoyma və manifestasiya təcrübələri üçün hazırlanıb.",
+                    PriceAzn = 20,
+                    UnitLabel = "ədəd",
+                    ImageUrl = "/uploads/shop/sham-ay-enerjili.jpg",
+                    SortOrder = 2,
+                    IsActive = true,
+                    Stock = 70
+                },
+                new()
+                {
+                    Category = ShopCategory.Kitab,
+                    Slug = "astrologiyaya-giris-burcler-evler",
+                    Name = "Astrologiyaya Giriş: Bürclər və Evlər",
+                    NameEn = "Introduction to Astrology: Signs and Houses",
+                    Description = "12 bürc, 12 ev və əsas planetlərin mənalarını sadə dildə izah edən başlanğıc səviyyəsi astrologiya kitabı.",
+                    PriceAzn = 12,
+                    UnitLabel = "ədəd",
+                    ImageUrl = "/uploads/shop/kitab-astrologiyaya-giris.jpg",
+                    SortOrder = 1,
+                    IsActive = true,
+                    Stock = 40
+                },
+                new()
+                {
+                    Category = ShopCategory.Kitab,
+                    Slug = "natal-xerite-oxuma-beledcisi",
+                    Name = "Natal Xəritə Oxuma Bələdçisi",
+                    NameEn = "Natal Chart Reading Guide",
+                    Description = "Öz natal xəritəni addım-addım oxumağı öyrədən praktik bələdçi — planet mövqeləri, aspektlər və evlərin şərhi daxildir.",
+                    PriceAzn = 16,
+                    UnitLabel = "ədəd",
+                    ImageUrl = "/uploads/shop/kitab-natal-xerite.jpg",
+                    SortOrder = 2,
+                    IsActive = true,
+                    Stock = 40
+                }
+            };
+
+                await context.ShopProducts.AddRangeAsync(products);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }
