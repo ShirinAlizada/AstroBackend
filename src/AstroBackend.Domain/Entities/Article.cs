@@ -6,9 +6,15 @@ namespace AstroBackend.Domain.Entities
     {
         public Guid? AuthorId { get; set; }
         public string Title { get; set; } = string.Empty;
+        public string? TitleEn { get; set; }
+        public string? TitleRu { get; set; }
         public string Slug { get; set; } = string.Empty;
         public string? Excerpt { get; set; }
+        public string? ExcerptEn { get; set; }
+        public string? ExcerptRu { get; set; }
         public string Body { get; set; } = string.Empty;
+        public string? BodyEn { get; set; }
+        public string? BodyRu { get; set; }
         public string Tag { get; set; } = "ümumi";
         public string? CoverUrl { get; set; }
         public bool Published { get; set; } = true;

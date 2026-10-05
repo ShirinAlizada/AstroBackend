@@ -17,11 +17,15 @@ namespace AstroBackend.Domain.Entities
         public string Key { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string? Tagline { get; set; }
+        public string? TaglineEn { get; set; }
+        public string? TaglineRu { get; set; }
         public int PriceAzn { get; set; }
         /// <summary>Bu sətirdəki qiymət aylıq qiymətdir; illik qiymət (endirimli) tətbiq səviyyəsində hesablanır.</summary>
         public string BillingPeriod { get; set; } = "monthly";
         /// <summary>JSON massiv kimi saxlanılır (List&lt;string&gt; dəyər çeviricisi ilə) — SQL Server-də native massiv dəstəyi yoxdur.</summary>
         public List<string> Features { get; set; } = new();
+        public List<string>? FeaturesEn { get; set; }
+        public List<string>? FeaturesRu { get; set; }
         /// <summary>null = limitsiz.</summary>
         public int? AiMessagesPerDay { get; set; }
         public bool SynastryFullDetail { get; set; } = false;

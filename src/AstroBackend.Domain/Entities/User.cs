@@ -30,6 +30,7 @@ namespace AstroBackend.Domain.Entities
         public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
         public virtual UserSubscription? Subscription { get; set; }
         public virtual ICollection<PaymentTransaction> Payments { get; set; } = new List<PaymentTransaction>();
+        public virtual ICollection<PushSubscription> PushSubscriptions { get; set; } = new List<PushSubscription>();
     }
 
 }

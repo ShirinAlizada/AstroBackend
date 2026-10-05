@@ -10,6 +10,8 @@ namespace AstroBackend.Domain.Entities
         public HoroscopePeriod Period { get; set; } = HoroscopePeriod.Daily;
         public DateTime PeriodStart { get; set; } = DateTime.UtcNow.Date;
         public string Content { get; set; } = string.Empty;
+        public string? ContentEn { get; set; }
+        public string? ContentRu { get; set; }
         public int Love { get; set; } = 70;
         public int Career { get; set; } = 70;
         public int Finance { get; set; } = 70;
