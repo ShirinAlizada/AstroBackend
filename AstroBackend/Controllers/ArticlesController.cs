@@ -18,16 +18,17 @@ namespace AstroBackend.Controllers
             [FromQuery] string? tag,
             [FromQuery] string? search,
             [FromQuery] string? sort,
+            [FromQuery] string? lang,
             CancellationToken ct)
         {
-            var list = await _articleService.GetPublishedArticlesAsync(tag, search, sort, ct);
+            var list = await _articleService.GetPublishedArticlesAsync(tag, search, sort, lang, ct);
             return Ok(list);
         }
 
         [HttpGet("{slug}")]
-        public async Task<ActionResult<ArticleDto>> GetBySlug(string slug, CancellationToken ct)
+        public async Task<ActionResult<ArticleDto>> GetBySlug(string slug, [FromQuery] string? lang, CancellationToken ct)
         {
-            var article = await _articleService.GetArticleBySlugAsync(slug, ct);
+            var article = await _articleService.GetArticleBySlugAsync(slug, lang, ct);
             return Ok(article);
         }
 

@@ -17,6 +17,8 @@ public class AdminController : BaseApiController
     private readonly IForumService _forumService;
     private readonly IArticleService _articleService;
     private readonly IShopService _shopService;
+    private readonly ISubscriptionService _subscriptionService;
+    private readonly IContactService _contactService;
     private readonly ICurrentUserService _currentUserService;
 
     public AdminController(
@@ -27,6 +29,8 @@ public class AdminController : BaseApiController
         IForumService forumService,
         IArticleService articleService,
         IShopService shopService,
+        ISubscriptionService subscriptionService,
+        IContactService contactService,
         ICurrentUserService currentUserService)
     {
         _adminService = adminService;
@@ -36,6 +40,8 @@ public class AdminController : BaseApiController
         _forumService = forumService;
         _articleService = articleService;
         _shopService = shopService;
+        _subscriptionService = subscriptionService;
+        _contactService = contactService;
         _currentUserService = currentUserService;
     }
 
@@ -250,5 +256,49 @@ public class AdminController : BaseApiController
     {
         var stats = await _shopService.GetSalesStatsAsync(ct);
         return Ok(stats);
+    }
+
+    // --- SUBSCRIPTION PLANS MANAGEMENT ---
+    [HttpGet("subscriptions/plans")]
+    public async Task<ActionResult<IReadOnlyList<AdminSubscriptionPlanDto>>> GetAllSubscriptionPlans(CancellationToken ct)
+    {
+        var list = await _subscriptionService.AdminGetAllPlansAsync(ct);
+        return Ok(list);
+    }
+
+    [HttpPost("subscriptions/plans")]
+    public async Task<ActionResult<AdminSubscriptionPlanDto>> CreateSubscriptionPlan([FromBody] CreateSubscriptionPlanRequest request, CancellationToken ct)
+    {
+        var created = await _subscriptionService.AdminCreatePlanAsync(request, ct);
+        return Ok(created);
+    }
+
+    [HttpPut("subscriptions/plans/{id:guid}")]
+    public async Task<ActionResult<AdminSubscriptionPlanDto>> UpdateSubscriptionPlan(Guid id, [FromBody] UpdateSubscriptionPlanRequest request, CancellationToken ct)
+    {
+        var updated = await _subscriptionService.AdminUpdatePlanAsync(id, request, ct);
+        return Ok(updated);
+    }
+
+    [HttpDelete("subscriptions/plans/{id:guid}")]
+    public async Task<IActionResult> DeleteSubscriptionPlan(Guid id, CancellationToken ct)
+    {
+        await _subscriptionService.AdminDeletePlanAsync(id, ct);
+        return Ok(new { message = "Abunəlik paketi silindi." });
+    }
+
+    // --- CONTACT MESSAGES MANAGEMENT ---
+    [HttpGet("contact-messages")]
+    public async Task<ActionResult<IReadOnlyList<ContactMessageDto>>> GetAllContactMessages(CancellationToken ct)
+    {
+        var list = await _contactService.AdminGetAllAsync(ct);
+        return Ok(list);
+    }
+
+    [HttpPatch("contact-messages/{id:guid}/read")]
+    public async Task<IActionResult> MarkContactMessageRead(Guid id, [FromQuery] bool isRead = true, CancellationToken ct = default)
+    {
+        await _contactService.AdminMarkReadAsync(id, isRead, ct);
+        return Ok(new { message = "Mesaj statusu yeniləndi." });
     }
 }

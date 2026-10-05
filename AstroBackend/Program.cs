@@ -8,9 +8,11 @@ using AstroBackend.Infrastructure.Persistence.SeedData;
 using AstroBackend.Middlewares;
 using AstroBackend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,6 +87,20 @@ builder.Services.AddControllers()
 // 6. Swagger Documentation with JWT Authorize support
 builder.Services.AddSwaggerDocumentation();
 
+// 6b. Rate Limiting — spam/abuse qorunması (ASP.NET Core daxili middleware, əlavə paket tələb etmir).
+// "contact" siyasəti: IP üzrə saatda 3 sorğu (Əlaqə formu, ContactController-də [EnableRateLimiting]).
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    options.AddFixedWindowLimiter("contact", opt =>
+    {
+        opt.PermitLimit = 3;
+        opt.Window = TimeSpan.FromHours(1);
+        opt.QueueLimit = 0;
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    });
+});
+
 var app = builder.Build();
 
 // 7. Global Exception Handling Middleware
@@ -104,9 +120,10 @@ if (app.Environment.IsDevelopment())
 
 // 9. CORS & Security Pipeline
 app.UseCors("AllowedOrigins");
-app.UseStaticFiles(); // wwwroot/uploads (avatarlar və s.) statik fayl kimi ötürülür
+app.UseStaticFiles(); // wwwroot/uploads (avatarlar, mağaza şəkilləri və s.) statik fayl kimi ötürülür
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseRateLimiter();
 
 app.MapControllers();
 

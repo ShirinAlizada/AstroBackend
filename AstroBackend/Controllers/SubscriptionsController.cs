@@ -18,9 +18,9 @@ namespace AstroBackend.Controllers
         }
 
         [HttpGet("plans")]
-        public async Task<ActionResult<IReadOnlyList<SubscriptionPlanDto>>> GetPlans(CancellationToken ct)
+        public async Task<ActionResult<IReadOnlyList<SubscriptionPlanDto>>> GetPlans([FromQuery] string? lang, CancellationToken ct)
         {
-            var plans = await _subscriptionService.GetActivePlansAsync(ct);
+            var plans = await _subscriptionService.GetActivePlansAsync(lang, ct);
             return Ok(plans);
         }
 

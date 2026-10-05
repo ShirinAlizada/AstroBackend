@@ -17,9 +17,10 @@ public class HoroscopesController : BaseApiController
     public async Task<ActionResult<IReadOnlyList<HoroscopeDto>>> GetHoroscopes(
         [FromQuery] string? sign,
         [FromQuery] string? period,
+        [FromQuery] string? lang,
         CancellationToken ct)
     {
-        var list = await _horoscopeService.GetHoroscopesAsync(sign, period, ct);
+        var list = await _horoscopeService.GetHoroscopesAsync(sign, period, lang, ct);
         return Ok(list);
     }
 
@@ -27,9 +28,10 @@ public class HoroscopesController : BaseApiController
     public async Task<ActionResult<HoroscopeDto>> GetCurrentHoroscope(
         [FromQuery] string sign,
         [FromQuery] string period = "daily",
+        [FromQuery] string? lang = null,
         CancellationToken ct = default)
     {
-        var horoscope = await _horoscopeService.GetCurrentHoroscopeAsync(sign, period, ct);
+        var horoscope = await _horoscopeService.GetCurrentHoroscopeAsync(sign, period, lang, ct);
         if (horoscope == null) return NotFound(new { message = "Bu bürc və dövr üçün proqnoz tapılmadı." });
         return Ok(horoscope);
     }
