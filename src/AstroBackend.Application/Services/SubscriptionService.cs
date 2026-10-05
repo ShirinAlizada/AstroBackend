@@ -30,12 +30,12 @@ public class SubscriptionService : ISubscriptionService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IReadOnlyList<SubscriptionPlanDto>> GetActivePlansAsync(CancellationToken ct = default)
+    public async Task<IReadOnlyList<SubscriptionPlanDto>> GetActivePlansAsync(string? lang = null, CancellationToken ct = default)
     {
         var plans = await _planRepo.FindAsync(p => p.IsActive, ct);
         return plans
             .OrderBy(p => p.SortOrder)
-            .Select(MapPlan)
+            .Select(p => MapPlan(p, lang))
             .ToList();
     }
 
@@ -125,16 +125,131 @@ public class SubscriptionService : ISubscriptionService
             .ToList();
     }
 
-    private static SubscriptionPlanDto MapPlan(SubscriptionPlan plan) => new(
+    // --- Admin CRUD (xam, çoxdilli sahələrlə) ---
+
+    public async Task<IReadOnlyList<AdminSubscriptionPlanDto>> AdminGetAllPlansAsync(CancellationToken ct = default)
+    {
+        var plans = await _planRepo.GetAllAsync(ct);
+        return plans.OrderBy(p => p.SortOrder).Select(MapAdminPlan).ToList();
+    }
+
+    public async Task<AdminSubscriptionPlanDto> AdminCreatePlanAsync(CreateSubscriptionPlanRequest request, CancellationToken ct = default)
+    {
+        if (string.IsNullOrWhiteSpace(request.Key) || string.IsNullOrWhiteSpace(request.Name))
+            throw new BadRequestException("Açar (key) və ad mütləq daxil edilməlidir.");
+
+        var existing = await _planRepo.FirstOrDefaultAsync(p => p.Key == request.Key, ct);
+        if (existing != null)
+            throw new BadRequestException("Bu açarla (key) paket artıq mövcuddur.");
+
+        var plan = new SubscriptionPlan
+        {
+            Key = request.Key.Trim(),
+            Name = request.Name.Trim(),
+            Tagline = request.Tagline,
+            TaglineEn = request.TaglineEn,
+            TaglineRu = request.TaglineRu,
+            PriceAzn = request.PriceAzn,
+            BillingPeriod = string.IsNullOrWhiteSpace(request.BillingPeriod) ? "monthly" : request.BillingPeriod,
+            Features = request.Features ?? new List<string>(),
+            FeaturesEn = request.FeaturesEn,
+            FeaturesRu = request.FeaturesRu,
+            AiMessagesPerDay = request.AiMessagesPerDay,
+            SynastryFullDetail = request.SynastryFullDetail,
+            BookingDiscountPct = request.BookingDiscountPct,
+            SortOrder = request.SortOrder,
+            IsActive = request.IsActive
+        };
+
+        await _planRepo.AddAsync(plan, ct);
+        await _unitOfWork.SaveChangesAsync(ct);
+        return MapAdminPlan(plan);
+    }
+
+    public async Task<AdminSubscriptionPlanDto> AdminUpdatePlanAsync(Guid id, UpdateSubscriptionPlanRequest request, CancellationToken ct = default)
+    {
+        var plan = await _planRepo.GetByIdAsync(id, ct);
+        if (plan == null)
+            throw new NotFoundException("Abunəlik paketi tapılmadı.");
+
+        plan.Name = request.Name.Trim();
+        plan.Tagline = request.Tagline;
+        plan.TaglineEn = request.TaglineEn;
+        plan.TaglineRu = request.TaglineRu;
+        plan.PriceAzn = request.PriceAzn;
+        plan.BillingPeriod = string.IsNullOrWhiteSpace(request.BillingPeriod) ? "monthly" : request.BillingPeriod;
+        plan.Features = request.Features ?? new List<string>();
+        plan.FeaturesEn = request.FeaturesEn;
+        plan.FeaturesRu = request.FeaturesRu;
+        plan.AiMessagesPerDay = request.AiMessagesPerDay;
+        plan.SynastryFullDetail = request.SynastryFullDetail;
+        plan.BookingDiscountPct = request.BookingDiscountPct;
+        plan.SortOrder = request.SortOrder;
+        plan.IsActive = request.IsActive;
+        plan.UpdatedAt = DateTime.UtcNow;
+
+        _planRepo.Update(plan);
+        await _unitOfWork.SaveChangesAsync(ct);
+        return MapAdminPlan(plan);
+    }
+
+    public async Task AdminDeletePlanAsync(Guid id, CancellationToken ct = default)
+    {
+        var plan = await _planRepo.GetByIdAsync(id, ct);
+        if (plan == null)
+            throw new NotFoundException("Abunəlik paketi tapılmadı.");
+
+        _planRepo.Delete(plan);
+        await _unitOfWork.SaveChangesAsync(ct);
+    }
+
+    /// <summary>lang == "en"/"ru" olduqda uyğun tərcümə sütunu, boş/null olduqda isə Azərbaycan mətni istifadə olunur.</summary>
+    private static SubscriptionPlanDto MapPlan(SubscriptionPlan plan, string? lang)
+    {
+        string? tagline = plan.Tagline;
+        List<string> features = plan.Features;
+
+        if (string.Equals(lang, "en", StringComparison.OrdinalIgnoreCase))
+        {
+            tagline = string.IsNullOrWhiteSpace(plan.TaglineEn) ? plan.Tagline : plan.TaglineEn;
+            features = (plan.FeaturesEn != null && plan.FeaturesEn.Count > 0) ? plan.FeaturesEn : plan.Features;
+        }
+        else if (string.Equals(lang, "ru", StringComparison.OrdinalIgnoreCase))
+        {
+            tagline = string.IsNullOrWhiteSpace(plan.TaglineRu) ? plan.Tagline : plan.TaglineRu;
+            features = (plan.FeaturesRu != null && plan.FeaturesRu.Count > 0) ? plan.FeaturesRu : plan.Features;
+        }
+
+        return new(
+            plan.Key,
+            plan.Name,
+            tagline,
+            plan.PriceAzn,
+            plan.BillingPeriod,
+            features,
+            plan.AiMessagesPerDay,
+            plan.SynastryFullDetail,
+            plan.BookingDiscountPct
+        );
+    }
+
+    private static AdminSubscriptionPlanDto MapAdminPlan(SubscriptionPlan plan) => new(
+        plan.Id,
         plan.Key,
         plan.Name,
         plan.Tagline,
+        plan.TaglineEn,
+        plan.TaglineRu,
         plan.PriceAzn,
         plan.BillingPeriod,
         plan.Features,
+        plan.FeaturesEn,
+        plan.FeaturesRu,
         plan.AiMessagesPerDay,
         plan.SynastryFullDetail,
-        plan.BookingDiscountPct
+        plan.BookingDiscountPct,
+        plan.SortOrder,
+        plan.IsActive
     );
 
     private static UserSubscriptionDto MapSubscription(UserSubscription sub) => new(

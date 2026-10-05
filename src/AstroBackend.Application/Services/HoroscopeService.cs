@@ -19,7 +19,7 @@ public class HoroscopeService : IHoroscopeService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IReadOnlyList<HoroscopeDto>> GetHoroscopesAsync(string? sign, string? period, CancellationToken ct = default)
+    public async Task<IReadOnlyList<HoroscopeDto>> GetHoroscopesAsync(string? sign, string? period, string? lang = null, CancellationToken ct = default)
     {
         var query = _horoscopeRepo.Query();
 
@@ -30,10 +30,10 @@ public class HoroscopeService : IHoroscopeService
             query = query.Where(h => h.Period == pEnum);
 
         var list = await query.OrderByDescending(h => h.PeriodStart).ToListAsync(ct);
-        return list.Select(MapToDto).ToList();
+        return list.Select(h => MapToDto(h, lang)).ToList();
     }
 
-    public async Task<HoroscopeDto?> GetCurrentHoroscopeAsync(string sign, string period, CancellationToken ct = default)
+    public async Task<HoroscopeDto?> GetCurrentHoroscopeAsync(string sign, string period, string? lang = null, CancellationToken ct = default)
     {
         if (!Enum.TryParse<HoroscopePeriod>(period, true, out var pEnum))
             pEnum = HoroscopePeriod.Daily;
@@ -43,7 +43,7 @@ public class HoroscopeService : IHoroscopeService
             .OrderByDescending(h => h.PeriodStart)
             .FirstOrDefaultAsync(ct);
 
-        return horoscope != null ? MapToDto(horoscope) : null;
+        return horoscope != null ? MapToDto(horoscope, lang) : null;
     }
 
     public async Task<HoroscopeDto> CreateHoroscopeAsync(CreateHoroscopeRequest request, CancellationToken ct = default)
@@ -94,14 +94,24 @@ public class HoroscopeService : IHoroscopeService
         await _unitOfWork.SaveChangesAsync(ct);
     }
 
-    private static HoroscopeDto MapToDto(Horoscope h) => new(
-        h.Id,
-        h.Sign,
-        h.Period.ToString().ToLower(),
-        h.PeriodStart,
-        h.Content,
-        h.Love,
-        h.Career,
-        h.Finance
-    );
+    /// <summary>lang == "en"/"ru" olduqda uyğun tərcümə sütunu, boş/null olduqda Azərbaycan mətni istifadə olunur.</summary>
+    private static HoroscopeDto MapToDto(Horoscope h, string? lang = null)
+    {
+        string content = h.Content;
+        if (string.Equals(lang, "en", StringComparison.OrdinalIgnoreCase))
+            content = string.IsNullOrWhiteSpace(h.ContentEn) ? h.Content : h.ContentEn;
+        else if (string.Equals(lang, "ru", StringComparison.OrdinalIgnoreCase))
+            content = string.IsNullOrWhiteSpace(h.ContentRu) ? h.Content : h.ContentRu;
+
+        return new(
+            h.Id,
+            h.Sign,
+            h.Period.ToString().ToLower(),
+            h.PeriodStart,
+            content,
+            h.Love,
+            h.Career,
+            h.Finance
+        );
+    }
 }

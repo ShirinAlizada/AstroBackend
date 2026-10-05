@@ -15,6 +15,8 @@ namespace AstroBackend.Application.Services
         private readonly IGenericRepository<ShopProductReview> _reviewRepo;
         private readonly IGenericRepository<User> _userRepo;
         private readonly INotificationService _notificationService;
+        private readonly IPushSubscriptionService _pushSubscriptionService;
+        private readonly IEmailService _emailService;
         private readonly IUnitOfWork _unitOfWork;
 
         public ShopService(
@@ -24,6 +26,8 @@ namespace AstroBackend.Application.Services
             IGenericRepository<ShopProductReview> reviewRepo,
             IGenericRepository<User> userRepo,
             INotificationService notificationService,
+            IPushSubscriptionService pushSubscriptionService,
+            IEmailService emailService,
             IUnitOfWork unitOfWork)
         {
             _productRepo = productRepo;
@@ -32,6 +36,8 @@ namespace AstroBackend.Application.Services
             _reviewRepo = reviewRepo;
             _userRepo = userRepo;
             _notificationService = notificationService;
+            _pushSubscriptionService = pushSubscriptionService;
+            _emailService = emailService;
             _unitOfWork = unitOfWork;
         }
 
@@ -220,6 +226,27 @@ namespace AstroBackend.Application.Services
 
             await _unitOfWork.SaveChangesAsync(ct);
 
+            // Sifariş təsdiq e-poçtu — best-effort, uğursuz olsa sifarişin özünə mane olmur.
+            try
+            {
+                var buyer = await _userRepo.GetByIdAsync(userId, ct);
+                if (buyer != null)
+                {
+                    await _emailService.SendAsync(
+                        buyer.Email,
+                        "Sifarişiniz qəbul edildi — Virgo Astrology",
+                        $"<p>Salam {System.Net.WebUtility.HtmlEncode(order.FullName)},</p>" +
+                        $"<p>Sifarişiniz qəbul edildi. Ümumi məbləğ: <strong>{order.TotalAzn} AZN</strong>.</p>" +
+                        "<p>Status dəyişdikdə sizə bildiriş göndəriləcək.</p>" +
+                        "<p>Hörmətlə,<br/>Virgo Astrology komandası</p>",
+                        ct);
+                }
+            }
+            catch
+            {
+                // Email göndərilməsə belə sifariş artıq qeydə alınıb.
+            }
+
             return MapOrder(order, items);
         }
 
@@ -270,6 +297,32 @@ namespace AstroBackend.Application.Services
                     $"Sifarişiniz \"{statusLabel}\" statusuna keçdi.",
                     "/sifarislerim",
                     ct);
+
+                await _pushSubscriptionService.NotifyUserAsync(
+                    order.UserId,
+                    "Sifariş statusu yeniləndi",
+                    $"Sifarişiniz \"{statusLabel}\" statusuna keçdi.",
+                    "/sifarislerim",
+                    ct);
+
+                try
+                {
+                    var buyer = await _userRepo.GetByIdAsync(order.UserId, ct);
+                    if (buyer != null)
+                    {
+                        await _emailService.SendAsync(
+                            buyer.Email,
+                            "Sifariş statusu yeniləndi — Virgo Astrology",
+                            $"<p>Salam {System.Net.WebUtility.HtmlEncode(order.FullName)},</p>" +
+                            $"<p>Sifarişiniz \"{statusLabel}\" statusuna keçdi.</p>" +
+                            "<p>Hörmətlə,<br/>Virgo Astrology komandası</p>",
+                            ct);
+                    }
+                }
+                catch
+                {
+                    // Best-effort — status dəyişikliyi artıq qeydə alınıb.
+                }
             }
 
             var items = await _itemRepo.FindAsync(i => i.OrderId == order.Id, ct);

@@ -13,17 +13,20 @@ public class ForumService : IForumService
     private readonly IGenericRepository<ForumReply> _replyRepo;
     private readonly IUnitOfWork _unitOfWork;
     private readonly INotificationService _notificationService;
+    private readonly IPushSubscriptionService _pushSubscriptionService;
 
     public ForumService(
         IGenericRepository<ForumTopic> topicRepo,
         IGenericRepository<ForumReply> replyRepo,
         IUnitOfWork unitOfWork,
-        INotificationService notificationService)
+        INotificationService notificationService,
+        IPushSubscriptionService pushSubscriptionService)
     {
         _topicRepo = topicRepo;
         _replyRepo = replyRepo;
         _unitOfWork = unitOfWork;
         _notificationService = notificationService;
+        _pushSubscriptionService = pushSubscriptionService;
     }
 
     public async Task<IReadOnlyList<ForumTopicDto>> GetTopicsAsync(string? category, CancellationToken ct = default)
@@ -153,6 +156,14 @@ public class ForumService : IForumService
             await _notificationService.CreateAsync(
                 topic.UserId,
                 "forum_reply",
+                "Mövzuna yeni cavab",
+                $"{authorName}: {preview}",
+                $"/forum/{topicId}",
+                ct);
+
+            // Brauzer Web Push — tab bağlı olsa belə xəbərdarlıq (best-effort, DB bildirişinə əlavə kanal).
+            await _pushSubscriptionService.NotifyUserAsync(
+                topic.UserId,
                 "Mövzuna yeni cavab",
                 $"{authorName}: {preview}",
                 $"/forum/{topicId}",

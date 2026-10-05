@@ -33,8 +33,9 @@ public interface ISynastryService
 
 public interface IHoroscopeService
 {
-    Task<IReadOnlyList<HoroscopeDto>> GetHoroscopesAsync(string? sign, string? period, CancellationToken ct = default);
-    Task<HoroscopeDto?> GetCurrentHoroscopeAsync(string sign, string period, CancellationToken ct = default);
+    /// <summary>lang: "en"/"ru" verilsə uyğun tərcümə sütunundan oxunur, mövcud deyilsə Azərbaycan mətninə geri qayıdır.</summary>
+    Task<IReadOnlyList<HoroscopeDto>> GetHoroscopesAsync(string? sign, string? period, string? lang = null, CancellationToken ct = default);
+    Task<HoroscopeDto?> GetCurrentHoroscopeAsync(string sign, string period, string? lang = null, CancellationToken ct = default);
     Task<HoroscopeDto> CreateHoroscopeAsync(CreateHoroscopeRequest request, CancellationToken ct = default);
     Task<HoroscopeDto> UpdateHoroscopeAsync(Guid id, UpdateHoroscopeRequest request, CancellationToken ct = default);
     Task DeleteHoroscopeAsync(Guid id, CancellationToken ct = default);
@@ -84,8 +85,9 @@ public interface IForumService
 
 public interface IArticleService
 {
-    Task<IReadOnlyList<ArticleDto>> GetPublishedArticlesAsync(string? tag, string? search, string? sort, CancellationToken ct = default);
-    Task<ArticleDto> GetArticleBySlugAsync(string slug, CancellationToken ct = default);
+    /// <summary>lang: "en"/"ru" verilsə uyğun tərcümə sütunlarından oxunur, mövcud deyilsə Azərbaycan mətninə geri qayıdır.</summary>
+    Task<IReadOnlyList<ArticleDto>> GetPublishedArticlesAsync(string? tag, string? search, string? sort, string? lang = null, CancellationToken ct = default);
+    Task<ArticleDto> GetArticleBySlugAsync(string slug, string? lang = null, CancellationToken ct = default);
     Task IncrementViewsAsync(string slug, CancellationToken ct = default);
     Task<IReadOnlyList<ArticleDto>> AdminGetAllArticlesAsync(CancellationToken ct = default);
     Task<ArticleDto> AdminCreateArticleAsync(Guid? authorId, CreateArticleRequest request, CancellationToken ct = default);
@@ -182,9 +184,58 @@ public interface IFileStorageService
 /// </summary>
 public interface ISubscriptionService
 {
-    Task<IReadOnlyList<SubscriptionPlanDto>> GetActivePlansAsync(CancellationToken ct = default);
+    /// <summary>lang: "en"/"ru" verilsə Tagline/Features üçün uyğun tərcümədən oxunur, mövcud deyilsə AZ-a geri qayıdır.</summary>
+    Task<IReadOnlyList<SubscriptionPlanDto>> GetActivePlansAsync(string? lang = null, CancellationToken ct = default);
     Task<UserSubscriptionDto?> GetMySubscriptionAsync(Guid userId, CancellationToken ct = default);
     Task<UserSubscriptionDto> PurchaseAsync(Guid userId, PurchasePlanRequest request, CancellationToken ct = default);
     Task CancelAsync(Guid userId, CancellationToken ct = default);
     Task<IReadOnlyList<PaymentTransactionDto>> GetMyPaymentsAsync(Guid userId, CancellationToken ct = default);
+
+    // --- Admin CRUD (xam, çoxdilli sahələrlə — ShopProduct-dakı eyni naxış) ---
+    Task<IReadOnlyList<AdminSubscriptionPlanDto>> AdminGetAllPlansAsync(CancellationToken ct = default);
+    Task<AdminSubscriptionPlanDto> AdminCreatePlanAsync(CreateSubscriptionPlanRequest request, CancellationToken ct = default);
+    Task<AdminSubscriptionPlanDto> AdminUpdatePlanAsync(Guid id, UpdateSubscriptionPlanRequest request, CancellationToken ct = default);
+    Task AdminDeletePlanAsync(Guid id, CancellationToken ct = default);
+}
+
+/// <summary>
+/// "Əlaqə" formu mesajlarının backend qatı. Frontend-dəki (Supabase) analoqu kimi,
+/// eyni e-poçtdan son 1 saatda 3-dən çox mesaja icazə vermir (tətbiq-səviyyəli
+/// qoruma — [EnableRateLimiting] ilə IP-səviyyəli qorumaya əlavə olaraq).
+/// </summary>
+public interface IContactService
+{
+    Task<ContactMessageDto> SubmitAsync(CreateContactMessageRequest request, CancellationToken ct = default);
+    Task<IReadOnlyList<ContactMessageDto>> AdminGetAllAsync(CancellationToken ct = default);
+    Task AdminMarkReadAsync(Guid id, bool isRead, CancellationToken ct = default);
+}
+
+/// <summary>
+/// İstifadəçinin brauzer Web Push abunəliklərini idarə edir və digər servislərin
+/// (ForumService, ShopService) adından best-effort bildiriş göndərir — DB-daxili
+/// Notification-dan ayrı, əlavə bir kanal (tab bağlı olanda da xəbərdarlıq üçün).
+/// </summary>
+public interface IPushSubscriptionService
+{
+    Task SubscribeAsync(Guid userId, PushSubscribeRequest request, CancellationToken ct = default);
+    Task UnsubscribeAsync(Guid userId, string endpoint, CancellationToken ct = default);
+    Task NotifyUserAsync(Guid userId, string title, string body, string? link, CancellationToken ct = default);
+}
+
+/// <summary>
+/// Web Push (VAPID) göndərmə abstraksiyası — Infrastructure qatında WebPush
+/// NuGet paketi ilə tətbiq olunur.
+/// </summary>
+public interface IPushService
+{
+    Task SendAsync(string endpoint, string p256dh, string authKey, string payloadJson, CancellationToken ct = default);
+}
+
+/// <summary>
+/// E-poçt göndərmə abstraksiyası — Infrastructure qatında SMTP (MailKit) ilə tətbiq
+/// olunur. Bütün çağırışlar "best-effort"dur: göndərmə xətası əsas əməliyyatı pozmamalıdır.
+/// </summary>
+public interface IEmailService
+{
+    Task SendAsync(string toEmail, string subject, string htmlBody, CancellationToken ct = default);
 }

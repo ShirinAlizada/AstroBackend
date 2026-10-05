@@ -26,6 +26,8 @@ public static class ServiceRegistration
         services.AddScoped<INotificationService, NotificationService>();
         services.AddScoped<IWishlistService, WishlistService>();
         services.AddScoped<ISubscriptionService, SubscriptionService>();
+        services.AddScoped<IContactService, ContactService>();
+        services.AddScoped<IPushSubscriptionService, PushSubscriptionService>();
 
         return services;
     }

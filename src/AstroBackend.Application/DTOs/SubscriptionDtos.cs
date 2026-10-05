@@ -41,4 +41,63 @@ namespace AstroBackend.Application.DTOs
         DateTime CreatedAt
     );
 
+    /// <summary>
+    /// Admin idarəetməsi üçün xam (bütün dillər daxil) paket şəkli — ShopProductDto-dakı
+    /// NameEn/NameRu naxışının analoqu. Tətbiq/müştəri tərəfinə göndərilən SubscriptionPlanDto
+    /// isə yalnız bir dildə (lang parametrinə görə həll olunmuş) göstərir.
+    /// </summary>
+    public record AdminSubscriptionPlanDto(
+        Guid Id,
+        string Key,
+        string Name,
+        string? Tagline,
+        string? TaglineEn,
+        string? TaglineRu,
+        int PriceAzn,
+        string BillingPeriod,
+        List<string> Features,
+        List<string>? FeaturesEn,
+        List<string>? FeaturesRu,
+        int? AiMessagesPerDay,
+        bool SynastryFullDetail,
+        int BookingDiscountPct,
+        short SortOrder,
+        bool IsActive
+    );
+
+    public record CreateSubscriptionPlanRequest(
+        string Key,
+        string Name,
+        string? Tagline,
+        string? TaglineEn,
+        string? TaglineRu,
+        int PriceAzn,
+        string BillingPeriod,
+        List<string> Features,
+        List<string>? FeaturesEn,
+        List<string>? FeaturesRu,
+        int? AiMessagesPerDay,
+        bool SynastryFullDetail,
+        int BookingDiscountPct,
+        short SortOrder,
+        bool IsActive
+    );
+
+    public record UpdateSubscriptionPlanRequest(
+        string Name,
+        string? Tagline,
+        string? TaglineEn,
+        string? TaglineRu,
+        int PriceAzn,
+        string BillingPeriod,
+        List<string> Features,
+        List<string>? FeaturesEn,
+        List<string>? FeaturesRu,
+        int? AiMessagesPerDay,
+        bool SynastryFullDetail,
+        int BookingDiscountPct,
+        short SortOrder,
+        bool IsActive
+    );
+
 }

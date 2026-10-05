@@ -31,7 +31,7 @@ namespace AstroBackend.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IReadOnlyList<ArticleDto>> GetPublishedArticlesAsync(string? tag, string? search, string? sort, CancellationToken ct = default)
+        public async Task<IReadOnlyList<ArticleDto>> GetPublishedArticlesAsync(string? tag, string? search, string? sort, string? lang = null, CancellationToken ct = default)
         {
             var query = _articleRepo.Query().Where(a => a.Published);
 
@@ -48,15 +48,15 @@ namespace AstroBackend.Application.Services
                 ? await query.OrderByDescending(a => a.Views).ToListAsync(ct)
                 : await query.OrderByDescending(a => a.PublishedAt ?? a.CreatedAt).ToListAsync(ct);
 
-            return list.Select(MapToDto).ToList();
+            return list.Select(a => MapToDto(a, lang)).ToList();
         }
 
-        public async Task<ArticleDto> GetArticleBySlugAsync(string slug, CancellationToken ct = default)
+        public async Task<ArticleDto> GetArticleBySlugAsync(string slug, string? lang = null, CancellationToken ct = default)
         {
             var article = await _articleRepo.FirstOrDefaultAsync(a => a.Slug.ToLower() == slug.ToLower() && a.Published, ct);
             if (article == null) throw new NotFoundException("Məqalə tapılmadı.");
 
-            return MapToDto(article);
+            return MapToDto(article, lang);
         }
 
         public async Task IncrementViewsAsync(string slug, CancellationToken ct = default)
@@ -73,7 +73,7 @@ namespace AstroBackend.Application.Services
         public async Task<IReadOnlyList<ArticleDto>> AdminGetAllArticlesAsync(CancellationToken ct = default)
         {
             var list = await _articleRepo.Query().OrderByDescending(a => a.CreatedAt).ToListAsync(ct);
-            return list.Select(MapToDto).ToList();
+            return list.Select(a => MapToDto(a)).ToList();
         }
 
         public async Task<ArticleDto> AdminCreateArticleAsync(Guid? authorId, CreateArticleRequest request, CancellationToken ct = default)
@@ -214,20 +214,41 @@ namespace AstroBackend.Application.Services
             return clean.Trim('-');
         }
 
-        private static ArticleDto MapToDto(Article a) => new(
-            a.Id,
-            a.AuthorId,
-            a.Title,
-            a.Slug,
-            a.Excerpt,
-            a.Body,
-            a.Tag,
-            a.CoverUrl,
-            a.Published,
-            a.PublishedAt,
-            a.Views,
-            a.CreatedAt
-        );
+        /// <summary>lang == "en"/"ru" olduqda uyğun tərcümə sütunları, boş/null olduqda Azərbaycan mətni istifadə olunur.</summary>
+        private static ArticleDto MapToDto(Article a, string? lang = null)
+        {
+            string title = a.Title;
+            string? excerpt = a.Excerpt;
+            string body = a.Body;
+
+            if (string.Equals(lang, "en", StringComparison.OrdinalIgnoreCase))
+            {
+                title = string.IsNullOrWhiteSpace(a.TitleEn) ? a.Title : a.TitleEn;
+                excerpt = string.IsNullOrWhiteSpace(a.ExcerptEn) ? a.Excerpt : a.ExcerptEn;
+                body = string.IsNullOrWhiteSpace(a.BodyEn) ? a.Body : a.BodyEn;
+            }
+            else if (string.Equals(lang, "ru", StringComparison.OrdinalIgnoreCase))
+            {
+                title = string.IsNullOrWhiteSpace(a.TitleRu) ? a.Title : a.TitleRu;
+                excerpt = string.IsNullOrWhiteSpace(a.ExcerptRu) ? a.Excerpt : a.ExcerptRu;
+                body = string.IsNullOrWhiteSpace(a.BodyRu) ? a.Body : a.BodyRu;
+            }
+
+            return new(
+                a.Id,
+                a.AuthorId,
+                title,
+                a.Slug,
+                excerpt,
+                body,
+                a.Tag,
+                a.CoverUrl,
+                a.Published,
+                a.PublishedAt,
+                a.Views,
+                a.CreatedAt
+            );
+        }
     }
 
 
