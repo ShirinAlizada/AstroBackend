@@ -30,6 +30,7 @@ namespace AstroBackend.Infrastructure.Persistence
         public DbSet<PaymentTransaction> PaymentTransactions => Set<PaymentTransaction>();
         public DbSet<ContactMessage> ContactMessages => Set<ContactMessage>();
         public DbSet<PushSubscription> PushSubscriptions => Set<PushSubscription>();
+        public DbSet<AiUsageLog> AiUsageLogs => Set<AiUsageLog>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -391,6 +392,18 @@ namespace AstroBackend.Infrastructure.Persistence
                 entity.HasOne(p => p.User)
                       .WithMany(u => u.PushSubscriptions)
                       .HasForeignKey(p => p.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // AiUsageLog (AIController-in gündəlik AI istifadə sayğacı)
+            modelBuilder.Entity<AiUsageLog>(entity =>
+            {
+                entity.HasKey(l => l.Id);
+                entity.HasIndex(l => new { l.UserId, l.UsageDate }).IsUnique();
+
+                entity.HasOne(l => l.User)
+                      .WithMany()
+                      .HasForeignKey(l => l.UserId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
         }
