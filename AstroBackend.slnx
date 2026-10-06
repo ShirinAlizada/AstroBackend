@@ -5,4 +5,7 @@
     <Project Path="src/AstroBackend.Domain/AstroBackend.Domain.csproj" />
     <Project Path="src/AstroBackend.Infrastructure/AstroBackend.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AstroBackend.Tests/AstroBackend.Tests.csproj" />
+  </Folder>
 </Solution>
