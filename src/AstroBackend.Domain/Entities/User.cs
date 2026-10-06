@@ -13,6 +13,10 @@ namespace AstroBackend.Domain.Entities
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
 
+        /// <summary>Şifrə sıfırlama (forgot-password) axını üçün bir dəfəlik token — RefreshToken ilə eyni naxış.</summary>
+        public string? PasswordResetToken { get; set; }
+        public DateTime? PasswordResetTokenExpiryTime { get; set; }
+
         // Navigation Properties
         public virtual Profile? Profile { get; set; }
         public virtual NatalChart? NatalChart { get; set; }
