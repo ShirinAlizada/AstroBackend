@@ -8,6 +8,15 @@ public interface IAuthService
     Task<AuthResponse> LoginAsync(LoginRequest request, CancellationToken ct = default);
     Task<AuthResponse> RefreshTokenAsync(RefreshTokenRequest request, CancellationToken ct = default);
     Task ChangePasswordAsync(Guid userId, ChangePasswordRequest request, CancellationToken ct = default);
+
+    /// <summary>Cari refresh tokeni serverdə etibarsız edir (nullayır) — logout-dan sonra həmin token artıq yeni access-token ala bilməz.</summary>
+    Task LogoutAsync(Guid userId, CancellationToken ct = default);
+
+    /// <summary>E-poçt mövcuddursa bir sıfırlama tokeni generasiya edib best-effort email göndərir. E-poçt mövcud olmasa belə sakitcə qayıdır (enumeration-un qarşısını almaq üçün).</summary>
+    Task ForgotPasswordAsync(ForgotPasswordRequest request, CancellationToken ct = default);
+
+    /// <summary>Tokeni doğrulayıb şifrəni dəyişir və bütün mövcud refresh tokenləri etibarsız edir.</summary>
+    Task ResetPasswordAsync(ResetPasswordRequest request, CancellationToken ct = default);
 }
 
 public interface IProfileService
@@ -29,6 +38,17 @@ public interface ISynastryService
 
     /// <summary>Tam natal xəritəyə əsaslanan (yalnız Günəş bürcü deyil) uyğunluq hesablaması.</summary>
     Task<SynastryResponse> CalculateFromChartsAsync(SynastryChartRequest request, Guid? currentUserId, CancellationToken ct = default);
+}
+
+/// <summary>
+/// AIController-in sərbəst AI çağırışları üçün gündəlik istifadə limitini tətbiq edir
+/// (bax: AiUsageLog). ChatService.SendMessageAsync (saxlanılan astroloq söhbəti) hələlik bu
+/// yoxlamaya bağlanmayıb — yalnız AIController-in birbaşa generate/stream endpoint-ləri üçün.
+/// </summary>
+public interface IAiUsageService
+{
+    /// <summary>İstifadəçinin bugünkü istifadəsini planına görə yoxlayır; limit keçilibsə BadRequestException atır, əks halda sayğacı 1 artırır.</summary>
+    Task EnsureWithinDailyLimitAsync(Guid userId, CancellationToken ct = default);
 }
 
 public interface IHoroscopeService
@@ -72,7 +92,8 @@ public interface IJournalService
 
 public interface IForumService
 {
-    Task<IReadOnlyList<ForumTopicDto>> GetTopicsAsync(string? category, CancellationToken ct = default);
+    /// <summary>page 1-dən başlayır; pageSize 1-100 aralığına sıxılır (bax: ForumService).</summary>
+    Task<PagedResult<ForumTopicDto>> GetTopicsAsync(string? category, int page = 1, int pageSize = 20, CancellationToken ct = default);
     Task<ForumTopicDto> GetTopicByIdAsync(Guid id, CancellationToken ct = default);
     Task<ForumTopicDto> CreateTopicAsync(Guid userId, string authorName, CreateTopicRequest request, CancellationToken ct = default);
     Task<IReadOnlyList<ForumReplyDto>> GetRepliesAsync(Guid topicId, CancellationToken ct = default);
@@ -85,8 +106,8 @@ public interface IForumService
 
 public interface IArticleService
 {
-    /// <summary>lang: "en"/"ru" verilsə uyğun tərcümə sütunlarından oxunur, mövcud deyilsə Azərbaycan mətninə geri qayıdır.</summary>
-    Task<IReadOnlyList<ArticleDto>> GetPublishedArticlesAsync(string? tag, string? search, string? sort, string? lang = null, CancellationToken ct = default);
+    /// <summary>lang: "en"/"ru" verilsə uyğun tərcümə sütunlarından oxunur, mövcud deyilsə Azərbaycan mətninə geri qayıdır. page 1-dən başlayır.</summary>
+    Task<PagedResult<ArticleDto>> GetPublishedArticlesAsync(string? tag, string? search, string? sort, string? lang = null, int page = 1, int pageSize = 20, CancellationToken ct = default);
     Task<ArticleDto> GetArticleBySlugAsync(string slug, string? lang = null, CancellationToken ct = default);
     Task IncrementViewsAsync(string slug, CancellationToken ct = default);
     Task<IReadOnlyList<ArticleDto>> AdminGetAllArticlesAsync(CancellationToken ct = default);
@@ -133,7 +154,8 @@ public interface IAIService
 
 public interface IShopService
 {
-    Task<IReadOnlyList<ShopProductDto>> GetActiveProductsAsync(string? search, string? sort, CancellationToken ct = default);
+    /// <summary>page 1-dən başlayır; pageSize 1-100 aralığına sıxılır (bax: ShopService).</summary>
+    Task<PagedResult<ShopProductDto>> GetActiveProductsAsync(string? search, string? sort, int page = 1, int pageSize = 20, CancellationToken ct = default);
     Task<IReadOnlyList<ShopProductDto>> GetAllProductsAsync(CancellationToken ct = default);
     Task<ShopProductDto> CreateProductAsync(CreateShopProductRequest request, CancellationToken ct = default);
     Task<ShopProductDto> UpdateProductAsync(Guid id, UpdateShopProductRequest request, CancellationToken ct = default);

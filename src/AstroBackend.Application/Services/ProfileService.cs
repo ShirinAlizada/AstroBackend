@@ -39,7 +39,7 @@ public class ProfileService : IProfileService
             await _profileRepo.AddAsync(profile, ct);
         }
 
-        profile.FullName = request.FullName ?? profile.FullName;
+        profile!.FullName = request.FullName ?? profile.FullName;
         profile.AvatarUrl = request.AvatarUrl ?? profile.AvatarUrl;
         profile.BirthDate = request.BirthDate ?? profile.BirthDate;
         profile.BirthTime = request.BirthTime ?? profile.BirthTime;

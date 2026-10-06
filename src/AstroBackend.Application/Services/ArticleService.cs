@@ -31,7 +31,7 @@ namespace AstroBackend.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IReadOnlyList<ArticleDto>> GetPublishedArticlesAsync(string? tag, string? search, string? sort, string? lang = null, CancellationToken ct = default)
+        public async Task<PagedResult<ArticleDto>> GetPublishedArticlesAsync(string? tag, string? search, string? sort, string? lang = null, int page = 1, int pageSize = 20, CancellationToken ct = default)
         {
             var query = _articleRepo.Query().Where(a => a.Published);
 
@@ -44,11 +44,24 @@ namespace AstroBackend.Application.Services
                 query = query.Where(a => a.Title.ToLower().Contains(s) || (a.Excerpt != null && a.Excerpt.ToLower().Contains(s)));
             }
 
-            var list = sort == "populyar"
-                ? await query.OrderByDescending(a => a.Views).ToListAsync(ct)
-                : await query.OrderByDescending(a => a.PublishedAt ?? a.CreatedAt).ToListAsync(ct);
+            query = sort == "populyar"
+                ? query.OrderByDescending(a => a.Views)
+                : query.OrderByDescending(a => a.PublishedAt ?? a.CreatedAt);
 
-            return list.Select(a => MapToDto(a, lang)).ToList();
+            (page, pageSize) = NormalizePaging(page, pageSize);
+            var totalCount = await query.CountAsync(ct);
+            var list = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync(ct);
+
+            return new PagedResult<ArticleDto>(list.Select(a => MapToDto(a, lang)).ToList(), page, pageSize, totalCount);
+        }
+
+        /// <summary>page ən azı 1, pageSize 1-100 aralığına sıxılır — xarici sorğu parametrlərinin sərbəst dəyərlər göndərməsinin qarşısını alır.</summary>
+        private static (int Page, int PageSize) NormalizePaging(int page, int pageSize)
+        {
+            if (page < 1) page = 1;
+            if (pageSize < 1) pageSize = 20;
+            if (pageSize > 100) pageSize = 100;
+            return (page, pageSize);
         }
 
         public async Task<ArticleDto> GetArticleBySlugAsync(string slug, string? lang = null, CancellationToken ct = default)

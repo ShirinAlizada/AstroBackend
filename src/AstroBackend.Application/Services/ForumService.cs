@@ -29,14 +29,22 @@ public class ForumService : IForumService
         _pushSubscriptionService = pushSubscriptionService;
     }
 
-    public async Task<IReadOnlyList<ForumTopicDto>> GetTopicsAsync(string? category, CancellationToken ct = default)
+    public async Task<PagedResult<ForumTopicDto>> GetTopicsAsync(string? category, int page = 1, int pageSize = 20, CancellationToken ct = default)
     {
         var query = _topicRepo.Query().Where(t => !t.IsHidden);
 
         if (!string.IsNullOrWhiteSpace(category) && category != "hamısı")
             query = query.Where(t => t.Category == category);
 
-        var topics = await query.OrderByDescending(t => t.CreatedAt).ToListAsync(ct);
+        if (page < 1) page = 1;
+        if (pageSize < 1) pageSize = 20;
+        if (pageSize > 100) pageSize = 100;
+
+        var totalCount = await query.CountAsync(ct);
+        var topics = await query.OrderByDescending(t => t.CreatedAt)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(ct);
         var topicIds = topics.Select(t => t.Id).ToList();
 
         var replyCounts = await _replyRepo.Query()
@@ -45,7 +53,7 @@ public class ForumService : IForumService
             .Select(g => new { TopicId = g.Key, Count = g.Count() })
             .ToDictionaryAsync(g => g.TopicId, g => g.Count, ct);
 
-        return topics.Select(t => new ForumTopicDto(
+        var items = topics.Select(t => new ForumTopicDto(
             t.Id,
             t.UserId,
             t.AuthorName,
@@ -56,6 +64,8 @@ public class ForumService : IForumService
             t.CreatedAt,
             replyCounts.TryGetValue(t.Id, out var cnt) ? cnt : 0
         )).ToList();
+
+        return new PagedResult<ForumTopicDto>(items, page, pageSize, totalCount);
     }
 
     public async Task<ForumTopicDto> GetTopicByIdAsync(Guid id, CancellationToken ct = default)

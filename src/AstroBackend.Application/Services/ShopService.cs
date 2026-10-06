@@ -41,7 +41,7 @@ namespace AstroBackend.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IReadOnlyList<ShopProductDto>> GetActiveProductsAsync(string? search, string? sort, CancellationToken ct = default)
+        public async Task<PagedResult<ShopProductDto>> GetActiveProductsAsync(string? search, string? sort, int page = 1, int pageSize = 20, CancellationToken ct = default)
         {
             var term = string.IsNullOrWhiteSpace(search) ? null : search.Trim();
             var list = term == null
@@ -49,7 +49,16 @@ namespace AstroBackend.Application.Services
                 : await _productRepo.FindAsync(p => p.IsActive && p.Name.Contains(term), ct);
 
             var ordered = ApplySort(list, sort);
-            return await MapProductsAsync(ordered, ct);
+
+            if (page < 1) page = 1;
+            if (pageSize < 1) pageSize = 20;
+            if (pageSize > 100) pageSize = 100;
+
+            var totalCount = ordered.Count;
+            var paged = ordered.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var dtos = await MapProductsAsync(paged, ct);
+
+            return new PagedResult<ShopProductDto>(dtos.ToList(), page, pageSize, totalCount);
         }
 
         public async Task<IReadOnlyList<ShopProductDto>> GetAllProductsAsync(CancellationToken ct = default)
