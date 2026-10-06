@@ -18,9 +18,13 @@ public class ForumController : BaseApiController
     }
 
     [HttpGet("topics")]
-    public async Task<ActionResult<IReadOnlyList<ForumTopicDto>>> GetTopics([FromQuery] string? category, CancellationToken ct)
+    public async Task<ActionResult<PagedResult<ForumTopicDto>>> GetTopics(
+        [FromQuery] string? category,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 20,
+        CancellationToken ct = default)
     {
-        var list = await _forumService.GetTopicsAsync(category, ct);
+        var list = await _forumService.GetTopicsAsync(category, page, pageSize, ct);
         return Ok(list);
     }
 

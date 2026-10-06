@@ -2,6 +2,8 @@ using AstroBackend.Application;
 using AstroBackend.Application.Interfaces.Security;
 using AstroBackend.Application.Interfaces.Services;
 using AstroBackend.Extensions;
+using AstroBackend.Filters;
+using AstroBackend.HealthChecks;
 using AstroBackend.Infrastructure;
 using AstroBackend.Infrastructure.Persistence;
 using AstroBackend.Infrastructure.Persistence.SeedData;
@@ -10,14 +12,21 @@ using AstroBackend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// 0. Serilog — strukturlaşdırılmış loglama (Console + gündəlik fayl). appsettings.json-dakı
+// "Serilog" bölməsindən oxunur; builder-in daxili ILogger<T> istifadəsini şəffaf şəkildə əvəz edir.
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .Enrich.FromLogContext());
+
 // 1. Onion Architecture Layers Registration
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.ContentRootPath);
 
 // 2. Current User & HttpContext
@@ -78,7 +87,12 @@ builder.Services.AddCors(options =>
 });
 
 // 5. Controllers & JSON Options
-builder.Services.AddControllers()
+builder.Services.AddControllers(options =>
+    {
+        // FluentValidation-ı bütün action-lar üçün avtomatik tətbiq edir (DTO validasiyası) —
+        // bax: AstroBackend/Filters/ValidationActionFilter.cs.
+        options.Filters.Add<ValidationActionFilter>();
+    })
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
@@ -89,6 +103,8 @@ builder.Services.AddSwaggerDocumentation();
 
 // 6b. Rate Limiting — spam/abuse qorunması (ASP.NET Core daxili middleware, əlavə paket tələb etmir).
 // "contact" siyasəti: IP üzrə saatda 3 sorğu (Əlaqə formu, ContactController-də [EnableRateLimiting]).
+// "ai" siyasəti: istifadəçi üzrə (NameIdentifier claim-i ilə partitioned) dəqiqədə 10 sorğu —
+// Gemini çağırışlarının pul xərcini məhdudlaşdırmaq üçün (AIController-də [EnableRateLimiting]).
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -99,7 +115,25 @@ builder.Services.AddRateLimiter(options =>
         opt.QueueLimit = 0;
         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
     });
+    options.AddPolicy("ai", httpContext =>
+    {
+        var userKey = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+            ?? httpContext.Connection.RemoteIpAddress?.ToString()
+            ?? "anonymous";
+
+        return RateLimitPartition.GetFixedWindowLimiter(userKey, _ => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = 10,
+            Window = TimeSpan.FromMinutes(1),
+            QueueLimit = 0,
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+        });
+    });
 });
+
+// 6c. Health Checks — yükləmə balanslayıcıları/monitorinq üçün /health endpoint-i.
+builder.Services.AddHealthChecks()
+    .AddCheck<DatabaseHealthCheck>("database");
 
 var app = builder.Build();
 
@@ -126,6 +160,7 @@ app.UseAuthorization();
 app.UseRateLimiter();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 // 10. Database Seeding on Startup
 using (var scope = app.Services.CreateScope())

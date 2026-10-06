@@ -60,4 +60,31 @@ public class AuthController : BaseApiController
         await _authService.ChangePasswordAsync(_currentUserService.UserId.Value, request, ct);
         return Ok(new { message = "Şifrə uğurla dəyişdirildi." });
     }
+
+    /// <summary>Cari refresh tokeni serverdə etibarsız edir — logout-dan sonra həmin token yeni access-token almaq üçün istifadə edilə bilməz.</summary>
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout(CancellationToken ct)
+    {
+        if (!_currentUserService.UserId.HasValue)
+            throw new UnauthorizedException("Giriş edilməyib.");
+
+        await _authService.LogoutAsync(_currentUserService.UserId.Value, ct);
+        return Ok(new { message = "Çıxış edildi." });
+    }
+
+    /// <summary>E-poçt qeydiyyatda mövcuddursa, sıfırlama linki göndərir. Mövcud olmasa belə eyni cavabı qaytarır (e-poçtun qeydiyyatda olub-olmadığını açıqlamır).</summary>
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request, CancellationToken ct)
+    {
+        await _authService.ForgotPasswordAsync(request, ct);
+        return Ok(new { message = "Əgər bu e-poçt qeydiyyatdadırsa, sıfırlama linki göndərildi." });
+    }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request, CancellationToken ct)
+    {
+        await _authService.ResetPasswordAsync(request, ct);
+        return Ok(new { message = "Şifrə uğurla sıfırlandı. Yeni şifrənizlə daxil ola bilərsiniz." });
+    }
 }

@@ -18,9 +18,14 @@ namespace AstroBackend.Controllers
         }
 
         [HttpGet("products")]
-        public async Task<ActionResult<IReadOnlyList<ShopProductDto>>> GetProducts([FromQuery] string? search, [FromQuery] string? sort, CancellationToken ct)
+        public async Task<ActionResult<PagedResult<ShopProductDto>>> GetProducts(
+            [FromQuery] string? search,
+            [FromQuery] string? sort,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 20,
+            CancellationToken ct = default)
         {
-            var list = await _shopService.GetActiveProductsAsync(search, sort, ct);
+            var list = await _shopService.GetActiveProductsAsync(search, sort, page, pageSize, ct);
             return Ok(list);
         }
 

@@ -14,14 +14,16 @@ namespace AstroBackend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ArticleDto>>> GetArticles(
+        public async Task<ActionResult<PagedResult<ArticleDto>>> GetArticles(
             [FromQuery] string? tag,
             [FromQuery] string? search,
             [FromQuery] string? sort,
             [FromQuery] string? lang,
-            CancellationToken ct)
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 20,
+            CancellationToken ct = default)
         {
-            var list = await _articleService.GetPublishedArticlesAsync(tag, search, sort, lang, ct);
+            var list = await _articleService.GetPublishedArticlesAsync(tag, search, sort, lang, page, pageSize, ct);
             return Ok(list);
         }
 
