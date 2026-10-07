@@ -118,6 +118,8 @@ namespace AstroBackend.Infrastructure.Persistence
             {
                 entity.HasKey(t => t.Id);
                 entity.Property(t => t.Title).HasMaxLength(200).IsRequired();
+                entity.Property(t => t.TitleEn).HasMaxLength(200);
+                entity.Property(t => t.TitleRu).HasMaxLength(200);
 
                 entity.HasOne(t => t.User)
                       .WithMany(u => u.ForumTopics)
@@ -198,6 +200,8 @@ namespace AstroBackend.Infrastructure.Persistence
                 entity.Property(p => p.DescriptionEn).HasMaxLength(2000);
                 entity.Property(p => p.DescriptionRu).HasMaxLength(2000);
                 entity.Property(p => p.UnitLabel).HasMaxLength(50);
+                entity.Property(p => p.UnitLabelEn).HasMaxLength(50);
+                entity.Property(p => p.UnitLabelRu).HasMaxLength(50);
                 entity.Property(p => p.ImageUrl).HasMaxLength(500);
             });
 
