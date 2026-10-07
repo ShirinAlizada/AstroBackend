@@ -25,7 +25,7 @@ public class SynastryService : ISynastryService
         if (!string.IsNullOrWhiteSpace(request.DateB) && DateTime.TryParse(request.DateB, out var db))
             signB = AstrologyEngine.SunSignFromDate(db);
 
-        return AstrologyEngine.ComputeSynastry(signA, signB);
+        return AstrologyEngine.ComputeSynastry(signA, signB, request.Lang);
     }
 
     public async Task<SynastryResponse> CalculateFromChartsAsync(SynastryChartRequest request, Guid? currentUserId, CancellationToken ct = default)
@@ -47,6 +47,6 @@ public class SynastryService : ISynastryService
 
         var chartB = AstrologyEngine.ComputeNatalChart(request.PersonB.Date, request.PersonB.Time, request.PersonB.Latitude, request.PersonB.Longitude);
 
-        return AstrologyEngine.ComputeSynastryFromCharts(chartA, chartB);
+        return AstrologyEngine.ComputeSynastryFromCharts(chartA, chartB, request.Lang);
     }
 }

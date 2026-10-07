@@ -96,6 +96,8 @@ namespace AstroBackend.Application.Services
                 DescriptionRu = string.IsNullOrWhiteSpace(request.DescriptionRu) ? null : request.DescriptionRu.Trim(),
                 PriceAzn = request.PriceAzn,
                 UnitLabel = string.IsNullOrWhiteSpace(request.UnitLabel) ? null : request.UnitLabel.Trim(),
+                UnitLabelEn = string.IsNullOrWhiteSpace(request.UnitLabelEn) ? null : request.UnitLabelEn.Trim(),
+                UnitLabelRu = string.IsNullOrWhiteSpace(request.UnitLabelRu) ? null : request.UnitLabelRu.Trim(),
                 ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? null : request.ImageUrl.Trim(),
                 SortOrder = request.SortOrder,
                 IsActive = request.IsActive,
@@ -125,6 +127,8 @@ namespace AstroBackend.Application.Services
             product.DescriptionRu = string.IsNullOrWhiteSpace(request.DescriptionRu) ? null : request.DescriptionRu.Trim();
             product.PriceAzn = request.PriceAzn;
             product.UnitLabel = string.IsNullOrWhiteSpace(request.UnitLabel) ? null : request.UnitLabel.Trim();
+            product.UnitLabelEn = string.IsNullOrWhiteSpace(request.UnitLabelEn) ? null : request.UnitLabelEn.Trim();
+            product.UnitLabelRu = string.IsNullOrWhiteSpace(request.UnitLabelRu) ? null : request.UnitLabelRu.Trim();
             product.ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? null : request.ImageUrl.Trim();
             product.SortOrder = request.SortOrder;
             product.IsActive = request.IsActive;
@@ -479,6 +483,8 @@ namespace AstroBackend.Application.Services
             p.DescriptionRu,
             p.PriceAzn,
             p.UnitLabel,
+            p.UnitLabelEn,
+            p.UnitLabelRu,
             p.ImageUrl,
             p.SortOrder,
             p.IsActive,

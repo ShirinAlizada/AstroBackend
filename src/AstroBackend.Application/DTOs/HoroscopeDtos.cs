@@ -18,13 +18,17 @@
         string Content,
         int Love,
         int Career,
-        int Finance
+        int Finance,
+        string? ContentEn = null,
+        string? ContentRu = null
     );
 
     public record UpdateHoroscopeRequest(
         string Content,
         int Love,
         int Career,
-        int Finance
+        int Finance,
+        string? ContentEn = null,
+        string? ContentRu = null
     );
 }

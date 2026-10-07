@@ -261,3 +261,16 @@ public interface IEmailService
 {
     Task SendAsync(string toEmail, string subject, string htmlBody, CancellationToken ct = default);
 }
+
+/// <summary>
+/// Saytın bütün açıq (public) məzmun növləri üzrə qlobal axtarış: məqalələr (başlıq+qısa
+/// təsvir+tam mətn, hər 3 dildə), astroloqlar (ad+bio), mağaza məhsulları (ad+təsvir, hər
+/// 3 dildə) və forum mövzuları (başlıq+mətn, hər 3 dildə). Frontend-in öz SiteNav axtarışı
+/// ilə eyni məntiqi və limitləri güdür (bax: destiny-reads-app/src/components/SiteNav.tsx),
+/// sadəcə Supabase-ə birbaşa sorğu əvəzinə backend üzərindən.
+/// </summary>
+public interface ISearchService
+{
+    /// <summary>query 2 simvoldan qısa olarsa boş nəticə qayıdır. lang: "en"/"ru" verilsə uyğun tərcümədən, mövcud deyilsə AZ-a geri qayıdaraq göstərici mətn seçilir.</summary>
+    Task<IReadOnlyList<SearchHitDto>> SearchAsync(string query, string? lang = null, CancellationToken ct = default);
+}

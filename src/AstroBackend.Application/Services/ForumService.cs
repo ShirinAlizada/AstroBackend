@@ -59,7 +59,11 @@ public class ForumService : IForumService
             t.AuthorName,
             t.Category,
             t.Title,
+            t.TitleEn,
+            t.TitleRu,
             t.Body,
+            t.BodyEn,
+            t.BodyRu,
             t.IsHidden,
             t.CreatedAt,
             replyCounts.TryGetValue(t.Id, out var cnt) ? cnt : 0
@@ -82,7 +86,11 @@ public class ForumService : IForumService
             topic.AuthorName,
             topic.Category,
             topic.Title,
+            topic.TitleEn,
+            topic.TitleRu,
             topic.Body,
+            topic.BodyEn,
+            topic.BodyRu,
             topic.IsHidden,
             topic.CreatedAt,
             count
@@ -100,7 +108,11 @@ public class ForumService : IForumService
             AuthorName = authorName,
             Category = string.IsNullOrWhiteSpace(request.Category) ? "ümumi" : request.Category,
             Title = request.Title,
+            TitleEn = string.IsNullOrWhiteSpace(request.TitleEn) ? null : request.TitleEn.Trim(),
+            TitleRu = string.IsNullOrWhiteSpace(request.TitleRu) ? null : request.TitleRu.Trim(),
             Body = request.Body,
+            BodyEn = string.IsNullOrWhiteSpace(request.BodyEn) ? null : request.BodyEn.Trim(),
+            BodyRu = string.IsNullOrWhiteSpace(request.BodyRu) ? null : request.BodyRu.Trim(),
             IsHidden = false
         };
 
@@ -113,7 +125,11 @@ public class ForumService : IForumService
             topic.AuthorName,
             topic.Category,
             topic.Title,
+            topic.TitleEn,
+            topic.TitleRu,
             topic.Body,
+            topic.BodyEn,
+            topic.BodyRu,
             topic.IsHidden,
             topic.CreatedAt,
             0
@@ -133,6 +149,8 @@ public class ForumService : IForumService
             r.UserId,
             r.AuthorName,
             r.Body,
+            r.BodyEn,
+            r.BodyRu,
             r.IsHidden,
             r.CreatedAt
         )).ToList();
@@ -153,6 +171,8 @@ public class ForumService : IForumService
             UserId = userId,
             AuthorName = authorName,
             Body = request.Body,
+            BodyEn = string.IsNullOrWhiteSpace(request.BodyEn) ? null : request.BodyEn.Trim(),
+            BodyRu = string.IsNullOrWhiteSpace(request.BodyRu) ? null : request.BodyRu.Trim(),
             IsHidden = false
         };
 
@@ -186,6 +206,8 @@ public class ForumService : IForumService
             reply.UserId,
             reply.AuthorName,
             reply.Body,
+            reply.BodyEn,
+            reply.BodyRu,
             reply.IsHidden,
             reply.CreatedAt
         );

@@ -1,4 +1,4 @@
-﻿using AstroBackend.Application.DTOs;
+using AstroBackend.Application.DTOs;
 
 namespace AstroBackend.Application.Astrology
 {
@@ -185,7 +185,150 @@ namespace AstroBackend.Application.Astrology
             };
         }
 
-        public static SynastryResponse ComputeSynastry(string signA, string signB)
+        /// <summary>
+        /// Münasibətin ümumi uyğunluq faizinə görə "arxetipi" — frontend-dəki `synastryTier`
+        /// (src/lib/astrology.ts) ilə eyni həddlər: 82+ cosmic, 68+ strong, 55+ growing, əks halda challenging.
+        /// </summary>
+        public static string SynastryTier(int overall)
+        {
+            if (overall >= 82) return "cosmic";
+            if (overall >= 68) return "strong";
+            if (overall >= 55) return "growing";
+            return "challenging";
+        }
+
+        /// <summary>
+        /// Xəritədəki bütün planetlərin elementlər (Od/Torpaq/Hava/Su) üzrə faiz bölgüsü
+        /// (cəm ~100) — frontend-dəki `elementBalance` ilə eynidir.
+        /// </summary>
+        public static ElementBalanceDto ElementBalanceFromChart(NatalChartResponse chart)
+        {
+            int od = 0, torpaq = 0, hava = 0, su = 0;
+            foreach (var p in chart.Planets)
+            {
+                if (!Elements.TryGetValue(p.Sign, out var el)) continue;
+                switch (el)
+                {
+                    case "Od": od++; break;
+                    case "Torpaq": torpaq++; break;
+                    case "Hava": hava++; break;
+                    case "Su": su++; break;
+                }
+            }
+
+            int total = od + torpaq + hava + su;
+            if (total == 0) return new ElementBalanceDto(0, 0, 0, 0);
+
+            return new ElementBalanceDto(
+                (int)Math.Round(od * 100.0 / total),
+                (int)Math.Round(torpaq * 100.0 / total),
+                (int)Math.Round(hava * 100.0 / total),
+                (int)Math.Round(su * 100.0 / total)
+            );
+        }
+
+        /// <summary>Tək bürc üçün sadələşdirilmiş element bölgüsü (yalnız Günəş bürcü bilinən sürətli uyğunluq yolunda) — həmin elementə 100%.</summary>
+        public static ElementBalanceDto ElementBalanceFromSign(string sign)
+        {
+            if (!Elements.TryGetValue(sign, out var el)) return new ElementBalanceDto(0, 0, 0, 0);
+            return el switch
+            {
+                "Od" => new ElementBalanceDto(100, 0, 0, 0),
+                "Torpaq" => new ElementBalanceDto(0, 100, 0, 0),
+                "Hava" => new ElementBalanceDto(0, 0, 100, 0),
+                "Su" => new ElementBalanceDto(0, 0, 0, 100),
+                _ => new ElementBalanceDto(0, 0, 0, 0)
+            };
+        }
+
+        /// <summary>Elementlər arasında ən güclü (dominant) olanı qaytarır — bölgü boşdursa null.</summary>
+        public static string? DominantElement(ElementBalanceDto balance)
+        {
+            string? best = null;
+            int bestVal = 0;
+            foreach (var (key, value) in new[] { ("Od", balance.Od), ("Torpaq", balance.Torpaq), ("Hava", balance.Hava), ("Su", balance.Su) })
+            {
+                if (value > bestVal)
+                {
+                    bestVal = value;
+                    best = key;
+                }
+            }
+            return best;
+        }
+
+        /// <summary>
+        /// "Şərh" mətnlərini (elements_same/diff, moon/venus/mercury strong/tense) frontend-dəki
+        /// `SYNASTRY_NOTE_BUILDERS` (src/lib/astrology.ts) ilə eyni həddlər və məzmunla, birbaşa
+        /// seçilmiş dildə ("en"/"ru", əks halda AZ-a geri qayıdaraq) qaytarır.
+        /// </summary>
+        private static List<string> BuildSynastryNotes(string elemA, string elemB, int moonScore, int venusScore, int mercuryScore, string? lang)
+        {
+            bool isEn = string.Equals(lang, "en", StringComparison.OrdinalIgnoreCase);
+            bool isRu = string.Equals(lang, "ru", StringComparison.OrdinalIgnoreCase);
+
+            var notes = new List<string>();
+
+            if (!string.IsNullOrEmpty(elemA) && !string.IsNullOrEmpty(elemB))
+            {
+                if (elemA == elemB)
+                {
+                    notes.Add(isEn
+                        ? $"Both of your Suns are in the {LocalizedElementName(elemA, lang)} element — natural understanding and a similar rhythm."
+                        : isRu
+                            ? $"Солнца у вас обоих в элементе {LocalizedElementName(elemA, lang)} — естественное понимание и похожий ритм."
+                            : $"Hər iki Günəş {elemA} elementindədir — təbii anlaşma və oxşar ritm.");
+                }
+                else
+                {
+                    notes.Add(isEn
+                        ? $"Your Sun elements differ ({LocalizedElementName(elemA, lang)} and {LocalizedElementName(elemB, lang)}) — you can complement each other."
+                        : isRu
+                            ? $"Солнечные элементы разные ({LocalizedElementName(elemA, lang)} и {LocalizedElementName(elemB, lang)}) — вы можете дополнять друг друга."
+                            : $"Günəş elementləri fərqlidir ({elemA} və {elemB}) — bir-birinizi tamamlaya bilərsiniz.");
+                }
+            }
+
+            if (moonScore >= 75)
+                notes.Add(isEn ? "Your Moon connection is strong: a high sense of emotional security."
+                    : isRu ? "Ваша лунная связь сильна: высокое чувство эмоциональной безопасности."
+                    : "Ay bağlantınız güclüdür: emosional təhlükəsizlik hissi yüksəkdir.");
+            else
+                notes.Add(isEn ? "The Moon connection can create tension — talk openly about your feelings."
+                    : isRu ? "Лунная связь может вызывать напряжение — открыто говорите о своих чувствах."
+                    : "Ay bağlantısı gərginlik yarada bilər: hisslərinizi açıq danışın.");
+
+            if (venusScore >= 75)
+                notes.Add(isEn ? "Venus harmony blends romance and shared aesthetic taste."
+                    : isRu ? "Гармония Венеры объединяет романтику и общий эстетический вкус."
+                    : "Venera harmoniyası romantikanı və estetik zövqləri birləşdirir.");
+            else
+                notes.Add(isEn ? "The Venus difference shows your love languages aren't quite the same."
+                    : isRu ? "Различие Венеры показывает, что ваши языки любви не совсем совпадают."
+                    : "Venera fərqi sevgi dilinizin fərqli olduğunu göstərir.");
+
+            if (mercuryScore >= 70)
+                notes.Add(isEn ? "Mercury compatibility makes communication easier."
+                    : isRu ? "Совместимость Меркурия облегчает общение."
+                    : "Merkuri uyğunluğu ünsiyyəti asanlaşdırır.");
+            else
+                notes.Add(isEn ? "Mercury tension raises the risk of misunderstanding — be patient."
+                    : isRu ? "Напряжение Меркурия повышает риск недопонимания — будь терпелив."
+                    : "Merkuri gərginliyi anlaşılmazlıq riski yaradır — səbirli olun.");
+
+            return notes;
+        }
+
+        private static string LocalizedElementName(string elementAz, string? lang)
+        {
+            if (string.Equals(lang, "en", StringComparison.OrdinalIgnoreCase))
+                return elementAz switch { "Od" => "Fire", "Torpaq" => "Earth", "Hava" => "Air", "Su" => "Water", _ => elementAz };
+            if (string.Equals(lang, "ru", StringComparison.OrdinalIgnoreCase))
+                return elementAz switch { "Od" => "Огонь", "Torpaq" => "Земля", "Hava" => "Воздух", "Su" => "Вода", _ => elementAz };
+            return elementAz;
+        }
+
+        public static SynastryResponse ComputeSynastry(string signA, string signB, string? lang = null)
         {
             int ia = Array.IndexOf(SignsAz, signA);
             int ib = Array.IndexOf(SignsAz, signB);
@@ -207,52 +350,22 @@ namespace AstroBackend.Application.Astrology
 
             var score = scores.TryGetValue(diff, out var s) ? s : new AspectScore(65, 65, 65, 65);
 
-            var notes = new List<string>();
             Elements.TryGetValue(signA, out var elemA);
             Elements.TryGetValue(signB, out var elemB);
+            var notes = BuildSynastryNotes(elemA ?? "", elemB ?? "", score.Love, score.Love, score.Communication, lang);
 
-            if (elemA != null && elemB != null)
+            // Planet Pair Details — Günəş, Ay, Venera, Mars, Merkuri, Yupiter, Saturn (7 planet).
+            // Offsetlər ComputeNatalChart-dakı eyni təxmini düsturla üst-üstə düşür.
+            var keyPlanets = new (string Name, int Offset)[]
             {
-                if (elemA == elemB)
-                {
-                    notes.Add($"Hər iki bürc {elemA} ünsürünə aiddir — təbii harmoniya, oxşar həyat baxışı və yüksək daxili anlaşma.");
-                }
-                else if ((elemA == "Od" && elemB == "Hava") || (elemA == "Hava" && elemB == "Od"))
-                {
-                    notes.Add("Od və Hava ünsürlərinin qovuşması — bir-birini alovlandıran yüksək enerji, intellektual maraq və macəra.");
-                }
-                else if ((elemA == "Torpaq" && elemB == "Su") || (elemA == "Su" && elemB == "Torpaq"))
-                {
-                    notes.Add("Torpaq və Su ünsürlərinin vəhdəti — möhkəm təməl, dərin emosional etibar və qarşılıqlı dəstək.");
-                }
-                else
-                {
-                    notes.Add($"Fərqli ünsürlər ({elemA} və {elemB}) — bir-birinizi tamamlayaraq həyatınızda yeni dünyalar aça bilərsiniz.");
-                }
-            }
-
-            if (score.Love >= 80)
-                notes.Add("Venera və emosional cazibə yüksəkdir: romantik münasibətlər üçün olduqca əlverişli səma bağlantısı.");
-            else
-                notes.Add("Sevgi dili fərqlilik göstərə bilər: hisslərinizi açıq və səmimi ifadə etmək münasibəti möhkəmləndirər.");
-
-            if (score.Communication >= 80)
-                notes.Add("Merkuri intellektual uyğunluğu mükəmməldir: ortaq mövzular tapmaq və anlaşmaq çox asandır.");
-            else
-                notes.Add("Ünsiyyət zamanı səbir və təmkin önəmlidir: fərqli fikirlərə hörmətlə yanaşma tövsiyə olunur.");
-
-            // Planet Pair Details for 5 key planets
-            string[] keyPlanets = ["Günəş", "Ay", "Venera", "Mars", "Merkuri"];
+                ("Günəş", 0), ("Ay", 4), ("Venera", 1), ("Mars", 4), ("Merkuri", 11), ("Yupiter", 7), ("Saturn", 10)
+            };
             var details = new List<PlanetPairDetailDto>();
 
-            foreach (var planet in keyPlanets)
+            foreach (var (planet, offset) in keyPlanets)
             {
-                string sA = signA;
-                string sB = signB;
-                if (planet == "Ay") { sA = SignsAz[(ia + 4) % 12]; sB = SignsAz[(ib + 4) % 12]; }
-                if (planet == "Venera") { sA = SignsAz[(ia + 1) % 12]; sB = SignsAz[(ib + 1) % 12]; }
-                if (planet == "Mars") { sA = SignsAz[(ia + 2) % 12]; sB = SignsAz[(ib + 2) % 12]; }
-                if (planet == "Merkuri") { sA = SignsAz[(ia + 11) % 12]; sB = SignsAz[(ib + 11) % 12]; }
+                string sA = SignsAz[(ia + offset) % 12];
+                string sB = SignsAz[(ib + offset) % 12];
 
                 Elements.TryGetValue(sA, out var elA);
                 Elements.TryGetValue(sB, out var elB);
@@ -269,7 +382,15 @@ namespace AstroBackend.Application.Astrology
                 ));
             }
 
-            return new SynastryResponse(score.Overall, score.Love, score.Friendship, score.Communication, notes, details);
+            var balanceA = ElementBalanceFromSign(signA);
+            var balanceB = ElementBalanceFromSign(signB);
+
+            return new SynastryResponse(
+                score.Overall, score.Love, score.Friendship, score.Communication,
+                SynastryTier(score.Overall),
+                notes, details,
+                balanceA, balanceB,
+                DominantElement(balanceA), DominantElement(balanceB));
         }
 
         /// <summary>
@@ -277,8 +398,11 @@ namespace AstroBackend.Application.Astrology
         /// fərqli olaraq təxmini "bürc fərqi" düsturu ilə kifayətlənmir — hər iki şəxsin faktiki hesablanmış
         /// Günəş, Ay, Venera, Mars, Merkuri və Ascendant mövqelərini birbaşa müqayisə edir. Çəkilər və qeyd
         /// mətnləri frontend-dəki `computeSynastry`/`synastryDetails` (src/lib/astrology.ts) ilə eynidir.
+        /// Planet-cüt təfərrüatı (Details) Yupiter və Saturn da daxil olmaqla 7 planeti əhatə edir —
+        /// bunlar Overall/Love/Friendship/Communication düsturuna daxil deyil (frontend-də də elədir),
+        /// sadəcə əlavə məlumat sətirləridir.
         /// </summary>
-        public static SynastryResponse ComputeSynastryFromCharts(NatalChartResponse a, NatalChartResponse b)
+        public static SynastryResponse ComputeSynastryFromCharts(NatalChartResponse a, NatalChartResponse b, string? lang = null)
         {
             static string GetSign(NatalChartResponse chart, string name) =>
                 chart.Planets.FirstOrDefault(p => p.Name == name)?.Sign ?? "—";
@@ -288,6 +412,8 @@ namespace AstroBackend.Application.Astrology
             string venusA = GetSign(a, "Venera"), venusB = GetSign(b, "Venera");
             string marsA = GetSign(a, "Mars"), marsB = GetSign(b, "Mars");
             string merA = GetSign(a, "Merkuri"), merB = GetSign(b, "Merkuri");
+            string jupA = GetSign(a, "Yupiter"), jupB = GetSign(b, "Yupiter");
+            string satA = GetSign(a, "Saturn"), satB = GetSign(b, "Saturn");
 
             int sun = PairScore(sunA, sunB);
             int moon = PairScore(moonA, moonB);
@@ -301,24 +427,9 @@ namespace AstroBackend.Application.Astrology
             int communication = (int)Math.Round(mercury * 0.6 + sun * 0.2 + asc * 0.2);
             int overall = (int)Math.Round((love + friendship + communication) / 3.0);
 
-            var notes = new List<string>();
             Elements.TryGetValue(sunA, out var ea);
             Elements.TryGetValue(sunB, out var eb);
-            if (ea != null && eb != null)
-            {
-                notes.Add(ea == eb
-                    ? $"Hər iki Günəş {ea} elementindədir — təbii anlaşma və oxşar ritm."
-                    : $"Günəş elementləri fərqlidir ({ea} və {eb}) — bir-birinizi tamamlaya bilərsiniz.");
-            }
-            notes.Add(moon >= 75
-                ? "Ay bağlantınız güclüdür: emosional təhlükəsizlik hissi yüksəkdir."
-                : "Ay bağlantısı gərginlik yarada bilər: hisslərinizi açıq danışın.");
-            notes.Add(venus >= 75
-                ? "Venera harmoniyası romantikanı və estetik zövqləri birləşdirir."
-                : "Venera fərqi sevgi dilinizin fərqli olduğunu göstərir.");
-            notes.Add(mercury >= 70
-                ? "Merkuri uyğunluğu ünsiyyəti asanlaşdırır."
-                : "Merkuri gərginliyi anlaşılmazlıq riski yaradır — səbirli olun.");
+            var notes = BuildSynastryNotes(ea ?? "", eb ?? "", moon, venus, mercury, lang);
 
             var signPairs = new Dictionary<string, (string A, string B)>
             {
@@ -327,10 +438,12 @@ namespace AstroBackend.Application.Astrology
                 ["Venera"] = (venusA, venusB),
                 ["Mars"] = (marsA, marsB),
                 ["Merkuri"] = (merA, merB),
+                ["Yupiter"] = (jupA, jupB),
+                ["Saturn"] = (satA, satB),
             };
 
             var details = new List<PlanetPairDetailDto>();
-            foreach (var planet in new[] { "Günəş", "Ay", "Venera", "Mars", "Merkuri" })
+            foreach (var planet in new[] { "Günəş", "Ay", "Venera", "Mars", "Merkuri", "Yupiter", "Saturn" })
             {
                 var (sA, sB) = signPairs[planet];
                 Elements.TryGetValue(sA, out var elA);
@@ -347,7 +460,15 @@ namespace AstroBackend.Application.Astrology
                 ));
             }
 
-            return new SynastryResponse(overall, love, friendship, communication, notes, details);
+            var balanceA = ElementBalanceFromChart(a);
+            var balanceB = ElementBalanceFromChart(b);
+
+            return new SynastryResponse(
+                overall, love, friendship, communication,
+                SynastryTier(overall),
+                notes, details,
+                balanceA, balanceB,
+                DominantElement(balanceA), DominantElement(balanceB));
         }
     }
 

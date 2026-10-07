@@ -3,14 +3,18 @@ namespace AstroBackend.Application.DTOs
 {
     public record NumerologyRequest(
     string FullName,
-    string BirthDate // YYYY-MM-DD
+    string BirthDate, // YYYY-MM-DD
+    string? Lang = null,
+    int? ForYear = null
 );
 
     public record NumerologyItemDto(
         int Number,
         string Name,
         string Title,
-        string Meaning
+        string Meaning,
+        List<string> Keywords,
+        List<int> Compatible
     );
 
     public record NumerologyResponse(
@@ -19,6 +23,9 @@ namespace AstroBackend.Application.DTOs
         int SoulUrge,
         int Personality,
         int Birthday,
+        int Maturity,
+        int PersonalYear,
+        string PersonalYearTheme,
         List<NumerologyItemDto> Details
     );
 

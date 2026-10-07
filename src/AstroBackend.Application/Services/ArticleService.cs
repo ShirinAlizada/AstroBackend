@@ -102,9 +102,15 @@ namespace AstroBackend.Application.Services
             {
                 AuthorId = authorId,
                 Title = request.Title,
+                TitleEn = string.IsNullOrWhiteSpace(request.TitleEn) ? null : request.TitleEn.Trim(),
+                TitleRu = string.IsNullOrWhiteSpace(request.TitleRu) ? null : request.TitleRu.Trim(),
                 Slug = slug,
                 Excerpt = request.Excerpt,
+                ExcerptEn = string.IsNullOrWhiteSpace(request.ExcerptEn) ? null : request.ExcerptEn.Trim(),
+                ExcerptRu = string.IsNullOrWhiteSpace(request.ExcerptRu) ? null : request.ExcerptRu.Trim(),
                 Body = request.Body,
+                BodyEn = string.IsNullOrWhiteSpace(request.BodyEn) ? null : request.BodyEn.Trim(),
+                BodyRu = string.IsNullOrWhiteSpace(request.BodyRu) ? null : request.BodyRu.Trim(),
                 Tag = string.IsNullOrWhiteSpace(request.Tag) ? "ümumi" : request.Tag,
                 CoverUrl = request.CoverUrl,
                 Published = request.Published,
@@ -123,10 +129,16 @@ namespace AstroBackend.Application.Services
             if (article == null) throw new NotFoundException("Məqalə tapılmadı.");
 
             article.Title = request.Title;
+            article.TitleEn = string.IsNullOrWhiteSpace(request.TitleEn) ? null : request.TitleEn.Trim();
+            article.TitleRu = string.IsNullOrWhiteSpace(request.TitleRu) ? null : request.TitleRu.Trim();
             if (!string.IsNullOrWhiteSpace(request.Slug))
                 article.Slug = GenerateSlug(request.Slug);
             article.Excerpt = request.Excerpt;
+            article.ExcerptEn = string.IsNullOrWhiteSpace(request.ExcerptEn) ? null : request.ExcerptEn.Trim();
+            article.ExcerptRu = string.IsNullOrWhiteSpace(request.ExcerptRu) ? null : request.ExcerptRu.Trim();
             article.Body = request.Body;
+            article.BodyEn = string.IsNullOrWhiteSpace(request.BodyEn) ? null : request.BodyEn.Trim();
+            article.BodyRu = string.IsNullOrWhiteSpace(request.BodyRu) ? null : request.BodyRu.Trim();
             article.Tag = request.Tag;
             article.CoverUrl = request.CoverUrl;
 

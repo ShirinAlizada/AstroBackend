@@ -17,7 +17,7 @@ namespace AstroBackend.Application.Services
             if (string.IsNullOrWhiteSpace(request.BirthDate))
                 throw new BadRequestException("Doğum tarixi daxil edilməlidir.");
 
-            return NumerologyEngine.Compute(request.FullName, request.BirthDate);
+            return NumerologyEngine.Compute(request.FullName, request.BirthDate, request.Lang, request.ForYear);
         }
     }
 

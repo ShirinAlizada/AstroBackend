@@ -57,6 +57,8 @@ public class HoroscopeService : IHoroscopeService
             Period = pEnum,
             PeriodStart = request.PeriodStart,
             Content = request.Content,
+            ContentEn = string.IsNullOrWhiteSpace(request.ContentEn) ? null : request.ContentEn.Trim(),
+            ContentRu = string.IsNullOrWhiteSpace(request.ContentRu) ? null : request.ContentRu.Trim(),
             Love = request.Love,
             Career = request.Career,
             Finance = request.Finance
@@ -74,6 +76,8 @@ public class HoroscopeService : IHoroscopeService
             throw new NotFoundException("Horoskop tapılmadı.");
 
         horoscope.Content = request.Content;
+        horoscope.ContentEn = string.IsNullOrWhiteSpace(request.ContentEn) ? null : request.ContentEn.Trim();
+        horoscope.ContentRu = string.IsNullOrWhiteSpace(request.ContentRu) ? null : request.ContentRu.Trim();
         horoscope.Love = request.Love;
         horoscope.Career = request.Career;
         horoscope.Finance = request.Finance;

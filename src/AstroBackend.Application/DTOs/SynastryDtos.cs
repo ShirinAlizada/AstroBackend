@@ -4,7 +4,8 @@
       string SignA,
       string SignB,
       string? DateA = null,
-      string? DateB = null
+      string? DateB = null,
+      string? Lang = null
   );
 
     /// <summary>
@@ -16,7 +17,8 @@
     /// </summary>
     public record SynastryChartRequest(
         CalculateChartRequest? PersonA,
-        CalculateChartRequest PersonB
+        CalculateChartRequest PersonB,
+        string? Lang = null
     );
 
     public record PlanetPairDetailDto(
@@ -30,12 +32,28 @@
         int Score
     );
 
+    /// <summary>
+    /// Element (Od/Torpaq/Hava/Su) faiz bölgüsü — frontend-dəki `elementBalance`
+    /// (src/lib/astrology.ts) ilə eyni dörd element, cəmi ~100.
+    /// </summary>
+    public record ElementBalanceDto(
+        int Od,
+        int Torpaq,
+        int Hava,
+        int Su
+    );
+
     public record SynastryResponse(
         int Overall,
         int Love,
         int Friendship,
         int Communication,
+        string Tier,
         List<string> Notes,
-        List<PlanetPairDetailDto> Details
+        List<PlanetPairDetailDto> Details,
+        ElementBalanceDto ElementBalanceA,
+        ElementBalanceDto ElementBalanceB,
+        string? DominantElementA,
+        string? DominantElementB
     );
 }

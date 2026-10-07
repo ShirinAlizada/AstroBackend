@@ -57,6 +57,7 @@ public static class ServiceRegistration
         services.AddScoped<ISubscriptionService, SubscriptionService>();
         services.AddScoped<IContactService, ContactService>();
         services.AddScoped<IPushSubscriptionService, PushSubscriptionService>();
+        services.AddScoped<ISearchService, SearchService>();
 
         // FluentValidation — Validators/ qovluğundakı bütün AbstractValidator<T> siniflərini
         // IValidator<T> kimi qeydiyyatdan keçirir. AstroBackend/Filters/ValidationActionFilter.cs

@@ -23,7 +23,13 @@ namespace AstroBackend.Application.DTOs
         string Body,
         string Tag,
         string? CoverUrl,
-        bool Published
+        bool Published,
+        string? TitleEn = null,
+        string? TitleRu = null,
+        string? ExcerptEn = null,
+        string? ExcerptRu = null,
+        string? BodyEn = null,
+        string? BodyRu = null
     );
 
     public record UpdateArticleRequest(
@@ -33,7 +39,13 @@ namespace AstroBackend.Application.DTOs
         string Body,
         string Tag,
         string? CoverUrl,
-        bool Published
+        bool Published,
+        string? TitleEn = null,
+        string? TitleRu = null,
+        string? ExcerptEn = null,
+        string? ExcerptRu = null,
+        string? BodyEn = null,
+        string? BodyRu = null
     );
 
     public record GenerateArticleAiRequest(
