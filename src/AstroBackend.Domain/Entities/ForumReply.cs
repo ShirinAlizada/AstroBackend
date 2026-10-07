@@ -8,6 +8,8 @@ namespace AstroBackend.Domain.Entities
         public Guid UserId { get; set; }
         public string AuthorName { get; set; } = "İstifadəçi";
         public string Body { get; set; } = string.Empty;
+        public string? BodyEn { get; set; }
+        public string? BodyRu { get; set; }
         public bool IsHidden { get; set; } = false;
 
         // Navigation

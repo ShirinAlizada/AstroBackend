@@ -15,6 +15,8 @@ namespace AstroBackend.Domain.Entities
         public string? DescriptionRu { get; set; }
         public int PriceAzn { get; set; }
         public string? UnitLabel { get; set; }
+        public string? UnitLabelEn { get; set; }
+        public string? UnitLabelRu { get; set; }
         public string? ImageUrl { get; set; }
         public short SortOrder { get; set; } = 0;
         public bool IsActive { get; set; } = true;

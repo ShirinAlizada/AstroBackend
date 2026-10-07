@@ -9,7 +9,11 @@ namespace AstroBackend.Domain.Entities
         public string AuthorName { get; set; } = "İstifadəçi";
         public string Category { get; set; } = "ümumi";
         public string Title { get; set; } = string.Empty;
+        public string? TitleEn { get; set; }
+        public string? TitleRu { get; set; }
         public string Body { get; set; } = string.Empty;
+        public string? BodyEn { get; set; }
+        public string? BodyRu { get; set; }
         public bool IsHidden { get; set; } = false;
 
         // Navigation
