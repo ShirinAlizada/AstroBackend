@@ -194,6 +194,32 @@ public class AdminController : BaseApiController
     }
 
     // --- FORUM MODERATION ---
+    // Admin tərəfindən (real istifadəçi hesabı olmadan) mövzu/rəy yaratmaq — məs. çoxdilli
+    // demo məzmunu seed etmək üçün. FK tələbinə görə mövzu/rəy cari admin istifadəçisinin
+    // Id-sinə bağlanır, lakin göstərilən müəllif adı sərbəst mətn kimi gəlir (bax: ForumService).
+    [HttpPost("forum/topics")]
+    public async Task<ActionResult<ForumTopicDto>> AdminCreateTopic([FromBody] AdminCreateTopicRequest request, CancellationToken ct)
+    {
+        var created = await _forumService.CreateTopicAsync(
+            CurrentUserId,
+            request.AuthorName,
+            new CreateTopicRequest(request.Category, request.Title, request.Body, request.TitleEn, request.TitleRu, request.BodyEn, request.BodyRu),
+            ct);
+        return Ok(created);
+    }
+
+    [HttpPost("forum/topics/{topicId:guid}/replies")]
+    public async Task<ActionResult<ForumReplyDto>> AdminCreateReply(Guid topicId, [FromBody] AdminCreateReplyRequest request, CancellationToken ct)
+    {
+        var created = await _forumService.CreateReplyAsync(
+            topicId,
+            CurrentUserId,
+            request.AuthorName,
+            new CreateReplyRequest(request.Body, request.BodyEn, request.BodyRu),
+            ct);
+        return Ok(created);
+    }
+
     [HttpPatch("forum/topics/{id:guid}/hide")]
     public async Task<IActionResult> SetTopicHidden(Guid id, [FromQuery] bool isHidden, CancellationToken ct)
     {
